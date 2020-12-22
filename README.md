@@ -1,2 +1,23 @@
-# mahvie
-Mahvie is an online platform that will provide insurance agents and their clients with a better overall experience. To start, we’ll focus on the customers to ensure that they have the best experience possible before shifting towards the agent side. However, it is important to know that we indirectly streamline many processes for the agent by providing our clients with a better experience.
+![WELA Logo](Wela-logo-small.png)</br>
+[![GNU Affero General Public licensed](https://www.gnu.org/licenses/agpl-3.0.en.html)](./LICENSE.md)
+
+# Mahvie
+A Django powered Angular web app to simplify the insurance buying experience
+
+# About
+
+Mahvie is primarily authored by Pratiman Shahi and guided and supported by the Mahvie [Product Team](mailto:spratiman@yahoo.com)
+
+Mahvie is maintained and funded by Mahvie Inc. The names and logos for Mahvie are trademarks of Mahvie Inc.
+
+# Demo Credentials
+## Client Emails:
+
+## Agent Emails:
+
+## Password:
+
+    
+<a name="license"></a>
+# License
+[GNU Affero General Public Licence (GNU AGPLv3)](LICENSE)
