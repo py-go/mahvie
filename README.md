@@ -1,4 +1,4 @@
-![Mahvie Logo](mahvie logo 107x68.png)</br>
+![Mahvie Logo](mahvie-logo.png)</br>
 [![GNU Affero General Public Licensed](https://img.shields.io/badge/license-GNU%20AGPLv3-blue.svg)](./LICENSE.md)
 
 # Mahvie
