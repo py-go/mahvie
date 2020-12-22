@@ -1,5 +1,5 @@
-![WELA Logo](Wela-logo-small.png)</br>
-[![GNU Affero General Public licensed](https://www.gnu.org/licenses/agpl-3.0.en.html)](./LICENSE.md)
+![Mahvie Logo](mahvie-logo-107x68)</br>
+[![GNU Affero General Public Licensed](https://img.shields.io/badge/license-GNU%20AGPLv3-blue.svg)](./LICENSE.md)
 
 # Mahvie
 A Django powered Angular web app to simplify the insurance buying experience
