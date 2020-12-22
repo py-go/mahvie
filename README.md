@@ -1,0 +1,2 @@
+# mahvie
+Mahvie is an online platform that will provide insurance agents and their clients with a better overall experience. To start, we’ll focus on the customers to ensure that they have the best experience possible before shifting towards the agent side. However, it is important to know that we indirectly streamline many processes for the agent by providing our clients with a better experience.
