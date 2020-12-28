@@ -1,0 +1,48 @@
+<div class="contain centered-wrapper">
+    <div class="centered-content">
+        <form class="mt-132">
+            <section>
+
+                <h1 class="titleText">{{currentQuestion.title}}</h1>
+                <div class="questionsStyle w-100" *ngIf="currentQuestion.subtitle">
+                    {{currentQuestion.subtitle}}
+                </div>
+            </section>
+            <section class="mt-132">
+                <div>
+                    <div class="questionsStyle" *ngIf="currentQuestion.question">
+                        {{currentQuestion.question}}
+                    </div>
+
+                    <div *ngIf="currentQuestion.type=='radio'">
+                        <div class="inputFull" *ngFor="let optionVal of currentQuestion.options">
+                            <input type={{currentQuestion.type}} value={{optionVal}} name={{currentQuestion.name}} (click)="submitBtn=null">
+                            <label class="optStyle">{{optionVal}}</label><br>
+                        </div>
+                    </div>
+
+                    <div class="mt-4" *ngIf="currentQuestion.type=='text'">
+                        <input type="text" class="inputText" placeholder={{currentQuestion.options}} [ngClass]="{'inputHalf':currentQuestion.inline,'inputFull':!currentQuestion.inline}" *ngFor="let fields of currentQuestion.options">
+                    </div>
+
+                    <div class="mt-4" *ngIf="currentQuestion.type=='slider'">
+                        <label class="slideInpText">$</label>
+                        <input type="text" class="inputFull inputSlide" placeholder="0">
+                        <mat-slider min="1" max="100" step="1" value="1"></mat-slider>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="mt-132">
+                    <button class="submitBtn" [attr.disabled]="null" type="button" name="name" (click)="submit()">Continue</button>
+                </div>
+                <div class="mt-46" *ngIf="formSection==2">
+                    <span class="skipText">Skip for now</span>
+                </div>
+            </section>
+        </form>
+    </div>
+</div>
