@@ -10,9 +10,27 @@
 }
 
 .fa-chevron-left {
-    color: rgb(253, 125, 5);
+    color: #F45D01;
 }
 
 .headerStyle {
     min-height: 100px;
+}
+
+
+/*css*/
+
+.textStyle {
+    font-family: Source Sans Pro;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 32px;
+    /* identical to box height, or 133% */
+    align-items: center;
+    text-align: center;
+    letter-spacing: 0.02em;
+    color: #18344E;
+    float: left;
+    margin-left: 132px;
 }

@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { QuestionnaireComponent } from './questionnaire/questionnaire.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
 // import { Routes, RouterModule } from '@angular/router';
 
 // const routes: Routes = [
@@ -13,6 +15,7 @@ import { QuestionnaireComponent } from './questionnaire/questionnaire.component'
   declarations: [QuestionnaireComponent],
   imports: [
     CommonModule,
+    MatProgressSpinnerModule
     // RouterModule.forChild(routes)
   ],
   exports:[
