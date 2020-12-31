@@ -1,0 +1,1 @@
+web: gunicorn mahvie.wsgi --log-file -
