@@ -32,5 +32,6 @@
     letter-spacing: 0.02em;
     color: #18344E;
     float: left;
-    margin-left: 132px;
+    position: absolute;
+    margin-left: 3rem;
 }
