@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiServicesService {
 
-  baseUrl:any = environment.baseUrl;
+  baseUrl:any = 'https://product-dev-phase-1.herokuapp.com/api/';
 
   constructor(private http: HttpClient) { }
 
