@@ -12,10 +12,8 @@ import { InterceptorService } from '../app/core/services/interceptor.service';
 import { QuestionnaireModule } from './questionnaire/questionnaire.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import { MatSliderModule } from '@angular/material/slider';
-
+import { CookieService } from 'ngx-cookie-service';
+import { SharedModule } from './shared/shared.module';
 
 
 @NgModule({
@@ -30,17 +28,18 @@ import { MatSliderModule } from '@angular/material/slider';
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
-    MatProgressSpinnerModule,
-    MatSliderModule
+    SharedModule
   ],
   exports:[
-    MatSliderModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [{
     provide:HTTP_INTERCEPTORS,
     useClass:InterceptorService,
     multi:true
-  }],
+  },
+  CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

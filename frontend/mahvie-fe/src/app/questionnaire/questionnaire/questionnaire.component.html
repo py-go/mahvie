@@ -1,35 +1,90 @@
 <div class="contain centered-wrapper">
-    <div class="centered-content">
+    <div class="centered-content contianer">
         <form class="mt-132">
             <section>
 
                 <h1 class="titleText">{{currentQuestion.title}}</h1>
-                <div class="questionsStyle w-100" *ngIf="currentQuestion.subtitle">
+                <div class="questionsStyle w-100 mt-4" *ngIf="currentQuestion.subtitle">
                     {{currentQuestion.subtitle}}
                 </div>
             </section>
             <section class="mt-132">
-                <div>
-                    <div class="questionsStyle" *ngIf="currentQuestion.question">
+                <div class="row w-75 mx-auto">
+                    <div class="questionsStyle col-sm-7 text-left mx-auto" *ngIf="currentQuestion.question">
                         {{currentQuestion.question}}
                     </div>
 
-                    <div *ngIf="currentQuestion.type=='radio'">
-                        <div class="inputFull" *ngFor="let optionVal of currentQuestion.options">
-                            <input type={{currentQuestion.type}} value={{optionVal}} name={{currentQuestion.name}} (click)="submitBtn=null">
-                            <label class="optStyle">{{optionVal}}</label><br>
+                    <div *ngIf="currentQuestion.type=='radio'" class="col-sm-7 mx-auto">
+                        <div class="inputFull" [ngClass]="{'active':optionVal.active}" *ngFor="let optionVal of currentQuestion.options;let i=index" (click)="activeSetter(i, currentQuestion.options)">
+                            <input type={{currentQuestion.type}} class="inpChecked form-control" value={{optionVal}} name={{currentQuestion.name}} (click)="submitBtn=null">
+                            <label class="optStyle">{{optionVal.value | titlecase }}</label><br>
                         </div>
                     </div>
 
-                    <div class="mt-4" *ngIf="currentQuestion.type=='text'">
-                        <input type="text" class="inputText" placeholder={{currentQuestion.options}} [ngClass]="{'inputHalf':currentQuestion.inline,'inputFull':!currentQuestion.inline}" *ngFor="let fields of currentQuestion.options">
+                    <div class="mt-4" *ngIf="currentQuestion.type=='text' && currentQuestion.inline" class="mx-auto">
+                        <input type="text" class="inputText inputHalf col-sm-6" placeholder={{fields}} *ngFor="let fields of currentQuestion.options">
                     </div>
 
-                    <div class="mt-4" *ngIf="currentQuestion.type=='slider'">
-                        <label class="slideInpText">$</label>
-                        <input type="text" class="inputFull inputSlide" placeholder="0">
-                        <mat-slider min="1" max="100" step="1" value="1"></mat-slider>
+                    <div class="mt-4" *ngIf="currentQuestion.type=='text' && !currentQuestion.inline" class="col-sm-7 mx-auto">
+                        <input type="text" class="inputText inputFull" placeholder={{fields}} *ngFor="let fields of currentQuestion.options">
+                    </div>
 
+                    <div class="mt-4" *ngIf="currentQuestion.type=='slider'" class="col-sm-7 mx-auto">
+                        <!-- <label class="slideInpText">$</label> -->
+                        <input type="text" class="inputFull inputSlide mb-74" matInput [(ngModel)]="sliderValue" [ngModelOptions]="{standalone: true}">
+                        <mat-slider [max]="currentQuestion.validations.max" [min]="currentQuestion.validations.min" [(ngModel)]="sliderValue" [ngModelOptions]="{standalone: true}"></mat-slider>
+                        <label class="float-left sliderLabel">{{currentQuestion.validations.min | currency}}</label>
+                        <label class="float-right sliderLabel">{{currentQuestion.validations.max | currency}}</label>
+                    </div>
+
+                    <div class="mt-4 dateField" *ngIf="currentQuestion.type=='date'" class="col-sm-7 mx-auto">
+
+                        <input matInput [matDatepicker]="dp3" disabled (dateChange)="addEvent('change', $event)" class="inputDate t1" style="width:40%" placeholder="Date of Birth">
+                        <div class="calenderIcon">
+                            <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+                            <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+                        </div>
+                        <!-- <input type="text" class="inputDate t1" style="width:40%" value="Date of birth" readonly> -->
+                        <input type="text" class="inputDate t2" style="width:20%" placeholder="MM" readonly [(ngModel)]="date" [ngModelOptions]="{standalone: true}">
+                        <input type="text" class="inputDate t2" style="width:20%" placeholder="DD" readonly [(ngModel)]="month" [ngModelOptions]="{standalone: true}">
+                        <input type="text" class="inputDate t2" style="width:20%" placeholder="YYYY" readonly [(ngModel)]="year" [ngModelOptions]="{standalone: true}">
+
+                        <!-- <mat-form-field appearance="fill" class="inputFull mb-74 p-0">
+                            <mat-label>Date of birth</mat-label>
+                            <input matInput [matDatepicker]="dp3" disabled (dateChange)="addEvent('change', $event)">
+                            <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+                            <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+                        </mat-form-field> -->
+                    </div>
+
+                    <div class="row mt-4 w-100 mt-3" *ngIf="currentQuestion.type=='div'">
+                        <div class="col-md-4 mt-4 text-center">
+                            <div class="product-h"><img src="../../../assets/icons/life insurance - unselected.svg" class="img-fluid"></div>
+                            <div class="product-des mt-4">LIFE INSURANCE</div>
+                        </div>
+                        <div class="col-md-4 mt-4 text-center">
+                            <div class="product-h"><img src="../../../assets/icons/critical illness - unselected.svg" class="img-fluid"></div>
+                            <div class="product-des mt-4">CRITICAL ILLNESS</div>
+                        </div>
+                        <div class="col-md-4 mt-4 text-center">
+                            <div class="product-h"><img src="../../../assets/icons/long term care - unselected.svg" class="img-fluid"></div>
+                            <div class="product-des mt-4">LONG TERM CARE</div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-4 w-100 mt-3" *ngIf="currentQuestion.type=='div2'">
+                        <div class="col-md-4 mt-4 text-center">
+                            <div class="product-h"><img src="../../../assets/icons/needs icon.svg" class="img-fluid"></div>
+                            <div class="product-des mt-4">LIFE INSURANCE</div>
+                        </div>
+                        <div class="col-md-4 mt-4 text-center">
+                            <div class="product-h"><img src="../../../assets/icons/life insurance - unselected.svg" class="img-fluid"></div>
+                            <div class="product-des mt-4">CRITICAL ILLNESS</div>
+                        </div>
+                        <div class="col-md-4 mt-4 text-center">
+                            <div class="product-h"><img src="../../../assets/icons/finance asset (blue).svg" class="img-fluid"></div>
+                            <div class="product-des mt-4">LONG TERM CARE</div>
+                        </div>
                     </div>
 
                 </div>

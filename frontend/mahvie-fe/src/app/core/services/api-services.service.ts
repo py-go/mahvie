@@ -6,11 +6,11 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ApiServicesService {
 
-  configUrl = 'https://af0a022abe72.ngrok.io/api/v1/';
+  baseUrl:any = 'https://product-dev-phase-1.herokuapp.com/api/';
 
   constructor(private http: HttpClient) { }
 
-  getConfig() {
-    return this.http.get(this.configUrl);
+  postData(url:any,data:any){
+    return this.http.post(this.baseUrl+url,data);
   }
 }
