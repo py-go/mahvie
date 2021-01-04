@@ -6,7 +6,7 @@ A Django powered Angular web app to simplify the insurance buying experience
 
 # About
 
-Mahvie is primarily authored by Pratiman Shahi and guided and supported by the Mahvie [Product Team](mailto:spratiman@yahoo.com)
+Mahvie is primarily authored by Pratiman Shahi and guided and supported by the Mahvie [Product Team](mailto:pratiman.shahi@mahvie.com)
 
 Mahvie is maintained and funded by Mahvie Inc. The names and logos for Mahvie are trademarks of Mahvie Inc.
 
