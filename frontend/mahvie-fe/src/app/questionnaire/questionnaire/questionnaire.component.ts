@@ -1,16 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
-import { elementAt } from 'rxjs/operators';
 import { ApiServicesService } from '../../core/services/api-services.service';
 import {MatDatepickerInputEvent} from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-questionnaire',
   templateUrl: './questionnaire.component.html',
-  styleUrls: ['./questionnaire.component.css']
+  styleUrls: ['./questionnaire.component.scss']
 })
 export class QuestionnaireComponent implements OnInit {
-
   questionSet:any=[
     {slno:1,name:"live",question:"Do you live in Ontario?",type:"radio",options:[{value:"yes",active:false},{value:"no",active:false}],validations:{},title:"Before we get started...",subtitle:""},
     {slno:2,name:"email",question:"What is your email?",type:"text",options:["email address"],validations:{},title:"Before we get started...",subtitle:"",skip:true},
@@ -35,18 +33,13 @@ export class QuestionnaireComponent implements OnInit {
   date:any;
   month:any;
   year:any;
+  questionForm = new FormGroup({});
 
-  questionForm = new FormGroup({
-    
-  });
-
-
-  constructor(private apiServicesService:ApiServicesService) { 
-   
-  }
+  constructor(
+    private apiServicesService: ApiServicesService
+  ) { }
 
   ngOnInit(): void {
-
     // this.apiServicesService.getConfig().subscribe(data=>{
     //   console.log(data);
     // })
@@ -91,5 +84,4 @@ export class QuestionnaireComponent implements OnInit {
       });
     }
   }
-
 }

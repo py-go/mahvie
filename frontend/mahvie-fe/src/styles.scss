@@ -1,4 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'base';
 
 body,
 html {
@@ -53,20 +53,20 @@ body {
 }
 
 .mat-form-field-wrapper {
-    padding: 0px !important;
+    padding: 0 !important;
     padding-right: 20px !important;
     border-right: 2px solid #18344E;
 }
 
 .mat-form-field-flex {
     height: 100%;
-    padding: 0px !important;
+    padding: 0 !important;
 }
 
 .mat-form-field-infix {
     align-self: center;
-    padding: 0px !important;
-    margin: 0px !important;
+    padding: 0 !important;
+    margin: 0 !important;
     font-family: Source Sans Pro;
     font-style: normal;
     font-weight: bold;
