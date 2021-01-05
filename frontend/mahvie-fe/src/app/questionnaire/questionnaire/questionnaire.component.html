@@ -76,11 +76,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="mt-132">
-                    <button class="submitBtn" [attr.disabled]="null" type="button" name="name" (click)="submit()">Continue</button>
-                </div>
-                <div class="mt-46" *ngIf="formSection === 2">
-                    <span class="skipText">Skip for now</span>
+                <button class="submitBtn" [attr.disabled]="null" type="button" name="name" (click)="submit()">Continue</button>
+                <div>
+                  <button *ngIf="formSection === 2" class="skipText" (click)="submit()">Skip for now</button>
                 </div>
             </section>
         </form>

@@ -111,7 +111,7 @@ p input:checked {
 /*--css--*/
 
 .mt-132 {
-  margin-top: 132px;
+  margin-top: 22px;
 }
 
 .mt-46 {
@@ -162,7 +162,7 @@ p input:checked {
 
 .submitBtn {
   height: 64px;
-  width: 356px;
+  width: 358px;
   /* background: #E7E7E7; */
   background: #f45d01;
   border: 1px solid #e7e7e7;
@@ -175,7 +175,8 @@ p input:checked {
   align-items: center;
   text-align: center;
   letter-spacing: 0.04em;
-  color: #ffffff;
+  color: $w;
+  margin-top: 100px;
 }
 
 .inputFull {
@@ -294,15 +295,16 @@ p input:checked {
 }
 
 .skipText {
-  font-family: Source Sans Pro;
+  font: 600 24px 'Source Sans Pro';
   font-style: normal;
-  font-weight: 600;
-  font-size: 24px;
   line-height: 24px;
-  /* or 100% */
-  align-items: center;
   text-align: center;
   color: #f45d01;
+  height: 64px;
+  width: 358px;
+  border-radius: 4px;
+  background: $t;
+  margin-top: 64px;
 }
 
 .slideInpText {
