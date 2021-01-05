@@ -1,6 +1,6 @@
 @import 'base';
 
-$preference-list: '';
+$preference-list: 'life-insurance', 'critical-illness', 'long-term-care';
 
 /*
 .questionContainer {
@@ -422,3 +422,57 @@ mat-slider {
 }
 
 /* preferences */
+.preference {
+  display: block;
+  position: relative;
+  padding-top: 95px;
+
+  @each $item in $preference-list {
+    &.#{$item}:before {
+      @include svg($item);
+      background-position: center;
+    }
+  }
+  &:before {
+    @include tl(0, 0);
+    content: '';
+    width: 100%;
+    height: 72px;
+  }
+  span.title {
+    @include transit(0.5s);
+    color: $secondary;
+    text-transform: uppercase;
+    font-size: 1.45rem;
+    font-weight: bold;
+  }
+  .show-on-hover {
+    @include transit(0.5s);
+    @include radius(5px);
+    @include box-shadow(0, 0, 6px, 0, 0, 0, 0.05);
+    @include tl(calc(100% + 15px), 0);
+    width: 100%;
+    padding: 30px;
+    background: #e7e7e7;
+    color: $secondary;
+    display: grid;
+    place-items: center;
+    text-align: left;
+    opacity: 0;
+  }
+  &:hover, &.active {
+    @each $item in $preference-list {
+      &.#{$item}:before {
+        $item: $item + '-hover';
+        @include svg($item);
+        background-position: center;
+      }
+    }
+    span.title {
+      color: $primary;
+    }
+    .show-on-hover {
+      opacity: 1;
+    }
+  }
+}
