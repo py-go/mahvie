@@ -1,0 +1,47 @@
+@import "base";
+
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 2px solid #96a2ad;
+  padding: 20px 60px;
+
+  img{
+    margin-right: auto;
+    padding-right: 82px;
+  }
+  button {
+    position: relative;
+    padding: 10px 10px 10px 30px;
+    border: none;
+    background: $t;
+    color: $b;
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-right: auto;
+
+    &:before {
+      @include basvg(back, 20px, 20px, 20px);
+      @include tl(50%, 0);
+      margin-top: -10px;
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  header {
+    justify-content: space-between;
+    padding: 20px 30px;
+
+    img {
+      margin: 0;
+      padding: 0;
+    }
+    button {
+      margin: 0;
+    }
+  }
+}
+
+
