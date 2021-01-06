@@ -179,8 +179,21 @@ p input:checked {
   margin-top: 100px;
 }
 
+.skipText {
+  font: 600 24px 'Source Sans Pro';
+  font-style: normal;
+  line-height: 24px;
+  text-align: center;
+  color: #f45d01;
+  height: 64px;
+  width: 358px;
+  border-radius: 4px;
+  background: $t;
+  margin-top: 64px;
+}
+
 .inputFull {
-  height: 80px;
+  height: 75px;
   width: 100%;
   border-radius: 0;
   padding: 20px 16px;
@@ -276,9 +289,8 @@ p input:checked {
   line-height: 24px;
   align-items: center;
   color: #2b5d8c;
-  /* width: 100%; */
+  text-align: center;
   height: 42px;
-  float: left;
 }
 
 .optStyle {
@@ -292,19 +304,6 @@ p input:checked {
   color: #18344e;
   align-self: center;
   pointer-events: none;
-}
-
-.skipText {
-  font: 600 24px 'Source Sans Pro';
-  font-style: normal;
-  line-height: 24px;
-  text-align: center;
-  color: #f45d01;
-  height: 64px;
-  width: 358px;
-  border-radius: 4px;
-  background: $t;
-  margin-top: 64px;
 }
 
 .slideInpText {
@@ -442,16 +441,18 @@ mat-slider {
   }
   .show-on-hover {
     @include radius(5px);
-    @include box-shadow(0, 0, 6px, 0, 0, 0, 0.05);
+    @include box-shadow(0, 5px, 10px, 0, 0, 0, 0.05);
     @include tl(calc(100% + 15px), 0);
     width: 100%;
     padding: 30px;
     background: #e7e7e7;
+    border: 1px solid ligthen($light-border, 10%);
     color: $secondary;
     display: grid;
     place-items: center;
     text-align: left;
     opacity: 0;
+    pointer-events: none;
   }
   &:hover, &.active {
     @each $item in $preference-list {
@@ -464,6 +465,8 @@ mat-slider {
     span.title {
       color: $primary;
     }
+  }
+  &:hover {
     .show-on-hover {
       opacity: 1;
     }

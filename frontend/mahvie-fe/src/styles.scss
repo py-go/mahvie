@@ -17,9 +17,19 @@ body {
 }
 
 a {
+  @include transit(0.5s);
+
   &:hover {
     text-decoration: none;
   }
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  background: #dddddd;
+}
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
 }
 
 button {
@@ -102,4 +112,8 @@ button {
 .mat-datepicker-toggle-default-icon {
   width: 2.5rem !important;
   height: 2.5rem !important;
+}
+
+.mat-progress-spinner circle, .mat-spinner circle {
+  stroke: $secondary;
 }

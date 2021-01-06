@@ -136,7 +136,7 @@ export class QuestionnaireComponent implements OnInit {
       name: 'names2',
       question: '',
       type: 'text',
-      options: ['first name', 'last name'],
+      options: ['First Name', 'Last Name'],
       validations: {},
       title: 'Welcome to G2G,your recommendation is only minutes away!',
       subtitle: '',
@@ -204,7 +204,7 @@ export class QuestionnaireComponent implements OnInit {
 
   /**
    * Check active status of form control
-   * @param index 
+   * @param index
    * @param options Options of current question
    * @param event Click event
    */
@@ -218,9 +218,11 @@ export class QuestionnaireComponent implements OnInit {
     if (this.currentQuestion.type === 'radio') {
       const target = <HTMLElement>event.target;
       const radioInput = target.querySelector('input[type="radio"]');
-      this.el.nativeElement.querySelectorAll('input[type="radio"]').forEach((radio: any) => {
-        this.renderer.setProperty(radio, 'checked', false);
-      });
+      this.el.nativeElement
+        .querySelectorAll('input[type="radio"]')
+        .forEach((radio: any) => {
+          this.renderer.setProperty(radio, 'checked', false);
+        });
       radioInput && this.renderer.setProperty(radioInput, 'checked', true);
     }
   }

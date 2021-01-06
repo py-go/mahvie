@@ -8,14 +8,17 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule }   from '@angular/forms';
 
 const routes: Routes = [
-  { path: '', component:LoginComponent },
+  { path: 'login', component:LoginComponent },
   { path: 'forget', component:ForgetPasswordComponent },
   { path: 'register', component:RegisterationComponent }
 ];
 
-
 @NgModule({
-  declarations: [LoginComponent, ForgetPasswordComponent, RegisterationComponent],
+  declarations: [
+    LoginComponent,
+    ForgetPasswordComponent,
+    RegisterationComponent,
+  ],
   imports: [
     CommonModule,
     FormsModule,

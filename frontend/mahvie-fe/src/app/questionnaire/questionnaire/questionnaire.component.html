@@ -3,7 +3,7 @@
         <form class="mt-132">
             <section>
                 <h1 class="titleText">{{currentQuestion.title}}</h1>
-                <div class="questionsStyle w-100 mt-4" *ngIf="currentQuestion.subtitle">
+                <div class="questionsStyle w-100" *ngIf="currentQuestion.subtitle">
                     {{currentQuestion.subtitle}}
                 </div>
             </section>
@@ -26,8 +26,10 @@
                     </div>
                     <div class="mt-4" *ngIf="currentQuestion.type === 'slider'" class="col-sm-7 mx-auto">
                         <!-- <label class="slideInpText">$</label> -->
-                        <input type="text" class="inputFull inputSlide mb-74" matInput [(ngModel)]="sliderValue" [ngModelOptions]="{standalone: true}">
-                        <mat-slider [max]="currentQuestion.validations.max" [min]="currentQuestion.validations.min" [(ngModel)]="sliderValue" [ngModelOptions]="{standalone: true}"></mat-slider>
+                        <input readonly type="text" class="inputFull inputSlide mb-74" matInput 
+                          [ngModel]="sliderValue | currency" (ngModelChange)="sliderValue = $event" [ngModelOptions]="{ standalone: true }">
+                        <mat-slider [max]="currentQuestion.validations.max" [min]="currentQuestion.validations.min" 
+                          [(ngModel)]="sliderValue" [ngModelOptions]="{ standalone: true }"></mat-slider>
                         <label class="float-left sliderLabel">{{currentQuestion.validations.min | currency}}</label>
                         <label class="float-right sliderLabel">{{currentQuestion.validations.max | currency}}</label>
                     </div>
@@ -76,9 +78,11 @@
                         </div>
                     </div>
                 </div>
-                <button class="submitBtn" [attr.disabled]="null" type="button" name="name" (click)="submit()">Continue</button>
-                <div>
-                  <button *ngIf="formSection === 2" class="skipText" (click)="submit()">Skip for now</button>
+                <div class="text-center">
+                  <button class="submitBtn" [attr.disabled]="null" type="button" name="name" (click)="submit()">Continue</button>
+                  <div>
+                    <button *ngIf="formSection === 2" class="skipText" (click)="submit()">Skip for now</button>
+                  </div>
                 </div>
             </section>
         </form>
