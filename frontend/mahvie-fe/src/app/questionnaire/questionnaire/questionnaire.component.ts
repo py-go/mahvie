@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { QuestionnaireService } from 'src/app/core/services/questionnaire.service';
 
@@ -9,17 +9,18 @@ import { QuestionnaireService } from 'src/app/core/services/questionnaire.servic
   styleUrls: ['./questionnaire.component.scss'],
 })
 export class QuestionnaireComponent implements OnInit {
-  questionSet: any = [
+  questionSet: Record<string, any>[] = [
     {
       id: 1,
-      name: 'live',
+      name: 'location',
       question: 'Do you live in Ontario?',
       type: 'radio',
       options: [
-        { value: 'yes', active: false },
-        { value: 'no', active: false },
+        { text: 'yes', active: false },
+        { text: 'no', active: false },
       ],
-      validations: {},
+      controls: ['location'],
+      validations: { required: true },
       title: 'Before we get started...',
       subtitle: '',
     },
@@ -29,7 +30,8 @@ export class QuestionnaireComponent implements OnInit {
       question: 'What is your email?',
       type: 'text',
       options: ['Email Address'],
-      validations: {},
+      controls: ['email'],
+      validations: { required: true, pattern: '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$' },
       title: 'Before we get started...',
       subtitle: '',
       skip: true,
@@ -40,10 +42,22 @@ export class QuestionnaireComponent implements OnInit {
       question: '',
       type: 'text',
       options: ['First Name', 'Last Name'],
-      validations: {},
+      controls: ['firstName', 'lastName'],
+      validations: { required: true },
       title: 'Lets get to know you!',
       subtitle: '',
       inline: true,
+    },
+    {
+      id: 4,
+      name: 'products',
+      question: '',
+      type: 'div',
+      options: [],
+      controls: ['products'],
+      validations: { required: true },
+      title: 'Which product(s) match your preferences?',
+      subtitle: 'Please select all products that match your needs.',
     },
     {
       id: 5,
@@ -143,16 +157,6 @@ export class QuestionnaireComponent implements OnInit {
       inline: true,
     },
     {
-      id: 4,
-      name: 'products',
-      question: '',
-      type: 'div',
-      options: [],
-      validations: {},
-      title: 'Which product(s) match your preferences?',
-      subtitle: 'Please select all products that match your needs.',
-    },
-    {
       id: 13,
       name: 'gettoknow',
       question: '',
@@ -172,12 +176,13 @@ export class QuestionnaireComponent implements OnInit {
   date: any;
   month: any;
   year: any;
-  questionForm = new FormGroup({});
+  formGroup = new FormGroup({});
 
   constructor(
     private el: ElementRef,
     private renderer: Renderer2,
     private questionService: QuestionnaireService,
+    private formBuilder: FormBuilder,
   ) {
     this.formSection = parseInt(localStorage.getItem('questionId') || '1');
     this.saveQuestionId();
@@ -186,9 +191,9 @@ export class QuestionnaireComponent implements OnInit {
   ngOnInit(): void {
     this.assignQuestions();
 
-    this.questionSet.forEach((element: any) => {
-      this.questionForm.addControl(element.name, new FormControl(''));
-    });
+    // this.questionSet.forEach((element: any) => {
+    //   this.formGroup.addControl(element.name, new FormControl(''));
+    // });
 
     // subscribe to back button clicks
     this.questionService.backButtonClick.subscribe(_ => this.previousQuestion());
@@ -201,6 +206,18 @@ export class QuestionnaireComponent implements OnInit {
     this.questionSet.forEach((question: any) => {
       if (localStorage.getItem('questionId') == question.id) {
         this.currentQuestion = question;
+        const validations: any[] = [];
+        Object.keys(this.currentQuestion.validations).forEach(validation => {
+          (validation === 'required' && this.currentQuestion.validations[validation])
+            && validations.push(Validators.required);
+          validation === 'pattern'
+            && validations.push(Validators.pattern(this.currentQuestion.validations.pattern));
+        });
+        this.currentQuestion.controls.forEach((controlName: string) => {  
+          this.formGroup.addControl(controlName, new FormControl('', validations));
+        });
+        validations.length = 0;
+        // this.formGroup.updateValueAndValidity();
       }
     });
   }
@@ -209,6 +226,7 @@ export class QuestionnaireComponent implements OnInit {
    * Continue click event
    */
   submit() {
+    console.log(this.formGroup.value);
     this.formSection++;
     this.saveQuestionId();
     this.assignQuestions();
@@ -256,17 +274,20 @@ export class QuestionnaireComponent implements OnInit {
     });
     options[index].active = true;
 
-    // set checked attribute of radio buttons inside clicked div
-    if (this.currentQuestion.type === 'radio') {
-      const target = <HTMLElement>event.target;
-      const radioInput = target.querySelector('input[type="radio"]');
-      this.el.nativeElement
-        .querySelectorAll('input[type="radio"]')
-        .forEach((radio: any) => {
-          this.renderer.setProperty(radio, 'checked', false);
-        });
-      radioInput && this.renderer.setProperty(radioInput, 'checked', true);
-    }
+    console.log(this.formGroup.value);
+
+    // set checked attribute of radio buttons inside form
+    // if (this.currentQuestion.type === 'radio') {
+    //   const target = <HTMLElement>event.target;
+    //   const radioInput = target.querySelector('input[type="radio"]');
+    //   this.el.nativeElement
+    //     .querySelectorAll('input[type="radio"]')
+    //     .forEach((radio: any) => {
+    //       this.renderer.setProperty(radio, 'checked', false);
+    //     });
+    //   radioInput && this.renderer.setProperty(radioInput, 'checked', true);
+    //   this.currentQuestion.validations.required = false;
+    // }
   }
 
   /**

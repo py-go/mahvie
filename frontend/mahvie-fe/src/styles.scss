@@ -6,6 +6,10 @@ html {
   background-color: #fafafa;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 html,
 body {
   height: 100%;

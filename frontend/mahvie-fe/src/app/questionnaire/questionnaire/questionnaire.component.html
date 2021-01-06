@@ -1,6 +1,6 @@
 <div class="contain centered-wrapper">
     <div class="centered-content contianer">
-        <form class="mt-132">
+        <div class="mt-132">
             <section>
                 <h1 class="titleText">{{currentQuestion.title}}</h1>
                 <div class="questionsStyle w-100" *ngIf="currentQuestion.subtitle">
@@ -8,22 +8,31 @@
                 </div>
             </section>
             <section class="mt-132">
-                <div class="row w-75 mx-auto">
+                <form *ngIf="currentQuestion" [formGroup]="formGroup" (ngSubmit)="submit()">
+                  <div class="row w-75 mx-auto">
                     <div class="questionsStyle col-sm-7 text-left mx-auto" *ngIf="currentQuestion.question">
                         {{currentQuestion.question}}
                     </div>
+                    <!-- radio buttons -->
                     <div *ngIf="currentQuestion.type === 'radio'" class="col-sm-7 mx-auto">
-                        <div class="inputFull" [ngClass]="{ 'active': optionVal.active }" *ngFor="let optionVal of currentQuestion.options;let i=index" (click)="activeSetter(i, currentQuestion.options, $event)">
-                            <input type={{currentQuestion.type}} class="inpChecked form-control" value={{optionVal}} name={{currentQuestion.name}}>
-                            <label class="optStyle">{{optionVal.value | titlecase }}</label><br>
-                        </div>
+                      <div class="inputFull" *ngFor="let instance of currentQuestion.options; let i = index;" [ngClass]="{ 'active': instance.active }" 
+                        (click)="activeSetter(i, currentQuestion.options, $event)">
+                        <input [formControlName]="currentQuestion.name" [type]="currentQuestion.type" 
+                          class="inpChecked form-control" [value]="instance.text" [name]="currentQuestion.name">
+                        <label class="optStyle">{{instance.text | titlecase }}</label>
+                      </div>
                     </div>
+                    <!-- 2 textboxes -->
                     <div class="mt-4" *ngIf="currentQuestion.type === 'text' && currentQuestion.inline" class="mx-auto">
-                        <input type="text" class="inputText inputHalf col-sm-6" placeholder={{fields}} *ngFor="let fields of currentQuestion.options">
+                        <input formControlName="{{currentQuestion.controls[i]}}" type="text" class="inputText inputHalf col-sm-6" placeholder={{fields}} 
+                          *ngFor="let fields of currentQuestion.options; let i = index;">
                     </div>
+                    <!-- single textbox -->
                     <div class="mt-4" *ngIf="currentQuestion.type === 'text' && !currentQuestion.inline" class="col-sm-7 mx-auto">
-                        <input type="text" class="inputText inputFull" placeholder={{fields}} *ngFor="let fields of currentQuestion.options">
+                        <input formControlName="{{currentQuestion.controls[0]}}" type="text" class="inputText inputFull" placeholder={{fields}} 
+                          *ngFor="let fields of currentQuestion.options">
                     </div>
+                    <!-- amount slider -->
                     <div class="mt-4" *ngIf="currentQuestion.type === 'slider'" class="col-sm-7 mx-auto">
                         <!-- <label class="slideInpText">$</label> -->
                         <input readonly type="text" class="inputFull inputSlide mb-74" matInput 
@@ -33,6 +42,7 @@
                         <label class="float-left sliderLabel">{{currentQuestion.validations.min | currency}}</label>
                         <label class="float-right sliderLabel">{{currentQuestion.validations.max | currency}}</label>
                     </div>
+                    <!-- dates -->
                     <div class="mt-4 dateField" *ngIf="currentQuestion.type === 'date'" class="col-sm-7 mx-auto">
                         <input matInput [matDatepicker]="dp3" disabled (dateChange)="addEvent('change', $event)" class="inputDate t1" style="width:40%" placeholder="Date of Birth">
                         <div class="calenderIcon">
@@ -77,14 +87,16 @@
                             </a>
                         </div>
                     </div>
-                </div>
-                <div class="text-center">
-                  <button class="submitBtn" [attr.disabled]="null" type="button" name="name" (click)="submit()">Continue</button>
-                  <div>
-                    <button *ngIf="formSection === 2" class="skipText" (click)="submit()">Skip for now</button>
                   </div>
-                </div>
+                  <!-- submit/skip -->
+                  <div class="text-center">
+                    <button [disabled]="formGroup.invalid" type="submit" class="submitBtn" >Continue</button>
+                    <div>
+                      <button *ngIf="formSection === 2" class="skipText" (click)="submit()">Skip for now</button>
+                    </div>
+                  </div>
+                </form>
             </section>
-        </form>
+        </div>
     </div>
 </div>
