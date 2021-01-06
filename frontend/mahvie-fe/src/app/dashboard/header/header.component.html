@@ -1,4 +1,5 @@
 <header>
-  <button>Back</button>
+  <button *ngIf="isButtonVisible" (click)="previous()">Back</button>
+  <span *ngIf="!isButtonVisible" class="offscreen"></span>
   <img src="assets/images/mahvie-logo.png" alt="">
 </header>

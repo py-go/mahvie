@@ -7,6 +7,12 @@ header {
   border-bottom: 2px solid #96a2ad;
   padding: 20px 60px;
 
+  .offscreen {
+    display: inline-block;
+    margin-right: auto;
+    width: 1px;
+    height: 1px;
+  }
   img{
     margin-right: auto;
     padding-right: 82px;

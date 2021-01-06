@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ApiServicesService } from '../../core/services/api-services.service';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { QuestionnaireService } from 'src/app/core/services/questionnaire.service';
 
 @Component({
   selector: 'app-questionnaire',
@@ -11,7 +11,7 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 export class QuestionnaireComponent implements OnInit {
   questionSet: any = [
     {
-      slno: 1,
+      id: 1,
       name: 'live',
       question: 'Do you live in Ontario?',
       type: 'radio',
@@ -24,7 +24,7 @@ export class QuestionnaireComponent implements OnInit {
       subtitle: '',
     },
     {
-      slno: 2,
+      id: 2,
       name: 'email',
       question: 'What is your email?',
       type: 'text',
@@ -35,7 +35,7 @@ export class QuestionnaireComponent implements OnInit {
       skip: true,
     },
     {
-      slno: 3,
+      id: 3,
       name: 'names',
       question: '',
       type: 'text',
@@ -46,7 +46,7 @@ export class QuestionnaireComponent implements OnInit {
       inline: true,
     },
     {
-      slno: 5,
+      id: 5,
       name: 'gender',
       question: '',
       type: 'radio',
@@ -60,7 +60,7 @@ export class QuestionnaireComponent implements OnInit {
         'Your recommendation is as unique as you are. Using real info here will help us give you the most accurate recommendation.',
     },
     {
-      slno: 6,
+      id: 6,
       name: 'children',
       question: '',
       type: 'radio',
@@ -74,7 +74,7 @@ export class QuestionnaireComponent implements OnInit {
         'Your recommendation is as unique as you are. Using real info here will help us give you the most accurate recommendation.',
     },
     {
-      slno: 7,
+      id: 7,
       name: 'income',
       question: '',
       type: 'slider',
@@ -85,7 +85,7 @@ export class QuestionnaireComponent implements OnInit {
         'Feel free to use close estimates when it comes to your finances.',
     },
     {
-      slno: 8,
+      id: 8,
       name: 'mortgage',
       question: '',
       type: 'slider',
@@ -96,7 +96,7 @@ export class QuestionnaireComponent implements OnInit {
         'Feel free to use close estimates when it comes to your finances.',
     },
     {
-      slno: 9,
+      id: 9,
       name: 'expenses',
       question: '',
       type: 'slider',
@@ -107,7 +107,7 @@ export class QuestionnaireComponent implements OnInit {
         'Feel free to use close estimates when it comes to your finances.',
     },
     {
-      slno: 10,
+      id: 10,
       name: 'born',
       question: '',
       type: 'date',
@@ -118,7 +118,7 @@ export class QuestionnaireComponent implements OnInit {
         'Your recommendation is as unique as you are. Using real info here will help us give you the most accurate recommendation.',
     },
     {
-      slno: 11,
+      id: 11,
       name: 'smoke',
       question: '',
       type: 'radio',
@@ -132,7 +132,7 @@ export class QuestionnaireComponent implements OnInit {
         'Your recommendation is as unique as you are. Using real info here will help us give you the most accurate recommendation.',
     },
     {
-      slno: 12,
+      id: 12,
       name: 'names2',
       question: '',
       type: 'text',
@@ -143,7 +143,7 @@ export class QuestionnaireComponent implements OnInit {
       inline: true,
     },
     {
-      slno: 4,
+      id: 4,
       name: 'products',
       question: '',
       type: 'div',
@@ -153,7 +153,7 @@ export class QuestionnaireComponent implements OnInit {
       subtitle: 'Please select all products that match your needs.',
     },
     {
-      slno: 13,
+      id: 13,
       name: 'gettoknow',
       question: '',
       type: 'div2',
@@ -165,7 +165,7 @@ export class QuestionnaireComponent implements OnInit {
     },
   ];
   submitBtn: any = true;
-  formSection = 1;
+  formSection: number;
   currentQuestion: any;
   sliderValue: any = 0;
   events: any;
@@ -177,8 +177,11 @@ export class QuestionnaireComponent implements OnInit {
   constructor(
     private el: ElementRef,
     private renderer: Renderer2,
-    private apiServicesService: ApiServicesService
-  ) {}
+    private questionService: QuestionnaireService,
+  ) {
+    this.formSection = parseInt(localStorage.getItem('questionId') || '1');
+    this.saveQuestionId();
+  }
 
   ngOnInit(): void {
     this.assignQuestions();
@@ -186,21 +189,60 @@ export class QuestionnaireComponent implements OnInit {
     this.questionSet.forEach((element: any) => {
       this.questionForm.addControl(element.name, new FormControl(''));
     });
+
+    // subscribe to back button clicks
+    this.questionService.backButtonClick.subscribe(_ => this.previousQuestion());
   }
 
+  /**
+   * Shows question based on question id in local storage
+   */
+  assignQuestions() {
+    this.questionSet.forEach((question: any) => {
+      if (localStorage.getItem('questionId') == question.id) {
+        this.currentQuestion = question;
+      }
+    });
+  }
+
+  /**
+   * Continue click event
+   */
+  submit() {
+    this.formSection++;
+    this.saveQuestionId();
+    this.assignQuestions();
+    this.questionService.backButtonVisibility.next();
+  }
+
+  /**
+   * Shows previous question
+   */
+  previousQuestion() {
+    this.formSection--;
+    this.saveQuestionId();
+    this.assignQuestions();
+    this.questionService.backButtonVisibility.next();
+  }
+
+  /**
+   * Saves current question id in local storage
+   */
+  saveQuestionId() {
+    localStorage.setItem('questionId', this.formSection.toString());
+  }
+
+  /**
+   * Sets selected date in related textboxes
+   * @param type 
+   * @param event 
+   */
   addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
     this.events = `${type}: ${event.value}`;
     this.date = new Date(this.events).getDate();
     this.month = new Date(this.events).getMonth() + 1;
     this.year = new Date(this.events).getFullYear();
   }
-
-  submit() {
-    this.formSection += 1;
-    this.assignQuestions();
-  }
-
-  checkSelected(val: any) {}
 
   /**
    * Check active status of form control
@@ -224,16 +266,6 @@ export class QuestionnaireComponent implements OnInit {
           this.renderer.setProperty(radio, 'checked', false);
         });
       radioInput && this.renderer.setProperty(radioInput, 'checked', true);
-    }
-  }
-
-  assignQuestions() {
-    if (this.questionSet) {
-      this.questionSet.forEach((element: any) => {
-        if (this.formSection == element.slno) {
-          this.currentQuestion = element;
-        }
-      });
     }
   }
 
