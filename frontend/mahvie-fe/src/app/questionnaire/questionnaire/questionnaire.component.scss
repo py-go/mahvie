@@ -48,8 +48,12 @@ $preference-list: 'life-insurance', 'critical-illness', 'long-term-care';
   font-weight: bold;
   font-size: 24px;
   line-height: 24px;
-  color: #a0a0a0;
+  color: darken($placeholder, 25%);
   padding-left: 20px;
+
+  &::placeholder {
+    color: $placeholder;
+  }
 }
 
 .submitBtn {
@@ -98,7 +102,6 @@ $preference-list: 'life-insurance', 'critical-illness', 'long-term-care';
   border: 2px solid $secondary;
   box-sizing: border-box;
   display: flex;
-  cursor: pointer;
   
   &.active {
     background-color: #f5c0a0;
@@ -111,9 +114,9 @@ $preference-list: 'life-insurance', 'critical-illness', 'long-term-care';
     border-radius: 0;
     background: $w;
     border: none;
-    box-sizing: border-box;
     align-self: center;
     margin: 0 20px;
+    cursor: pointer;
   
     &:focus {
       box-shadow: none;
@@ -129,6 +132,10 @@ $preference-list: 'life-insurance', 'critical-illness', 'long-term-care';
       margin: 7.5px;
     }
   }
+}
+
+.show-pointer {
+  cursor: pointer;
 }
 
 .inputDate {

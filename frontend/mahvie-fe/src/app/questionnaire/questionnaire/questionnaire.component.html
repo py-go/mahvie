@@ -8,17 +8,18 @@
                 </div>
             </section>
             <section class="mt-132">
-                <form *ngIf="currentQuestion" [formGroup]="formGroup" (ngSubmit)="submit()">
+                <form [formGroup]="formGroup" (ngSubmit)="continue()">
                   <div class="row w-75 mx-auto">
                     <div class="questionsStyle col-sm-7 text-left mx-auto" *ngIf="currentQuestion.question">
                         {{currentQuestion.question}}
                     </div>
                     <!-- radio buttons -->
                     <div *ngIf="currentQuestion.type === 'radio'" class="col-sm-7 mx-auto">
-                      <div class="inputFull" *ngFor="let instance of currentQuestion.options; let i = index;" [ngClass]="{ 'active': instance.active }" 
-                        (click)="activeSetter(i, currentQuestion.options, $event)">
-                        <input [formControlName]="currentQuestion.name" [type]="currentQuestion.type" 
-                          class="inpChecked form-control" [value]="instance.text" [name]="currentQuestion.name">
+                      <div class="inputFull" *ngFor="let instance of currentQuestion.options; let i = index;" 
+                        [ngClass]="{ 'active': instance.active, 'show-pointer': currentQuestion.type === 'radio' }" 
+                        (click)="radioSelection(i, currentQuestion.options)">
+                        <input [formControlName]="currentQuestion.name" [type]="currentQuestion.type"
+                          class="inpChecked form-control" [value]="instance.text" [name]="currentQuestion.name" [checked]="instance.active">
                         <label class="optStyle">{{instance.text | titlecase }}</label>
                       </div>
                     </div>
@@ -61,7 +62,7 @@
                         </mat-form-field> -->
                     </div>
                     <!-- preferences -->
-                    <div class="row mt-4 w-100 mt-3" *ngIf="currentQuestion.type === 'div'">
+                    <div class="row mt-4 w-100 mt-3 mx-auto" *ngIf="currentQuestion.type === 'products'">
                         <div class="col-md-4 mt-4 text-center">
                             <a href="javascript:void(0)" (click)="setPreference($event)" class="preference life-insurance">
                               <span class="title">life insurance</span>
@@ -92,7 +93,7 @@
                   <div class="text-center">
                     <button [disabled]="formGroup.invalid" type="submit" class="submitBtn" >Continue</button>
                     <div>
-                      <button *ngIf="formSection === 2" class="skipText" (click)="submit()">Skip for now</button>
+                      <button *ngIf="formSection === 2" class="skipText" (click)="continue()">Skip for now</button>
                     </div>
                   </div>
                 </form>

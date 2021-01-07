@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { QuestionnaireService } from 'src/app/core/services/questionnaire.service';
 
@@ -52,7 +52,7 @@ export class QuestionnaireComponent implements OnInit {
       id: 4,
       name: 'products',
       question: '',
-      type: 'div',
+      type: 'products',
       options: [],
       controls: ['products'],
       validations: { required: true },
@@ -176,13 +176,12 @@ export class QuestionnaireComponent implements OnInit {
   date: any;
   month: any;
   year: any;
-  formGroup = new FormGroup({});
+  formGroup: FormGroup = new FormGroup({});
 
   constructor(
     private el: ElementRef,
     private renderer: Renderer2,
     private questionService: QuestionnaireService,
-    private formBuilder: FormBuilder,
   ) {
     this.formSection = parseInt(localStorage.getItem('questionId') || '1');
     this.saveQuestionId();
@@ -190,10 +189,6 @@ export class QuestionnaireComponent implements OnInit {
 
   ngOnInit(): void {
     this.assignQuestions();
-
-    // this.questionSet.forEach((element: any) => {
-    //   this.formGroup.addControl(element.name, new FormControl(''));
-    // });
 
     // subscribe to back button clicks
     this.questionService.backButtonClick.subscribe(_ => this.previousQuestion());
@@ -206,18 +201,25 @@ export class QuestionnaireComponent implements OnInit {
     this.questionSet.forEach((question: any) => {
       if (localStorage.getItem('questionId') == question.id) {
         this.currentQuestion = question;
+        const cachedPayload = JSON.parse(localStorage.getItem('payload') || '{}');
         const validations: any[] = [];
+        // creates validations array for a control
         Object.keys(this.currentQuestion.validations).forEach(validation => {
           (validation === 'required' && this.currentQuestion.validations[validation])
             && validations.push(Validators.required);
           validation === 'pattern'
             && validations.push(Validators.pattern(this.currentQuestion.validations.pattern));
         });
-        this.currentQuestion.controls.forEach((controlName: string) => {  
-          this.formGroup.addControl(controlName, new FormControl('', validations));
+        // creates form controls & updates with empty or cached value
+        this.currentQuestion.controls.forEach((controlName: string) => {
+          this.formGroup.addControl(controlName, new FormControl(cachedPayload[controlName] ?? '', validations));
+        });
+        // removes validations of all form controls except the current question's
+        Object.keys(this.formGroup.controls).forEach(key => {
+          !this.currentQuestion.controls.includes(key)
+            && this.formGroup.get(key)!.setErrors(null);
         });
         validations.length = 0;
-        // this.formGroup.updateValueAndValidity();
       }
     });
   }
@@ -225,12 +227,10 @@ export class QuestionnaireComponent implements OnInit {
   /**
    * Continue click event
    */
-  submit() {
-    console.log(this.formGroup.value);
+  continue() {
     this.formSection++;
-    this.saveQuestionId();
-    this.assignQuestions();
-    this.questionService.backButtonVisibility.next();
+    this.loadQuestion();
+    localStorage.setItem('payload', JSON.stringify(this.formGroup.value));
   }
 
   /**
@@ -238,6 +238,13 @@ export class QuestionnaireComponent implements OnInit {
    */
   previousQuestion() {
     this.formSection--;
+    this.loadQuestion();
+  }
+
+  /**
+   * Loads current question 
+   */
+  loadQuestion() {
     this.saveQuestionId();
     this.assignQuestions();
     this.questionService.backButtonVisibility.next();
@@ -268,26 +275,12 @@ export class QuestionnaireComponent implements OnInit {
    * @param options Options of current question
    * @param event Click event
    */
-  activeSetter(index: any, options: Array<any>, event: Event) {
+  radioSelection(index: any, options: Array<any>) {
     options.forEach((element) => {
       element.active = false;
     });
     options[index].active = true;
-
-    console.log(this.formGroup.value);
-
-    // set checked attribute of radio buttons inside form
-    // if (this.currentQuestion.type === 'radio') {
-    //   const target = <HTMLElement>event.target;
-    //   const radioInput = target.querySelector('input[type="radio"]');
-    //   this.el.nativeElement
-    //     .querySelectorAll('input[type="radio"]')
-    //     .forEach((radio: any) => {
-    //       this.renderer.setProperty(radio, 'checked', false);
-    //     });
-    //   radioInput && this.renderer.setProperty(radioInput, 'checked', true);
-    //   this.currentQuestion.validations.required = false;
-    // }
+    this.formGroup.get(this.currentQuestion.name)!.setValue(options[index].text);
   }
 
   /**
