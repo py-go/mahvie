@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { QuestionnaireService } from 'src/app/core/services/questionnaire.service';
@@ -52,8 +52,12 @@ export class QuestionnaireComponent implements OnInit {
       id: 4,
       name: 'products',
       question: '',
-      type: 'products',
-      options: [],
+      type: 'products-radio',
+      options: [
+        { text: 'life-insurance', active: false },
+        { text: 'critical-illness', active: false },
+        { text: 'long-term-care', active: false },
+      ],
       controls: ['products'],
       validations: { required: true },
       title: 'Which product(s) match your preferences?',
@@ -65,10 +69,11 @@ export class QuestionnaireComponent implements OnInit {
       question: '',
       type: 'radio',
       options: [
-        { value: 'male', active: false },
-        { value: 'female', active: false },
+        { text: 'male', active: false },
+        { text: 'female', active: false },
       ],
-      validations: {},
+      controls: ['gender'],
+      validations: { required: true },
       title: 'What is your gender?',
       subtitle:
         'Your recommendation is as unique as you are. Using real info here will help us give you the most accurate recommendation.',
@@ -79,10 +84,11 @@ export class QuestionnaireComponent implements OnInit {
       question: '',
       type: 'radio',
       options: [
-        { value: 'yes', active: false },
-        { value: 'no', active: false },
+        { text: 'yes', active: false },
+        { text: 'no', active: false },
       ],
-      validations: {},
+      controls: ['children'],
+      validations: { required: true },
       title: 'Do you have any children?',
       subtitle:
         'Your recommendation is as unique as you are. Using real info here will help us give you the most accurate recommendation.',
@@ -93,7 +99,8 @@ export class QuestionnaireComponent implements OnInit {
       question: '',
       type: 'slider',
       options: ['annual income'],
-      validations: { min: 0, max: 500000 },
+      controls: ['income'],
+      validations: { required: true, min: 0, max: 500000 },
       title: 'What is your annual income?',
       subtitle:
         'Feel free to use close estimates when it comes to your finances.',
@@ -137,8 +144,8 @@ export class QuestionnaireComponent implements OnInit {
       question: '',
       type: 'radio',
       options: [
-        { value: 'yes', active: false },
-        { value: 'no', active: false },
+        { text: 'yes', active: false },
+        { text: 'no', active: false },
       ],
       validations: {},
       title: 'Have you smoked in the last 12 months?',
@@ -179,8 +186,6 @@ export class QuestionnaireComponent implements OnInit {
   formGroup: FormGroup = new FormGroup({});
 
   constructor(
-    private el: ElementRef,
-    private renderer: Renderer2,
     private questionService: QuestionnaireService,
   ) {
     this.formSection = parseInt(localStorage.getItem('questionId') || '1');
@@ -275,23 +280,11 @@ export class QuestionnaireComponent implements OnInit {
    * @param options Options of current question
    * @param event Click event
    */
-  radioSelection(index: any, options: Array<any>) {
+  radioSelection(index: number, options: Array<any>) {
     options.forEach((element) => {
       element.active = false;
     });
     options[index].active = true;
     this.formGroup.get(this.currentQuestion.name)!.setValue(options[index].text);
-  }
-
-  /**
-   * Sets active status of a preference
-   * @param event Click event
-   */
-  setPreference(event: Event): void {
-    const component = this.el.nativeElement;
-    component
-      .querySelectorAll('.preference')
-      .forEach((element: any) => this.renderer.removeClass(element, 'active'));
-    this.renderer.addClass((event.target as HTMLElement).closest('.preference'), 'active');
   }
 }

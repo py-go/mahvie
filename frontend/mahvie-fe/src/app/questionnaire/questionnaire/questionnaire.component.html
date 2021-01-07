@@ -62,29 +62,44 @@
                         </mat-form-field> -->
                     </div>
                     <!-- preferences -->
-                    <div class="row mt-4 w-100 mt-3 mx-auto" *ngIf="currentQuestion.type === 'products'">
+                    <div class="row mt-4 w-100 mt-3 mx-auto" *ngIf="currentQuestion.type === 'products-radio'">
                         <div class="col-md-4 mt-4 text-center">
-                            <a href="javascript:void(0)" (click)="setPreference($event)" class="preference life-insurance">
+                            <a href="javascript:void(0)" class="preference life-insurance"
+                              [ngClass]="{ 'active': currentQuestion.options[0].active }" 
+                              (click)="radioSelection(0, currentQuestion.options)">
                               <span class="title">life insurance</span>
                               <div class="show-on-hover">
                                 If I were to pass away, I would like to give money to a person(s) of my choice.
                               </div>
+                              <input [formControlName]="currentQuestion.name" type="radio"
+                                class="inpChecked form-control" [value]="currentQuestion.options[0].text" [name]="currentQuestion.name" 
+                                [checked]="currentQuestion.options[0].active">
                             </a>
                         </div>
                         <div class="col-md-4 mt-4 text-center">
-                            <a href="javascript:void(0)" (click)="setPreference($event)" class="preference critical-illness">
+                            <a href="javascript:void(0)" class="preference life-insurance"
+                              [ngClass]="{ 'active': currentQuestion.options[1].active }" 
+                              (click)="radioSelection(1, currentQuestion.options)">
                               <span class="title">critical illness</span>
                               <div class="show-on-hover">
                                 If I were to suffer a stroke, heart attack or  get cancer, I would like to personally receive a large amount of money.
                               </div>
+                              <input [formControlName]="currentQuestion.name" type="radio"
+                                class="inpChecked form-control" [value]="currentQuestion.options[1].text" [name]="currentQuestion.name" 
+                                [checked]="currentQuestion.options[1].active">
                             </a>
                         </div>
                         <div class="col-md-4 mt-4 text-center">
-                            <a href="javascript:void(0)" (click)="setPreference($event)" class="preference long-term-care">
+                            <a href="javascript:void(0)" class="preference life-insurance"
+                              [ngClass]="{ 'active': currentQuestion.options[2].active }" 
+                              (click)="radioSelection(2, currentQuestion.options)">
                               <span class="title">long term care</span>
                               <div class="show-on-hover">
                                 If I were unable to perform my daily tasks independently, I would like to receive money to hire assistance.
                               </div>
+                              <input [formControlName]="currentQuestion.name" type="radio"
+                                class="inpChecked form-control" [value]="currentQuestion.options[2].text" [name]="currentQuestion.name" 
+                                [checked]="currentQuestion.options[2].active">
                             </a>
                         </div>
                     </div>
