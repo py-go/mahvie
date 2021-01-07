@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { Subject } from 'rxjs';
+import { Question } from 'src/app/core/models/core.model';
 import { QuestionnaireService } from 'src/app/core/services/questionnaire.service';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'app-questionnaire',
   templateUrl: './questionnaire.component.html',
   styleUrls: ['./questionnaire.component.scss'],
 })
-export class QuestionnaireComponent implements OnInit {
-  questionSet: Record<string, any>[] = [
+export class QuestionnaireComponent implements OnInit, OnDestroy {
+  questionSet: Question[] = [
     {
       id: 1,
       name: 'location',
@@ -98,7 +101,7 @@ export class QuestionnaireComponent implements OnInit {
       name: 'income',
       question: '',
       type: 'slider',
-      options: ['annual income'],
+      options: [],
       controls: ['income'],
       validations: { required: true, min: 0, max: 500000 },
       title: 'What is your annual income?',
@@ -110,7 +113,7 @@ export class QuestionnaireComponent implements OnInit {
       name: 'mortgage',
       question: '',
       type: 'slider',
-      options: ['mortgage'],
+      options: [],
       controls: ['mortgage'],
       validations: { required: true, min: 0, max: 500000 },
       title: 'What is your total mortgage outstanding?',
@@ -122,19 +125,21 @@ export class QuestionnaireComponent implements OnInit {
       name: 'expenses',
       question: '',
       type: 'slider',
-      options: ['monthly expenses'],
-      validations: { min: 0, max: 500000 },
+      options: [],
+      controls: ['expenses'],
+      validations: { required: true, min: 0, max: 500000 },
       title: 'What is your monthly expenses excluding your mortgage?',
       subtitle:
         'Feel free to use close estimates when it comes to your finances.',
     },
     {
       id: 10,
-      name: 'born',
+      name: 'dob',
       question: '',
       type: 'date',
       options: [],
-      validations: {},
+      controls: ['dob'],
+      validations: { required: true },
       title: 'When were you born?',
       subtitle:
         'Your recommendation is as unique as you are. Using real info here will help us give you the most accurate recommendation.',
@@ -148,7 +153,8 @@ export class QuestionnaireComponent implements OnInit {
         { text: 'yes', active: false },
         { text: 'no', active: false },
       ],
-      validations: {},
+      controls: ['smoke'],
+      validations: { required: true },
       title: 'Have you smoked in the last 12 months?',
       subtitle:
         'Your recommendation is as unique as you are. Using real info here will help us give you the most accurate recommendation.',
@@ -159,6 +165,7 @@ export class QuestionnaireComponent implements OnInit {
       question: '',
       type: 'text',
       options: ['First Name', 'Last Name'],
+      controls: ['firstName2', 'lastName2'],
       validations: {},
       title: 'Welcome to G2G,your recommendation is only minutes away!',
       subtitle: '',
@@ -170,6 +177,7 @@ export class QuestionnaireComponent implements OnInit {
       question: '',
       type: 'div2',
       options: [],
+      controls: ['gettoknow'],
       validations: {},
       title: "Great, let's get to know you!",
       subtitle:
@@ -185,6 +193,8 @@ export class QuestionnaireComponent implements OnInit {
   month: any;
   year: any;
   formGroup: FormGroup = new FormGroup({});
+  sliderValueChange$ = new Subject<number | null>();
+  subsink = new SubSink();
 
   constructor(
     private questionService: QuestionnaireService,
@@ -198,6 +208,16 @@ export class QuestionnaireComponent implements OnInit {
 
     // subscribe to back button clicks
     this.questionService.backButtonClick.subscribe(_ => this.previousQuestion());
+
+    // set emitted value from mat-slider as current question's form control value
+    this.subsink.sink = this.sliderValueChange$.subscribe(value => {
+      this.sliderValue = value;
+      this.formGroup.get(this.currentQuestion.name)?.setValue(value);
+    })
+  }
+
+  ngOnDestroy(): void {
+    this.subsink.unsubscribe();
   }
 
   /**
@@ -229,6 +249,11 @@ export class QuestionnaireComponent implements OnInit {
           !question.controls.includes(key)
             && this.formGroup.get(key)!.setErrors(null);
         });
+        // set cache value for slider 
+        if (question.type === 'slider') {
+          this.sliderValue = cachedPayload[question.name] || 0;
+          this.formGroup.get(question.name)?.setValue(this.sliderValue);
+        }
         validations.length = 0;
       }
     });

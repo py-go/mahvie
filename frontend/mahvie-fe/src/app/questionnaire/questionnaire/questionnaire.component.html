@@ -33,15 +33,17 @@
                         <input formControlName="{{currentQuestion.controls[0]}}" type="text" class="inputText inputFull" placeholder={{fields}} 
                           *ngFor="let fields of currentQuestion.options">
                     </div>
-                    <!-- amount slider -->
+                    <!-- slider control -->
                     <div class="mt-4" *ngIf="currentQuestion.type === 'slider'" class="col-sm-7 mx-auto">
                         <input readonly type="text" class="inputFull inputSlide mb-74" matInput 
                           [value]="sliderValue | currency">
-                        <mat-slider [formControlName]="currentQuestion.name" 
+                        <mat-slider [step]="1000"
                           [max]="currentQuestion.validations.max" [min]="currentQuestion.validations.min" 
-                          (change)="sliderValue = $event.value"></mat-slider>
-                        <label class="float-left sliderLabel">{{currentQuestion.validations.min | currency}}</label>
-                        <label class="float-right sliderLabel">{{currentQuestion.validations.max | currency}}</label>
+                          (change)="sliderValueChange$.next($event.value)" [value]="sliderValue"></mat-slider>
+                        <section class="slider-amounts">
+                          <label class="sliderLabel">{{currentQuestion.validations.min | currency}}</label>
+                          <label class="sliderLabel">{{currentQuestion.validations.max | currency}}</label>
+                        </section>
                     </div>
                     <!-- dates -->
                     <div class="mt-4 dateField" *ngIf="currentQuestion.type === 'date'" class="col-sm-7 mx-auto">
@@ -50,16 +52,9 @@
                             <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
                             <mat-datepicker #dp3 disabled="false"></mat-datepicker>
                         </div>
-                        <!-- <input type="text" class="inputDate t1" style="width:40%" value="Date of birth" readonly> -->
                         <input type="text" class="inputDate t2" style="width:20%" placeholder="MM" readonly [(ngModel)]="date" [ngModelOptions]="{standalone: true}">
                         <input type="text" class="inputDate t2" style="width:20%" placeholder="DD" readonly [(ngModel)]="month" [ngModelOptions]="{standalone: true}">
                         <input type="text" class="inputDate t2" style="width:20%" placeholder="YYYY" readonly [(ngModel)]="year" [ngModelOptions]="{standalone: true}">
-                        <!-- <mat-form-field appearance="fill" class="inputFull mb-74 p-0">
-                            <mat-label>Date of birth</mat-label>
-                            <input matInput [matDatepicker]="dp3" disabled (dateChange)="addEvent('change', $event)">
-                            <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
-                            <mat-datepicker #dp3 disabled="false"></mat-datepicker>
-                        </mat-form-field> -->
                     </div>
                     <!-- preferences -->
                     <div class="row mt-4 w-100 mt-3 mx-auto" *ngIf="currentQuestion.type === 'products-radio'">
