@@ -111,7 +111,8 @@ export class QuestionnaireComponent implements OnInit {
       question: '',
       type: 'slider',
       options: ['mortgage'],
-      validations: { min: 0, max: 500000 },
+      controls: ['mortgage'],
+      validations: { required: true, min: 0, max: 500000 },
       title: 'What is your total mortgage outstanding?',
       subtitle:
         'Feel free to use close estimates when it comes to your finances.',
@@ -209,19 +210,23 @@ export class QuestionnaireComponent implements OnInit {
         const cachedPayload = JSON.parse(localStorage.getItem('payload') || '{}');
         const validations: any[] = [];
         // creates validations array for a control
-        Object.keys(this.currentQuestion.validations).forEach(validation => {
-          (validation === 'required' && this.currentQuestion.validations[validation])
+        Object.keys(question.validations).forEach(validation => {
+          (validation === 'required' && question.validations[validation])
             && validations.push(Validators.required);
           validation === 'pattern'
-            && validations.push(Validators.pattern(this.currentQuestion.validations.pattern));
+            && validations.push(Validators.pattern(question.validations.pattern));
+          validation === 'min'
+            && validations.push(Validators.min(question.validations.min + 100));
+          validation === 'max'
+            && validations.push(Validators.max(question.validations.max));
         });
         // creates form controls & updates with empty or cached value
-        this.currentQuestion.controls.forEach((controlName: string) => {
+        question.controls.forEach((controlName: string) => {
           this.formGroup.addControl(controlName, new FormControl(cachedPayload[controlName] ?? '', validations));
         });
         // removes validations of all form controls except the current question's
         Object.keys(this.formGroup.controls).forEach(key => {
-          !this.currentQuestion.controls.includes(key)
+          !question.controls.includes(key)
             && this.formGroup.get(key)!.setErrors(null);
         });
         validations.length = 0;
@@ -233,6 +238,9 @@ export class QuestionnaireComponent implements OnInit {
    * Continue click event
    */
   continue() {
+    // reset slider value on continue
+    this.currentQuestion.type === 'slider'
+      && (this.sliderValue = 0);
     this.formSection++;
     this.loadQuestion();
     localStorage.setItem('payload', JSON.stringify(this.formGroup.value));
