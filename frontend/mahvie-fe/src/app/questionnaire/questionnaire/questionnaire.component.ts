@@ -41,9 +41,9 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     },
     {
       id: 3,
-      name: 'gettoknow',
+      name: 'gettoknowyou',
       question: '',
-      type: 'div2',
+      type: '',
       options: [],
       validations: { },
       title: "Great, let's get to know you!",

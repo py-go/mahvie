@@ -181,7 +181,7 @@ $preference-list: 'life-insurance', 'critical-illness', 'long-term-care';
 }
 
 .questionsStyle {
-  font: 28px 'Source Sans Pro';
+  font: 24px 'Source Sans Pro';
   color: $secondary;
   text-align: center;
   width: 75%;
@@ -347,5 +347,41 @@ mat-slider {
     border: none;
     padding: 6px;
     border-bottom: 2px solid $placeholder;
+  }
+}
+
+.get-started {
+  display: flex;
+  width: 80%;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px auto 0;
+
+  .start {
+    font-size: 24px;
+    padding: 110px 60px 0;
+    color: $secondary;
+    line-height: 24px;
+    text-align: center;
+    position: relative;
+
+    &:before, &:after {
+      @include tl(0, 0);
+      width: 100%;
+      height: 90px;
+      content: '';
+    }
+    @for $i from 1 through 3 {
+      &.start#{$i}:before {
+        @include svg(start#{$i}-bg);
+        background-size: 74px;
+        background-position: center;
+      }
+      &.start#{$i}:after {
+        @include svg(start#{$i});
+        background-size: 74px;
+        background-position: center;
+      }
+    }
   }
 }
