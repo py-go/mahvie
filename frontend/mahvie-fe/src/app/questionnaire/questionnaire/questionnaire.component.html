@@ -3,7 +3,7 @@
         <div class="mt-132">
             <section>
                 <h1 class="titleText">{{currentQuestion.title}}</h1>
-                <div class="questionsStyle w-100" *ngIf="currentQuestion.subtitle">
+                <div class="questionsStyle" *ngIf="currentQuestion.subtitle">
                     {{currentQuestion.subtitle}}
                 </div>
             </section>
@@ -47,7 +47,9 @@
                     </div>
                     <!-- dates -->
                     <div class="mt-4 dateField" *ngIf="currentQuestion.type === 'date'" class="col-sm-7 mx-auto">
-                        <input matInput [matDatepicker]="dp3" disabled (dateChange)="addEvent('change', $event)" class="inputDate t1" style="width:40%" placeholder="Date of Birth">
+                        <input matInput [matDatepicker]="dp3" [value]="dateValue"
+                          (dateChange)="dateSelected('change', $event)" class="inputDate t1" 
+                          style="width:40%" placeholder="Date of Birth">
                         <div class="calenderIcon">
                             <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
                             <mat-datepicker #dp3 disabled="false"></mat-datepicker>
@@ -72,7 +74,7 @@
                             </a>
                         </div>
                         <div class="col-md-4 mt-4 text-center">
-                            <a href="javascript:void(0)" class="preference life-insurance"
+                            <a href="javascript:void(0)" class="preference critical-illness"
                               [ngClass]="{ 'active': currentQuestion.options[1].active }" 
                               (click)="radioSelection(1, currentQuestion.options)">
                               <span class="title">critical illness</span>
@@ -85,7 +87,7 @@
                             </a>
                         </div>
                         <div class="col-md-4 mt-4 text-center">
-                            <a href="javascript:void(0)" class="preference life-insurance"
+                            <a href="javascript:void(0)" class="preference long-term-care"
                               [ngClass]="{ 'active': currentQuestion.options[2].active }" 
                               (click)="radioSelection(2, currentQuestion.options)">
                               <span class="title">long term care</span>

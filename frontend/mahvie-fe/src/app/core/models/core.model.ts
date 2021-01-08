@@ -7,7 +7,7 @@ export type Option = {
 }
 
 /**
- * validations for questionnaire
+ * Validations for questionnaire
  */
 export type Validation = {
   required: boolean;
@@ -24,8 +24,8 @@ export type Question = {
   name: string;
   question: string;
   type: string;
-  controls: string[];
-  options: Partial<Option>[] | string[];
+  controls?: string[];
+  options: Option[] | string[];
   validations: Partial<Validation>;
   title: string;
   subtitle: string;

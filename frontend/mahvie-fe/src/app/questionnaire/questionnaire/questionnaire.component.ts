@@ -15,14 +15,14 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
   questionSet: Question[] = [
     {
       id: 1,
-      name: 'location',
+      name: 'ontario',
       question: 'Do you live in Ontario?',
       type: 'radio',
       options: [
         { text: 'yes', active: false },
         { text: 'no', active: false },
       ],
-      controls: ['location'],
+      controls: ['ontario'],
       validations: { required: true },
       title: 'Before we get started...',
       subtitle: '',
@@ -41,6 +41,17 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     },
     {
       id: 3,
+      name: 'gettoknow',
+      question: '',
+      type: 'div2',
+      options: [],
+      validations: { },
+      title: "Great, let's get to know you!",
+      subtitle:
+        "We'll recommend your coverage amount and policy length by assessing",
+    },
+    {
+      id: 4,
       name: 'names',
       question: '',
       type: 'text',
@@ -52,7 +63,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
       inline: true,
     },
     {
-      id: 4,
+      id: 5,
       name: 'products',
       question: '',
       type: 'products-radio',
@@ -67,7 +78,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
       subtitle: 'Please select all products that match your needs.',
     },
     {
-      id: 5,
+      id: 6,
       name: 'gender',
       question: '',
       type: 'radio',
@@ -82,7 +93,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
         'Your recommendation is as unique as you are. Using real info here will help us give you the most accurate recommendation.',
     },
     {
-      id: 6,
+      id: 7,
       name: 'children',
       question: '',
       type: 'radio',
@@ -97,7 +108,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
         'Your recommendation is as unique as you are. Using real info here will help us give you the most accurate recommendation.',
     },
     {
-      id: 7,
+      id: 8,
       name: 'income',
       question: '',
       type: 'slider',
@@ -109,7 +120,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
         'Feel free to use close estimates when it comes to your finances.',
     },
     {
-      id: 8,
+      id: 9,
       name: 'mortgage',
       question: '',
       type: 'slider',
@@ -121,7 +132,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
         'Feel free to use close estimates when it comes to your finances.',
     },
     {
-      id: 9,
+      id: 10,
       name: 'expenses',
       question: '',
       type: 'slider',
@@ -133,7 +144,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
         'Feel free to use close estimates when it comes to your finances.',
     },
     {
-      id: 10,
+      id: 11,
       name: 'dob',
       question: '',
       type: 'date',
@@ -145,7 +156,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
         'Your recommendation is as unique as you are. Using real info here will help us give you the most accurate recommendation.',
     },
     {
-      id: 11,
+      id: 12,
       name: 'smoke',
       question: '',
       type: 'radio',
@@ -160,28 +171,16 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
         'Your recommendation is as unique as you are. Using real info here will help us give you the most accurate recommendation.',
     },
     {
-      id: 12,
+      id: 13,
       name: 'names2',
       question: '',
       type: 'text',
       options: ['First Name', 'Last Name'],
       controls: ['firstName2', 'lastName2'],
-      validations: {},
+      validations: { required: true },
       title: 'Welcome to G2G,your recommendation is only minutes away!',
       subtitle: '',
       inline: true,
-    },
-    {
-      id: 13,
-      name: 'gettoknow',
-      question: '',
-      type: 'div2',
-      options: [],
-      controls: ['gettoknow'],
-      validations: {},
-      title: "Great, let's get to know you!",
-      subtitle:
-        "We'll recommend your coverage amount and policy length by assessing",
     },
   ];
   submitBtn: any = true;
@@ -195,6 +194,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
   formGroup: FormGroup = new FormGroup({});
   sliderValueChange$ = new Subject<number | null>();
   subsink = new SubSink();
+  dateValue!: Date;
 
   constructor(
     private questionService: QuestionnaireService,
@@ -240,20 +240,27 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
           validation === 'max'
             && validations.push(Validators.max(question.validations.max));
         });
-        // creates form controls & updates with empty or cached value
-        question.controls.forEach((controlName: string) => {
-          this.formGroup.addControl(controlName, new FormControl(cachedPayload[controlName] ?? '', validations));
-        });
+        // enable submit button if there are no controls
+        if (!question?.controls?.length) this.formGroup.setErrors(null);
+        else {
+          // creates form controls & updates with empty/cached value
+          question.controls.forEach((controlName: string) => {
+            this.formGroup.addControl(controlName, new FormControl(cachedPayload[controlName] ?? '', validations));
+          });
+        }
         // removes validations of all form controls except the current question's
         Object.keys(this.formGroup.controls).forEach(key => {
-          !question.controls.includes(key)
+          !question?.controls?.includes(key)
             && this.formGroup.get(key)!.setErrors(null);
         });
-        // set cache value for slider 
+        // set default/cached value for slider control
         if (question.type === 'slider') {
           this.sliderValue = cachedPayload[question.name] || 0;
           this.formGroup.get(question.name)?.setValue(this.sliderValue);
         }
+        // set default/cached value for date
+        question.type === 'date'
+          && (this.dateValue = cachedPayload[question.name]);
         validations.length = 0;
       }
     });
@@ -300,11 +307,12 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
    * @param type 
    * @param event 
    */
-  addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
+  dateSelected(type: string, event: MatDatepickerInputEvent<Date>) {
     this.events = `${type}: ${event.value}`;
     this.date = new Date(this.events).getDate();
     this.month = new Date(this.events).getMonth() + 1;
     this.year = new Date(this.events).getFullYear();
+    this.formGroup.get(this.currentQuestion.name)?.setValue(event.value);
   }
 
   /**
