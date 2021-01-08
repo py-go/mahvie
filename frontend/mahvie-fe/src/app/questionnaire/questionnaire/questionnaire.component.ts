@@ -170,18 +170,6 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
       subtitle:
         'Your recommendation is as unique as you are. Using real info here will help us give you the most accurate recommendation.',
     },
-    {
-      id: 13,
-      name: 'names2',
-      question: '',
-      type: 'text',
-      options: ['First Name', 'Last Name'],
-      controls: ['firstName2', 'lastName2'],
-      validations: { required: true },
-      title: 'Welcome to G2G,your recommendation is only minutes away!',
-      subtitle: '',
-      inline: true,
-    },
   ];
   submitBtn: any = true;
   formSection: number;
