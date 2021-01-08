@@ -12,8 +12,8 @@ class TimeStampedModel(models.Model):
 FEMALE = 'F'
 MALE = 'M'
 GENDER = [
-    (FEMALE, 'Male'),
-    (MALE, 'Female')
+    (FEMALE, 'Female'),
+    (MALE, 'Male')
 ]
 
 
