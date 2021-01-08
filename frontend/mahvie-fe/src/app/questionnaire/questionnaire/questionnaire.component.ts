@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { Subject } from 'rxjs';
-import { Question } from 'src/app/core/models/core.model';
+import { Option, Question } from 'src/app/core/models/core.model';
 import { QuestionnaireService } from 'src/app/core/services/questionnaire.service';
 import { SubSink } from 'subsink';
 
@@ -12,7 +12,7 @@ import { SubSink } from 'subsink';
   styleUrls: ['./questionnaire.component.scss'],
 })
 export class QuestionnaireComponent implements OnInit, OnDestroy {
-  questionSet: Question[] = [
+  questionPool: Question[] = [
     {
       id: 1,
       name: 'ontario',
@@ -174,6 +174,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
         'Your recommendation is as unique as you are. Using real info here will help us give you the most accurate recommendation.',
     },
   ];
+  questionSet: Question[];
   submitBtn: any = true;
   formSection: number;
   currentQuestion: any;
@@ -188,8 +189,14 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
   dateValue!: Date;
   isPopupVisible = false;
 
-  constructor(private questionService: QuestionnaireService) {
+  constructor(
+    private questionService: QuestionnaireService
+  ) {
     this.formSection = parseInt(localStorage.getItem('questionId') || '1');
+    const cachedQuestions: Question[] = JSON.parse(localStorage.getItem('questions') || '{}');
+    this.questionSet = Array.isArray(cachedQuestions) && cachedQuestions.length
+      ? cachedQuestions
+      : (localStorage.setItem('questions', JSON.stringify(this.questionPool)), this.questionPool);
     this.saveQuestionId();
   }
 
@@ -197,9 +204,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     this.assignQuestions();
 
     // subscribe to back button clicks
-    this.questionService.backButtonClick.subscribe((_) =>
-      this.previousQuestion()
-    );
+    this.questionService.backButtonClick.subscribe(_ => this.previousQuestion());
 
     // set emitted value from mat-slider as current question's form control value
     this.subsink.sink = this.sliderValueChange$.subscribe((value) => {
@@ -219,31 +224,25 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     this.questionSet.forEach((question: any) => {
       if (localStorage.getItem('questionId') == question.id) {
         this.currentQuestion = question;
-        const cachedPayload = JSON.parse(
-          localStorage.getItem('payload') || '{}'
-        );
+        const cachedPayload = JSON.parse(localStorage.getItem('payload') || '{}');
         const validations: any[] = [];
         // creates validations array for a control
-        Object.keys(question.validations).forEach((validation) => {
-          validation === 'required' &&
-            question.validations[validation] &&
-            validations.push(Validators.required);
-          validation === 'pattern' &&
-            validations.push(Validators.pattern(question.validations.pattern));
-          validation === 'min' &&
-            validations.push(Validators.min(question.validations.min + 100));
-          validation === 'max' &&
-            validations.push(Validators.max(question.validations.max));
+        Object.keys(question.validations).forEach(validation => {
+          validation === 'required' && question.validations[validation]
+            && validations.push(Validators.required);
+          validation === 'pattern'
+            && validations.push(Validators.pattern(question.validations.pattern));
+          validation === 'min'
+            && validations.push(Validators.min(question.validations.min + 100));
+          validation === 'max'
+            && validations.push(Validators.max(question.validations.max));
         });
         // enable submit button if there are no controls
         if (!question?.controls?.length) this.formGroup.setErrors(null);
+        // creates form controls & updates with empty/cached value
         else {
-          // creates form controls & updates with empty/cached value
           question.controls.forEach((controlName: string) => {
-            this.formGroup.addControl(
-              controlName,
-              new FormControl(cachedPayload[controlName] ?? '', validations)
-            );
+            this.formGroup.addControl(controlName, new FormControl(cachedPayload[controlName] ?? '', validations));
           });
         }
         // removes validations of all form controls except the current question's
@@ -257,12 +256,10 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
           this.formGroup.get(question.name)?.setValue(this.sliderValue);
         }
         // set default/cached value for date
-        question.type === 'date' &&
-          (this.dateValue = cachedPayload[question.name]);
-        question.name === 'children' &&
-          this.formGroup
-            .get('children-length')
-            ?.setValue(cachedPayload['children-length'] || 1);
+        question.type === 'date'
+          && (this.dateValue = cachedPayload[question.name]);
+        question.name === 'children'
+          && this.formGroup.get('children-length')?.setValue(cachedPayload['children-length'] || 1);
         validations.length = 0;
       }
     });
@@ -276,7 +273,8 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     this.currentQuestion.type === 'slider' && (this.sliderValue = 0);
     this.formSection++;
     this.loadQuestion();
-    localStorage.setItem('payload', JSON.stringify(this.formGroup.value));
+    const payload = { ...(JSON.parse(localStorage.getItem('payload') || '{}')), ...this.formGroup.value };
+    localStorage.setItem('payload', JSON.stringify(payload));
   }
 
   /**
@@ -322,13 +320,16 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
    * @param options Options of current question
    * @param event Click event
    */
-  radioSelection(index: number, options: Array<any>) {
-    options.forEach((element) => {
-      element.active = false;
+  radioSelection(index: number) {
+    this.questionSet.forEach(question => {
+      if (question.id === this.currentQuestion.id) {
+        question.options.forEach((option: Option) => {
+          option.active = false;
+        });
+        question.options[index].active = true;
+        this.formGroup.get(this.currentQuestion.name)!.setValue(question.options[index].text);
+      }
     });
-    options[index].active = true;
-    this.formGroup
-      .get(this.currentQuestion.name)!
-      .setValue(options[index].text);
+    localStorage.setItem('questions', JSON.stringify(this.questionSet));
   }
 }

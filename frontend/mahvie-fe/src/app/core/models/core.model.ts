@@ -25,7 +25,7 @@ export type Question = {
   question: string;
   type: string;
   controls?: string[];
-  options: Option[] | string[];
+  options: any[];
   validations: Partial<Validation>;
   title: string;
   subtitle: string;

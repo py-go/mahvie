@@ -74,22 +74,22 @@ $placeholder: #a0a0a0;
   box-shadow: $a $b $c rgba($d, $e, $f, $g);
 }
 @mixin basvg($svg, $width, $height, $bgsize) {
-  background: url('/assets/images/#{$svg}.svg') no-repeat;
-  content: '';
+  background: url("/assets/images/#{$svg}.svg") no-repeat;
+  content: "";
   width: $width;
   height: $height;
   background-size: $bgsize;
 }
 @mixin bajpg($jpg, $width, $height, $bgsize) {
-  background: url('/assets/images/#{$jpg}.jpg') no-repeat;
-  content: '';
+  background: url("/assets/images/#{$jpg}.jpg") no-repeat;
+  content: "";
   width: $width;
   height: $height;
   background-size: $bgsize;
 }
 @mixin bapng($png, $width, $height, $bgsize) {
-  background: url('/assets/images/#{$png}.png') no-repeat;
-  content: '';
+  background: url("/assets/images/#{$png}.png") no-repeat;
+  content: "";
   width: $width;
   height: $height;
   background-size: $bgsize;
@@ -100,13 +100,13 @@ $placeholder: #a0a0a0;
   transform: $t;
 }
 @mixin svg($svg) {
-  background: url('/assets/images/#{$svg}.svg') no-repeat;
+  background: url("/assets/images/#{$svg}.svg") no-repeat;
 }
 @mixin jpg($jpg) {
-  background: url('/assets/images/#{$jpg}.jpg') no-repeat;
+  background: url("/assets/images/#{$jpg}.jpg") no-repeat;
 }
 @mixin png($png) {
-  background: url('/assets/images/#{$png}.png') no-repeat;
+  background: url("/assets/images/#{$png}.png") no-repeat;
 }
 @mixin material-shadow {
   @include box-shadow(0, 0, 5px, 0, 0, 0, 0.1);

@@ -1,6 +1,6 @@
-@import 'base';
+@import "base";
 
-$preference-list: 'life-insurance', 'critical-illness', 'long-term-care';
+$preference-list: "life-insurance", "critical-illness", "long-term-care";
 
 .mt-132 {
   margin-top: 30px;
@@ -12,7 +12,7 @@ $preference-list: 'life-insurance', 'critical-illness', 'long-term-care';
 
 .titleText {
   width: 100%;
-  font: 500 38px 'Playfair Display';
+  font: 500 38px "Playfair Display";
   color: #18344e;
   margin: 0 auto 30px;
 }
@@ -35,7 +35,7 @@ $preference-list: 'life-insurance', 'critical-illness', 'long-term-care';
 }
 
 .inputText {
-  font-family: 'Source Sans Pro';
+  font-family: "Source Sans Pro";
   font-style: normal;
   font-weight: bold;
   font-size: 24px;
@@ -54,7 +54,7 @@ $preference-list: 'life-insurance', 'critical-illness', 'long-term-care';
   background: #f45d01;
   border: 1px solid $disabled;
   border-radius: 6px;
-  font: 600 24px 'Lato';
+  font: 600 24px "Lato";
   line-height: 29px;
   align-items: center;
   text-align: center;
@@ -68,7 +68,7 @@ $preference-list: 'life-insurance', 'critical-illness', 'long-term-care';
 }
 
 .skipText {
-  font: 600 24px 'Source Sans Pro';
+  font: 600 24px "Source Sans Pro";
   font-style: normal;
   line-height: 24px;
   text-align: center;
@@ -91,7 +91,7 @@ $preference-list: 'life-insurance', 'critical-illness', 'long-term-care';
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  
+
   &.active {
     background-color: #f5c0a0;
     border: 2px solid #f45d01;
@@ -106,7 +106,7 @@ $preference-list: 'life-insurance', 'critical-illness', 'long-term-care';
     align-self: center;
     margin: 0 20px;
     cursor: pointer;
-  
+
     &:focus {
       box-shadow: none;
     }
@@ -143,7 +143,7 @@ $preference-list: 'life-insurance', 'critical-illness', 'long-term-care';
 }
 
 .t1 {
-  font-family: 'Source Sans Pro';
+  font-family: "Source Sans Pro";
   font-style: normal;
   font-weight: bold;
   font-size: 27px;
@@ -155,7 +155,7 @@ $preference-list: 'life-insurance', 'critical-illness', 'long-term-care';
 }
 
 .t2 {
-  font-family: 'Lato';
+  font-family: "Lato";
   font-style: normal;
   font-weight: bold;
   font-size: 24px;
@@ -181,7 +181,7 @@ $preference-list: 'life-insurance', 'critical-illness', 'long-term-care';
 }
 
 .questionsStyle {
-  font: 24px 'Source Sans Pro';
+  font: 24px "Source Sans Pro";
   color: $secondary;
   text-align: center;
   width: 75%;
@@ -189,7 +189,7 @@ $preference-list: 'life-insurance', 'critical-illness', 'long-term-care';
 }
 
 .optStyle {
-  font: 24px 'Lato';
+  font: 24px "Lato";
   font-weight: bold;
   line-height: 29px;
   color: #18344e;
@@ -272,7 +272,7 @@ mat-slider {
   }
   &:before {
     @include tl(0, 0);
-    content: '';
+    content: "";
     width: 100%;
     height: 72px;
   }
@@ -303,10 +303,11 @@ mat-slider {
     opacity: 0;
     pointer-events: none;
   }
-  &:hover, &.active {
+  &:hover,
+  &.active {
     @each $item in $preference-list {
       &.#{$item}:before {
-        $item: $item + '-hover';
+        $item: $item + "-hover";
         @include svg($item);
         background-position: center;
       }
@@ -365,11 +366,12 @@ mat-slider {
     text-align: center;
     position: relative;
 
-    &:before, &:after {
+    &:before,
+    &:after {
       @include tl(0, 0);
       width: 100%;
       height: 90px;
-      content: '';
+      content: "";
     }
     @for $i from 1 through 3 {
       &.start#{$i}:before {
@@ -416,7 +418,7 @@ mat-slider {
       .title {
         color: darken(#3e566b, 18%);
         padding: 0 0 20px;
-        font: 700 1.5rem 'Source Sans Pro';
+        font: 700 1.5rem "Source Sans Pro";
         border-bottom: 1px solid $light-border;
         margin-bottom: 30px;
         text-align: left;

@@ -20,7 +20,7 @@
                     <div *ngIf="currentQuestion.type === 'radio'" class="col-sm-7 mx-auto">
                       <div class="inputFull" *ngFor="let instance of currentQuestion.options; let i = index;" 
                         [ngClass]="{ 'active': instance.active, 'show-pointer': currentQuestion.type === 'radio' }" 
-                        (click)="radioSelection(i, currentQuestion.options)">
+                        (click)="radioSelection(i)">
                         <input [formControlName]="currentQuestion.name" [type]="currentQuestion.type"
                           class="inpChecked form-control" [value]="instance.text" [name]="currentQuestion.name" [checked]="instance.active">
                         <label class="optStyle">
@@ -76,7 +76,7 @@
                         <div class="col-md-4 mt-4 text-center">
                             <a href="javascript:void(0)" class="preference life-insurance"
                               [ngClass]="{ 'active': currentQuestion.options[0].active }" 
-                              (click)="radioSelection(0, currentQuestion.options)">
+                              (click)="radioSelection(0)">
                               <span class="title">life insurance</span>
                               <div class="show-on-hover">
                                 If I were to pass away, I would like to give money to a person(s) of my choice.
@@ -89,7 +89,7 @@
                         <div class="col-md-4 mt-4 text-center">
                             <a href="javascript:void(0)" class="preference critical-illness"
                               [ngClass]="{ 'active': currentQuestion.options[1].active }" 
-                              (click)="radioSelection(1, currentQuestion.options)">
+                              (click)="radioSelection(1)">
                               <span class="title">critical illness</span>
                               <div class="show-on-hover">
                                 If I were to suffer a stroke, heart attack or  get cancer, I would like to personally receive a large amount of money.
@@ -102,7 +102,7 @@
                         <div class="col-md-4 mt-4 text-center">
                             <a href="javascript:void(0)" class="preference long-term-care"
                               [ngClass]="{ 'active': currentQuestion.options[2].active }" 
-                              (click)="radioSelection(2, currentQuestion.options)">
+                              (click)="radioSelection(2)">
                               <span class="title">long term care</span>
                               <div class="show-on-hover">
                                 If I were unable to perform my daily tasks independently, I would like to receive money to hire assistance.
