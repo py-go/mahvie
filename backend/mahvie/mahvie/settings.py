@@ -70,9 +70,11 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_rest_passwordreset',
     'corsheaders',
-    'api_authentication',
     'allauth',
     'allauth.account',
+    'api_v1',
+    'api_authentication',
+
 ]
 
 MIDDLEWARE = [
