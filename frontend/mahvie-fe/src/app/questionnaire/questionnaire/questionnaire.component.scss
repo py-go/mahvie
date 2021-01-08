@@ -385,3 +385,82 @@ mat-slider {
     }
   }
 }
+
+.children-popup {
+  position: fixed;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(248, 217, 198, 0.85);
+  display: grid;
+  place-items: center;
+
+  .content {
+    @include box-shadow(0, 0, 4px, 0, 0, 0, 0.15);
+    @include radius(6px);
+    width: 60%;
+    background: $w;
+    padding: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    img {
+      width: 26%;
+    }
+    .reason {
+      width: 68%;
+
+      .title {
+        color: darken(#3e566b, 18%);
+        padding: 0 0 20px;
+        font: 700 1.5rem 'Source Sans Pro';
+        border-bottom: 1px solid $light-border;
+        margin-bottom: 30px;
+        text-align: left;
+      }
+      p {
+        font-size: 16px;
+        text-align: left;
+        line-height: 28px;
+        color: $secondary;
+      }
+      a {
+        margin-top: 40px;
+        display: block;
+        letter-spacing: 1px;
+        color: $primary;
+        font-size: 1.35rem;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .children-popup {
+    .content {
+      flex-direction: column;
+      align-items: stretch;
+
+      img {
+        width: 100px;
+        margin-bottom: 20px;
+      }
+      .reason {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.info {
+  @include svg(info);
+  display: inline-block;
+  margin-right: 20px;
+  width: 26px;
+  height: 26px;
+  background-size: 26px;
+}

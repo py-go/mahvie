@@ -2,7 +2,10 @@
     <div class="centered-content contianer">
         <div class="mt-132">
             <section>
-                <h1 class="titleText">{{currentQuestion.title}}</h1>
+                <h1 class="titleText">
+                  {{currentQuestion.title}}
+                  <a *ngIf="currentQuestion.name === 'children'" (click)="isPopupVisible = true" class="info" href="javascript:void(0)"></a>
+                </h1>
                 <div class="questionsStyle" *ngIf="currentQuestion.subtitle">
                     {{currentQuestion.subtitle}}
                 </div>
@@ -135,3 +138,22 @@
         </div>
     </div>
 </div>
+
+<!-- children popup -->
+<section class="children-popup" *ngIf="isPopupVisible">
+  <div class="content">
+    <img src="assets/images/life-insurance-hover.svg" alt="">
+    <div class="reason">
+      <div class="title">Why do we ask about your children?</div>
+      <p>
+        Life insurance is all about protecting the people you love.
+        If there are people who rely on your financial support, a life insurance policy 
+        will make sure they have enough money if something unexpected happens to you and
+         your income is no longer there.
+      </p>
+      <div class="text-right">
+        <a (click)="isPopupVisible = false" href="javascript:void(0)">Return to question</a>
+      </div>
+    </div>
+  </div>
+</section>

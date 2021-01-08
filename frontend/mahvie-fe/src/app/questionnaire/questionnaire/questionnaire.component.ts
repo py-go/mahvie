@@ -34,7 +34,10 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
       type: 'text',
       options: ['Email Address'],
       controls: ['email'],
-      validations: { required: true, pattern: '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$' },
+      validations: {
+        required: true,
+        pattern: '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$',
+      },
       title: 'Before we get started...',
       subtitle: '',
       skip: true,
@@ -45,7 +48,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
       question: '',
       type: '',
       options: [],
-      validations: { },
+      validations: {},
       title: "Great, let's get to know you!",
       subtitle:
         "We'll recommend your coverage amount and policy length by assessing",
@@ -183,10 +186,9 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
   sliderValueChange$ = new Subject<number | null>();
   subsink = new SubSink();
   dateValue!: Date;
+  isPopupVisible = false;
 
-  constructor(
-    private questionService: QuestionnaireService,
-  ) {
+  constructor(private questionService: QuestionnaireService) {
     this.formSection = parseInt(localStorage.getItem('questionId') || '1');
     this.saveQuestionId();
   }
@@ -195,13 +197,15 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     this.assignQuestions();
 
     // subscribe to back button clicks
-    this.questionService.backButtonClick.subscribe(_ => this.previousQuestion());
+    this.questionService.backButtonClick.subscribe((_) =>
+      this.previousQuestion()
+    );
 
     // set emitted value from mat-slider as current question's form control value
-    this.subsink.sink = this.sliderValueChange$.subscribe(value => {
+    this.subsink.sink = this.sliderValueChange$.subscribe((value) => {
       this.sliderValue = value;
       this.formGroup.get(this.currentQuestion.name)?.setValue(value);
-    })
+    });
   }
 
   ngOnDestroy(): void {
@@ -215,31 +219,37 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     this.questionSet.forEach((question: any) => {
       if (localStorage.getItem('questionId') == question.id) {
         this.currentQuestion = question;
-        const cachedPayload = JSON.parse(localStorage.getItem('payload') || '{}');
+        const cachedPayload = JSON.parse(
+          localStorage.getItem('payload') || '{}'
+        );
         const validations: any[] = [];
         // creates validations array for a control
-        Object.keys(question.validations).forEach(validation => {
-          (validation === 'required' && question.validations[validation])
-            && validations.push(Validators.required);
-          validation === 'pattern'
-            && validations.push(Validators.pattern(question.validations.pattern));
-          validation === 'min'
-            && validations.push(Validators.min(question.validations.min + 100));
-          validation === 'max'
-            && validations.push(Validators.max(question.validations.max));
+        Object.keys(question.validations).forEach((validation) => {
+          validation === 'required' &&
+            question.validations[validation] &&
+            validations.push(Validators.required);
+          validation === 'pattern' &&
+            validations.push(Validators.pattern(question.validations.pattern));
+          validation === 'min' &&
+            validations.push(Validators.min(question.validations.min + 100));
+          validation === 'max' &&
+            validations.push(Validators.max(question.validations.max));
         });
         // enable submit button if there are no controls
         if (!question?.controls?.length) this.formGroup.setErrors(null);
         else {
           // creates form controls & updates with empty/cached value
           question.controls.forEach((controlName: string) => {
-            this.formGroup.addControl(controlName, new FormControl(cachedPayload[controlName] ?? '', validations));
+            this.formGroup.addControl(
+              controlName,
+              new FormControl(cachedPayload[controlName] ?? '', validations)
+            );
           });
         }
         // removes validations of all form controls except the current question's
-        Object.keys(this.formGroup.controls).forEach(key => {
-          !question?.controls?.includes(key)
-            && this.formGroup.get(key)!.setErrors(null);
+        Object.keys(this.formGroup.controls).forEach((key) => {
+          !question?.controls?.includes(key) &&
+            this.formGroup.get(key)!.setErrors(null);
         });
         // set default/cached value for slider control
         if (question.type === 'slider') {
@@ -247,10 +257,12 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
           this.formGroup.get(question.name)?.setValue(this.sliderValue);
         }
         // set default/cached value for date
-        question.type === 'date'
-          && (this.dateValue = cachedPayload[question.name]);
-        question.name === 'children'
-          && (this.formGroup.get('children-length')?.setValue(cachedPayload['children-length'] || 1));
+        question.type === 'date' &&
+          (this.dateValue = cachedPayload[question.name]);
+        question.name === 'children' &&
+          this.formGroup
+            .get('children-length')
+            ?.setValue(cachedPayload['children-length'] || 1);
         validations.length = 0;
       }
     });
@@ -261,8 +273,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
    */
   continue() {
     // reset slider value on continue
-    this.currentQuestion.type === 'slider'
-      && (this.sliderValue = 0);
+    this.currentQuestion.type === 'slider' && (this.sliderValue = 0);
     this.formSection++;
     this.loadQuestion();
     localStorage.setItem('payload', JSON.stringify(this.formGroup.value));
@@ -277,7 +288,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Loads current question 
+   * Loads current question
    */
   loadQuestion() {
     this.saveQuestionId();
@@ -294,8 +305,8 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
 
   /**
    * Sets selected date in related textboxes
-   * @param type 
-   * @param event 
+   * @param type
+   * @param event
    */
   dateSelected(type: string, event: MatDatepickerInputEvent<Date>) {
     this.events = `${type}: ${event.value}`;
@@ -316,6 +327,8 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
       element.active = false;
     });
     options[index].active = true;
-    this.formGroup.get(this.currentQuestion.name)!.setValue(options[index].text);
+    this.formGroup
+      .get(this.currentQuestion.name)!
+      .setValue(options[index].text);
   }
 }
