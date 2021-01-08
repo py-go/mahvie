@@ -261,6 +261,8 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
         // set default/cached value for date
         question.type === 'date'
           && (this.dateValue = cachedPayload[question.name]);
+        question.name === 'children'
+          && (this.formGroup.get('children-length')?.setValue(cachedPayload['children-length'] || 1));
         validations.length = 0;
       }
     });
