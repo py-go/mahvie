@@ -20,7 +20,17 @@
                         (click)="radioSelection(i, currentQuestion.options)">
                         <input [formControlName]="currentQuestion.name" [type]="currentQuestion.type"
                           class="inpChecked form-control" [value]="instance.text" [name]="currentQuestion.name" [checked]="instance.active">
-                        <label class="optStyle">{{instance.text | titlecase }}</label>
+                        <label class="optStyle">
+                          {{ instance.text | titlecase }} 
+                          {{ currentQuestion.name === 'children' && instance.text === 'yes' ? ', I have' : '' }}
+                        </label>
+                        <ng-container *ngIf="currentQuestion.name === 'children' && instance.text === 'yes'">
+                          <div class="children-length">
+                            <select formControlName="children-length">
+                              <option *ngFor="let opt of [1,2,3,4,5,6,7,8]" [value]="opt" [selected]="opt === 1">{{ opt }}</option>
+                            </select>
+                          </div>
+                        </ng-container>
                       </div>
                     </div>
                     <!-- 2 textboxes -->

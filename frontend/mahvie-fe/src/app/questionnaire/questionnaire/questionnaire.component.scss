@@ -53,11 +53,8 @@ $preference-list: 'life-insurance', 'critical-illness', 'long-term-care';
   width: 358px;
   background: #f45d01;
   border: 1px solid $disabled;
-  border-radius: 4px;
-  font-family: Lato;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 24px;
+  border-radius: 6px;
+  font: 600 24px 'Lato';
   line-height: 29px;
   align-items: center;
   text-align: center;
@@ -91,8 +88,9 @@ $preference-list: 'life-insurance', 'critical-illness', 'long-term-care';
   margin-top: 15px;
   background: #ffffff;
   border: 2px solid $secondary;
-  box-sizing: border-box;
   display: flex;
+  align-items: center;
+  justify-content: flex-start;
   
   &.active {
     background-color: #f5c0a0;
@@ -191,15 +189,11 @@ $preference-list: 'life-insurance', 'critical-illness', 'long-term-care';
 }
 
 .optStyle {
-  font-family: Lato;
-  font-style: normal;
+  font: 24px 'Lato';
   font-weight: bold;
-  font-size: 24px;
   line-height: 29px;
-  /* identical to box height */
-  text-align: center;
   color: #18344e;
-  align-self: center;
+  margin-bottom: 0;
   pointer-events: none;
 }
 
@@ -332,4 +326,26 @@ mat-slider {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.children-length {
+  position: relative;
+
+  &:after {
+    @include basvg(down, 10px, 10px, 10px);
+    @include tr(50%, 5px);
+    margin-top: -5px;
+  }
+  select {
+    font-size: 1.2rem;
+    background: $t;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 70px;
+    margin-left: 20px;
+    border: none;
+    padding: 6px;
+    border-bottom: 2px solid $placeholder;
+  }
 }

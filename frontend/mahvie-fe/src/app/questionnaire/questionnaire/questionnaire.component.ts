@@ -101,7 +101,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
         { text: 'yes', active: false },
         { text: 'no', active: false },
       ],
-      controls: ['children'],
+      controls: ['children', 'children-length'],
       validations: { required: true },
       title: 'Do you have any children?',
       subtitle:

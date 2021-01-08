@@ -48,6 +48,13 @@ button {
   }
 }
 
+select {
+  &:focus {
+    border: none;
+    outline: none;
+  }
+}
+
 .mat-slider.mat-slider-horizontal .mat-slider-wrapper {
   top: 18px;
 }
@@ -63,14 +70,14 @@ button {
 }
 
 .mat-slider.mat-slider-horizontal .mat-slider-track-fill {
-  background-color: #f45d01;
+  background-color: $primary;
 }
 
 .mat-accent .mat-slider-thumb {
   height: 50px;
   width: 50px;
   background-color: white;
-  border: solid 2px #f45d01;
+  border: 2px solid $primary;
   bottom: -30px;
   right: -20px;
 }
