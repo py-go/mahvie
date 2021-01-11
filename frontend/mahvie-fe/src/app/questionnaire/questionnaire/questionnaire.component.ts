@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { Option, Question } from 'src/app/core/models/core.model';
 import { QuestionnaireService } from 'src/app/core/services/questionnaire.service';
 import { SubSink } from 'subsink';
@@ -187,10 +189,12 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
   sliderValueChange$ = new Subject<number | null>();
   subsink = new SubSink();
   dateValue!: Date;
-  isPopupVisible = false;
+  isChildrenPopupVisible = false;
+  isOntarioPopupVisible = false;
 
   constructor(
-    private questionService: QuestionnaireService
+    private questionService: QuestionnaireService,
+    private router: Router,
   ) {
     this.formSection = parseInt(localStorage.getItem('questionId') || '1');
     const cachedQuestions: Question[] = JSON.parse(localStorage.getItem('questions') || '{}');
@@ -211,6 +215,11 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
       this.sliderValue = value;
       this.formGroup.get(this.currentQuestion.name)?.setValue(value);
     });
+
+    // show ontario popup when no is selected
+    this.subsink.sink = this.formGroup.valueChanges.pipe(
+      filter(_ => this.currentQuestion.name === 'ontario')
+    ).subscribe(value => value.ontario === 'no' && (this.isOntarioPopupVisible = true));
   }
 
   ngOnDestroy(): void {
@@ -331,5 +340,16 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
       }
     });
     localStorage.setItem('questions', JSON.stringify(this.questionSet));
+  }
+
+  /**
+   * Route redirection to home page
+   */
+  redirectToHome() {
+    localStorage.removeItem('payload');
+    localStorage.removeItem('questions');
+    localStorage.removeItem('questionId');
+    this.isOntarioPopupVisible = false;
+    this.router.navigateByUrl('/home');
   }
 }

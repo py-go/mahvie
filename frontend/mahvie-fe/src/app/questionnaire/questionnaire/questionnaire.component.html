@@ -4,7 +4,8 @@
             <section>
                 <h1 class="titleText">
                   {{currentQuestion.title}}
-                  <a *ngIf="currentQuestion.name === 'children'" (click)="isPopupVisible = true" class="info" href="javascript:void(0)"></a>
+                  <a *ngIf="currentQuestion.name === 'children'" 
+                    (click)="isChildrenPopupVisible = true" class="info" href="javascript:void(0)"></a>
                 </h1>
                 <div class="questionsStyle" *ngIf="currentQuestion.subtitle">
                     {{currentQuestion.subtitle}}
@@ -22,7 +23,8 @@
                         [ngClass]="{ 'active': instance.active, 'show-pointer': currentQuestion.type === 'radio' }" 
                         (click)="radioSelection(i)">
                         <input [formControlName]="currentQuestion.name" [type]="currentQuestion.type"
-                          class="inpChecked form-control" [value]="instance.text" [name]="currentQuestion.name" [checked]="instance.active">
+                          class="inpChecked form-control" [value]="instance.text" [name]="currentQuestion.name" 
+                          [checked]="instance.active">
                         <label class="optStyle">
                           {{ instance.text | titlecase }} 
                           {{ currentQuestion.name === 'children' && instance.text === 'yes' ? ', I have' : '' }}
@@ -140,7 +142,7 @@
 </div>
 
 <!-- children popup -->
-<section class="children-popup" *ngIf="isPopupVisible">
+<section class="popup" *ngIf="isChildrenPopupVisible">
   <div class="content">
     <img src="assets/images/life-insurance-hover.svg" alt="">
     <div class="reason">
@@ -152,7 +154,24 @@
          your income is no longer there.
       </p>
       <div class="text-right">
-        <a (click)="isPopupVisible = false" href="javascript:void(0)">Return to question</a>
+        <a (click)="isChildrenPopupVisible = false" href="javascript:void(0)">Return to question</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ontartio popup -->
+<section class="popup" *ngIf="isOntarioPopupVisible">
+  <div class="content">
+    <img src="assets/images/ontario.svg" alt="">
+    <div class="reason">
+      <div class="title">We are working hard to expand our reach!</div>
+      <p>
+        Thank you for expressing so much interest however, for the time being we are only servicing people who live in Ontario.
+        We are working hard to expand our reach to other provinces, please stay tuned!
+      </p>
+      <div class="text-right">
+        <a (click)="redirectToHome()" href="javascript:void(0)">Return to homepage</a>
       </div>
     </div>
   </div>

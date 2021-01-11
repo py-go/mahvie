@@ -388,7 +388,7 @@ mat-slider {
   }
 }
 
-.children-popup {
+.popup {
   position: fixed;
   z-index: 100;
   width: 100%;
@@ -442,7 +442,7 @@ mat-slider {
 }
 
 @media only screen and (max-width: 768px) {
-  .children-popup {
+  .popup {
     .content {
       flex-direction: column;
       align-items: stretch;
@@ -453,6 +453,11 @@ mat-slider {
       }
       .reason {
         width: 100%;
+
+        p {
+          font-size: 14px;
+          line-height: 22px;
+        }
       }
     }
   }
