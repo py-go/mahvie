@@ -1,90 +1,159 @@
 <div class="contain centered-wrapper">
     <div class="centered-content contianer">
-        <form class="mt-132">
+        <div class="mt-132">
             <section>
-                <h1 class="titleText">{{currentQuestion.title}}</h1>
-                <div class="questionsStyle w-100" *ngIf="currentQuestion.subtitle">
+                <h1 class="titleText">
+                  {{currentQuestion.title}}
+                  <a *ngIf="currentQuestion.name === 'children'" (click)="isPopupVisible = true" class="info" href="javascript:void(0)"></a>
+                </h1>
+                <div class="questionsStyle" *ngIf="currentQuestion.subtitle">
                     {{currentQuestion.subtitle}}
                 </div>
             </section>
             <section class="mt-132">
-                <div class="row w-75 mx-auto">
+                <form [formGroup]="formGroup" (ngSubmit)="continue()">
+                  <div class="row w-75 mx-auto">
                     <div class="questionsStyle col-sm-7 text-left mx-auto" *ngIf="currentQuestion.question">
                         {{currentQuestion.question}}
                     </div>
+                    <!-- radio buttons -->
                     <div *ngIf="currentQuestion.type === 'radio'" class="col-sm-7 mx-auto">
-                        <div class="inputFull" [ngClass]="{ 'active': optionVal.active }" *ngFor="let optionVal of currentQuestion.options;let i=index" (click)="activeSetter(i, currentQuestion.options, $event)">
-                            <input type={{currentQuestion.type}} class="inpChecked form-control" value={{optionVal}} name={{currentQuestion.name}}>
-                            <label class="optStyle">{{optionVal.value | titlecase }}</label><br>
-                        </div>
+                      <div class="inputFull" *ngFor="let instance of currentQuestion.options; let i = index;" 
+                        [ngClass]="{ 'active': instance.active, 'show-pointer': currentQuestion.type === 'radio' }" 
+                        (click)="radioSelection(i)">
+                        <input [formControlName]="currentQuestion.name" [type]="currentQuestion.type"
+                          class="inpChecked form-control" [value]="instance.text" [name]="currentQuestion.name" [checked]="instance.active">
+                        <label class="optStyle">
+                          {{ instance.text | titlecase }} 
+                          {{ currentQuestion.name === 'children' && instance.text === 'yes' ? ', I have' : '' }}
+                        </label>
+                        <ng-container *ngIf="currentQuestion.name === 'children' && instance.text === 'yes'">
+                          <div class="children-length">
+                            <select formControlName="children-length">
+                              <option *ngFor="let opt of [1,2,3,4,5,6,7,8]" [value]="opt">{{ opt }}</option>
+                            </select>
+                          </div>
+                        </ng-container>
+                      </div>
                     </div>
-                    <div class="mt-4" *ngIf="currentQuestion.type === 'text' && currentQuestion.inline" class="mx-auto">
-                        <input type="text" class="inputText inputHalf col-sm-6" placeholder={{fields}} *ngFor="let fields of currentQuestion.options">
+                    <!-- 2 textboxes -->
+                    <div *ngIf="currentQuestion.type === 'text' && currentQuestion.inline" class="mx-auto">
+                        <input formControlName="{{currentQuestion.controls[i]}}" type="text" class="inputText inputHalf col-sm-6" placeholder={{fields}} 
+                          *ngFor="let fields of currentQuestion.options; let i = index;">
                     </div>
-                    <div class="mt-4" *ngIf="currentQuestion.type === 'text' && !currentQuestion.inline" class="col-sm-7 mx-auto">
-                        <input type="text" class="inputText inputFull" placeholder={{fields}} *ngFor="let fields of currentQuestion.options">
+                    <!-- single textbox -->
+                    <div *ngIf="currentQuestion.type === 'text' && !currentQuestion.inline" class="col-sm-7 mx-auto">
+                        <input formControlName="{{currentQuestion.controls[0]}}" type="text" class="inputText inputFull" placeholder={{fields}} 
+                          *ngFor="let fields of currentQuestion.options">
                     </div>
-                    <div class="mt-4" *ngIf="currentQuestion.type === 'slider'" class="col-sm-7 mx-auto">
-                        <!-- <label class="slideInpText">$</label> -->
+                    <!-- slider control -->
+                    <div *ngIf="currentQuestion.type === 'slider'" class="col-sm-7 mx-auto">
                         <input readonly type="text" class="inputFull inputSlide mb-74" matInput 
-                          [ngModel]="sliderValue | currency" (ngModelChange)="sliderValue = $event" [ngModelOptions]="{ standalone: true }">
-                        <mat-slider [max]="currentQuestion.validations.max" [min]="currentQuestion.validations.min" 
-                          [(ngModel)]="sliderValue" [ngModelOptions]="{ standalone: true }"></mat-slider>
-                        <label class="float-left sliderLabel">{{currentQuestion.validations.min | currency}}</label>
-                        <label class="float-right sliderLabel">{{currentQuestion.validations.max | currency}}</label>
+                          [value]="sliderValue | currency">
+                        <mat-slider [step]="1000"
+                          [max]="currentQuestion.validations.max" [min]="currentQuestion.validations.min" 
+                          (change)="sliderValueChange$.next($event.value)" [value]="sliderValue"></mat-slider>
+                        <section class="slider-amounts">
+                          <label class="sliderLabel">{{currentQuestion.validations.min | currency}}</label>
+                          <label class="sliderLabel">{{currentQuestion.validations.max | currency}}</label>
+                        </section>
                     </div>
-                    <div class="mt-4 dateField" *ngIf="currentQuestion.type === 'date'" class="col-sm-7 mx-auto">
-                        <input matInput [matDatepicker]="dp3" disabled (dateChange)="addEvent('change', $event)" class="inputDate t1" style="width:40%" placeholder="Date of Birth">
+                    <!-- dates -->
+                    <div *ngIf="currentQuestion.type === 'date'" class="col-sm-7 mx-auto">
+                        <input matInput [matDatepicker]="dp3" [value]="dateValue"
+                          (dateChange)="dateSelected('change', $event)" class="inputDate t1" 
+                          style="width:40%" placeholder="Date of Birth">
                         <div class="calenderIcon">
                             <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
                             <mat-datepicker #dp3 disabled="false"></mat-datepicker>
                         </div>
-                        <!-- <input type="text" class="inputDate t1" style="width:40%" value="Date of birth" readonly> -->
                         <input type="text" class="inputDate t2" style="width:20%" placeholder="MM" readonly [(ngModel)]="date" [ngModelOptions]="{standalone: true}">
                         <input type="text" class="inputDate t2" style="width:20%" placeholder="DD" readonly [(ngModel)]="month" [ngModelOptions]="{standalone: true}">
                         <input type="text" class="inputDate t2" style="width:20%" placeholder="YYYY" readonly [(ngModel)]="year" [ngModelOptions]="{standalone: true}">
-                        <!-- <mat-form-field appearance="fill" class="inputFull mb-74 p-0">
-                            <mat-label>Date of birth</mat-label>
-                            <input matInput [matDatepicker]="dp3" disabled (dateChange)="addEvent('change', $event)">
-                            <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
-                            <mat-datepicker #dp3 disabled="false"></mat-datepicker>
-                        </mat-form-field> -->
                     </div>
                     <!-- preferences -->
-                    <div class="row mt-4 w-100 mt-3" *ngIf="currentQuestion.type === 'div'">
+                    <div *ngIf="currentQuestion.type === 'products-radio'" class="row mt-4 w-100 mt-3 mx-auto">
                         <div class="col-md-4 mt-4 text-center">
-                            <a href="javascript:void(0)" (click)="setPreference($event)" class="preference life-insurance">
+                            <a href="javascript:void(0)" class="preference life-insurance"
+                              [ngClass]="{ 'active': currentQuestion.options[0].active }" 
+                              (click)="radioSelection(0)">
                               <span class="title">life insurance</span>
                               <div class="show-on-hover">
                                 If I were to pass away, I would like to give money to a person(s) of my choice.
                               </div>
+                              <input [formControlName]="currentQuestion.name" type="radio"
+                                class="inpChecked form-control" [value]="currentQuestion.options[0].text" [name]="currentQuestion.name" 
+                                [checked]="currentQuestion.options[0].active">
                             </a>
                         </div>
                         <div class="col-md-4 mt-4 text-center">
-                            <a href="javascript:void(0)" (click)="setPreference($event)" class="preference critical-illness">
+                            <a href="javascript:void(0)" class="preference critical-illness"
+                              [ngClass]="{ 'active': currentQuestion.options[1].active }" 
+                              (click)="radioSelection(1)">
                               <span class="title">critical illness</span>
                               <div class="show-on-hover">
                                 If I were to suffer a stroke, heart attack or  get cancer, I would like to personally receive a large amount of money.
                               </div>
+                              <input [formControlName]="currentQuestion.name" type="radio"
+                                class="inpChecked form-control" [value]="currentQuestion.options[1].text" [name]="currentQuestion.name" 
+                                [checked]="currentQuestion.options[1].active">
                             </a>
                         </div>
                         <div class="col-md-4 mt-4 text-center">
-                            <a href="javascript:void(0)" (click)="setPreference($event)" class="preference long-term-care">
+                            <a href="javascript:void(0)" class="preference long-term-care"
+                              [ngClass]="{ 'active': currentQuestion.options[2].active }" 
+                              (click)="radioSelection(2)">
                               <span class="title">long term care</span>
                               <div class="show-on-hover">
                                 If I were unable to perform my daily tasks independently, I would like to receive money to hire assistance.
                               </div>
+                              <input [formControlName]="currentQuestion.name" type="radio"
+                                class="inpChecked form-control" [value]="currentQuestion.options[2].text" [name]="currentQuestion.name" 
+                                [checked]="currentQuestion.options[2].active">
                             </a>
                         </div>
                     </div>
-                </div>
-                <div class="text-center">
-                  <button class="submitBtn" [attr.disabled]="null" type="button" name="name" (click)="submit()">Continue</button>
-                  <div>
-                    <button *ngIf="formSection === 2" class="skipText" (click)="submit()">Skip for now</button>
+                    <!-- let's get to know you -->
+                    <div *ngIf="currentQuestion.name === 'gettoknowyou'" class="get-started">
+                      <div class="start start1">
+                        Your insurance needs and preferences
+                      </div>
+                      <div class="start start2">
+                        Your family & lifestyle factors
+                      </div>
+                      <div class="start start3">
+                        Your family’s benefits, savings, and income
+                      </div>
+                    </div>
                   </div>
-                </div>
+                  <!-- submit/skip -->
+                  <div class="text-center">
+                    <button [disabled]="formGroup.invalid" type="submit" class="submitBtn" >Continue</button>
+                    <div>
+                      <button *ngIf="formSection === 2" class="skipText" (click)="continue()">Skip for now</button>
+                    </div>
+                  </div>
+                </form>
             </section>
-        </form>
+        </div>
     </div>
 </div>
+
+<!-- children popup -->
+<section class="children-popup" *ngIf="isPopupVisible">
+  <div class="content">
+    <img src="assets/images/life-insurance-hover.svg" alt="">
+    <div class="reason">
+      <div class="title">Why do we ask about your children?</div>
+      <p>
+        Life insurance is all about protecting the people you love.
+        If there are people who rely on your financial support, a life insurance policy 
+        will make sure they have enough money if something unexpected happens to you and
+         your income is no longer there.
+      </p>
+      <div class="text-right">
+        <a (click)="isPopupVisible = false" href="javascript:void(0)">Return to question</a>
+      </div>
+    </div>
+  </div>
+</section>
