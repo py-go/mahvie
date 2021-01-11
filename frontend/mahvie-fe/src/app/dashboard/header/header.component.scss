@@ -5,7 +5,7 @@ header {
   justify-content: center;
   align-items: center;
   border-bottom: 2px solid #96a2ad;
-  padding: 20px 60px;
+  padding: 15px 60px;
 
   .offscreen {
     display: inline-block;
@@ -15,7 +15,7 @@ header {
   }
   img{
     margin-right: auto;
-    padding-right: 82px;
+    padding-right: 75px;
   }
   button {
     position: relative;
@@ -23,7 +23,7 @@ header {
     border: none;
     background: $t;
     color: $b;
-    font-size: 1.2rem;
+    font-size: 1rem;
     font-weight: 500;
     margin-right: auto;
 

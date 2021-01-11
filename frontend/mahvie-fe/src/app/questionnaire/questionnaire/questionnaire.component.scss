@@ -12,55 +12,68 @@ $preference-list: "life-insurance", "critical-illness", "long-term-care";
 
 .titleText {
   width: 100%;
-  font: 500 38px "Playfair Display";
+  font: 500 1.75rem "Playfair Display";
   color: #18344e;
   margin: 0 auto 30px;
 }
 
 .inputHalf {
-  flex-direction: row;
-  align-items: center;
-  padding: 28px 16px;
-  position: static;
+  padding: 0 15px;
   width: 360px;
-  height: 80px;
-  background: #ffffff;
+  height: 50px;
+  background: $w;
   border: 2px solid #2b5d8c;
-  box-sizing: border-box;
-  /* Inside Auto Layout */
-  flex: none;
-  order: 0;
-  flex-grow: 0;
-  margin: 8px 3px;
+  margin: 8px 0;
+}
+
+.mx-auto {
+  position: relative;
+
+  .inputHalf:last-child {
+    margin-left: 10px;
+  }
 }
 
 .inputText {
-  font-family: "Source Sans Pro";
-  font-style: normal;
-  font-weight: bold;
-  font-size: 24px;
-  line-height: 24px;
+  font-size: 1rem;
   color: darken($placeholder, 25%);
   padding-left: 20px;
 
   &::placeholder {
     color: $placeholder;
   }
+  &:focus {
+    @include radius(0);
+    outline: 2px solid lighten($primary, 35%);
+    border: 2px solid $primary;
+    border-color: $primary;
+  }
 }
 
-.submitBtn {
-  height: 64px;
-  width: 358px;
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+
+  button {
+    &:last-child {
+      margin-top: 30px;
+    }
+  }
+}
+
+.submitBtn, .skipText {
+  font-size: 1rem;
+  height: 50px;
+  width: 350px;
   background: #f45d01;
   border: 1px solid $disabled;
   border-radius: 6px;
-  font: 600 24px "Lato";
-  line-height: 29px;
-  align-items: center;
   text-align: center;
   letter-spacing: 0.04em;
   color: $w;
-  margin-top: 100px;
 
   &[disabled] {
     background: $disabled;
@@ -68,25 +81,18 @@ $preference-list: "life-insurance", "critical-illness", "long-term-care";
 }
 
 .skipText {
-  font: 600 24px "Source Sans Pro";
-  font-style: normal;
-  line-height: 24px;
-  text-align: center;
-  color: #f45d01;
-  height: 64px;
-  width: 358px;
-  border-radius: 4px;
-  background: $t;
-  margin-top: 64px;
+  background: $w;
+  color: $primary;
+  border: none;
 }
 
 .inputFull {
-  height: 75px;
-  width: 100%;
+  height: 50px;
+  width: 70%;
   border-radius: 0;
-  padding: 20px 16px;
-  margin-top: 15px;
-  background: #ffffff;
+  padding: 20px 15px;
+  margin: 15px auto 0;
+  background: $w;
   border: 2px solid $secondary;
   display: flex;
   align-items: center;
@@ -98,27 +104,27 @@ $preference-list: "life-insurance", "critical-illness", "long-term-care";
     z-index: 999 !important;
   }
   input[type="radio"] {
-    height: 40px;
-    width: 40px;
+    height: 20px;
+    width: 20px;
     border-radius: 0;
     background: $w;
     border: none;
-    align-self: center;
-    margin: 0 20px;
+    margin-right: 15px;
     cursor: pointer;
+    position: relative;
 
     &:focus {
       box-shadow: none;
     }
     &:checked:after {
+      @include radius(50%);
+      @include tl(50%, 50%);
       display: inline-block;
-      visibility: visible;
       background: #333;
       content: "";
-      height: 25px;
-      width: 25px;
-      border-radius: 50px;
-      margin: 7.5px;
+      height: 12px;
+      width: 12px;
+      margin: -6px 0 0 -6px;
     }
   }
 }
@@ -128,39 +134,28 @@ $preference-list: "life-insurance", "critical-illness", "long-term-care";
 }
 
 .inputDate {
-  flex-direction: row;
-  align-items: center;
   padding: 28px 16px;
-  position: static;
-  height: 80px;
-  background: #ffffff;
+  height: 50px;
   border: 2px solid $secondary;
-  box-sizing: border-box;
-  /* Inside Auto Layout */
-  flex: none;
-  order: 0;
-  flex-grow: 0;
+
+  &.t1 {
+    width: 30% !important;
+  }
+  &:focus {
+    border-color: $secondary;
+    outline: none;
+  }
 }
 
 .t1 {
-  font-family: "Source Sans Pro";
-  font-style: normal;
-  font-weight: bold;
-  font-size: 27px;
-  line-height: 140%;
-  /* identical to box height, or 34px */
+  font: 700 1rem 'Source Sans Pro';
   text-align: right;
   color: #18344e;
   border: 2px solid $secondary;
 }
 
 .t2 {
-  font-family: "Lato";
-  font-style: normal;
-  font-weight: bold;
-  font-size: 24px;
-  line-height: 29px;
-  /* identical to box height */
+  font: 700 1rem 'Lato';
   text-align: center;
   color: #a0a0a0;
   border: 2px solid $secondary;
@@ -168,9 +163,8 @@ $preference-list: "life-insurance", "critical-illness", "long-term-care";
 }
 
 .calenderIcon {
-  position: absolute;
-  top: 30%;
-  left: 5%;
+  @include tl(50%, 60px);
+  margin-top: -20px;
 }
 
 .centered-content {
@@ -181,7 +175,7 @@ $preference-list: "life-insurance", "critical-illness", "long-term-care";
 }
 
 .questionsStyle {
-  font: 24px "Source Sans Pro";
+  font: 1.2rem "Source Sans Pro";
   color: $secondary;
   text-align: center;
   width: 75%;
@@ -189,9 +183,8 @@ $preference-list: "life-insurance", "critical-illness", "long-term-care";
 }
 
 .optStyle {
-  font: 24px "Lato";
+  font: 1rem "Lato";
   font-weight: bold;
-  line-height: 29px;
   color: #18344e;
   margin-bottom: 0;
   pointer-events: none;
@@ -212,14 +205,8 @@ $preference-list: "life-insurance", "critical-illness", "long-term-care";
 }
 
 .inputSlide {
-  padding-left: 150px;
-  padding-right: 15px;
   text-align: right;
-  font-family: Lato;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 40px;
-  line-height: 48px;
+  font: 1.4rem 'Lato';
   color: #a0a0a0;
 }
 
@@ -228,17 +215,12 @@ mat-slider {
 }
 
 .mb-74 {
-  margin-bottom: 74px;
+  margin-bottom: 60px;
 }
 
 .sliderLabel {
   margin-top: 16px;
-  font-family: Lato;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 24px;
-  line-height: 29px;
-  /* identical to box height */
+  font: 1.4rem 'Lato';
   text-align: center;
   color: #18344e;
 }
@@ -285,12 +267,12 @@ mat-slider {
   span.title {
     color: $secondary;
     text-transform: uppercase;
-    font-size: 1.45rem;
+    font-size: 1rem;
     font-weight: bold;
   }
   .show-on-hover {
     @include radius(5px);
-    @include box-shadow(0, 5px, 10px, 0, 0, 0, 0.05);
+    @include box-shadow(0, 5px, 10px, 24, 52, 78, 0.1);
     @include tl(calc(100% + 15px), 0);
     width: 100%;
     padding: 30px;
@@ -338,7 +320,7 @@ mat-slider {
     margin-top: -5px;
   }
   select {
-    font-size: 1.2rem;
+    font-size: 1rem;
     background: $t;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -359,10 +341,9 @@ mat-slider {
   margin: 20px auto 0;
 
   .start {
-    font-size: 24px;
+    font-size: 1rem;
     padding: 110px 60px 0;
     color: $secondary;
-    line-height: 24px;
     text-align: center;
     position: relative;
 
@@ -418,13 +399,13 @@ mat-slider {
       .title {
         color: darken(#3e566b, 18%);
         padding: 0 0 20px;
-        font: 700 1.5rem "Source Sans Pro";
+        font: 700 1.3rem "Source Sans Pro";
         border-bottom: 1px solid $light-border;
         margin-bottom: 30px;
         text-align: left;
       }
       p {
-        font-size: 16px;
+        font-size: 1rem;
         text-align: left;
         line-height: 28px;
         color: $secondary;
@@ -434,7 +415,7 @@ mat-slider {
         display: block;
         letter-spacing: 1px;
         color: $primary;
-        font-size: 1.35rem;
+        font-size: 1rem;
         font-weight: 500;
       }
     }
@@ -446,9 +427,10 @@ mat-slider {
     .content {
       flex-direction: column;
       align-items: stretch;
+      padding: 30px;
 
       img {
-        width: 100px;
+        width: 70px;
         margin-bottom: 20px;
       }
       .reason {

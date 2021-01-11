@@ -14,7 +14,7 @@
             <section class="mt-132">
                 <form [formGroup]="formGroup" (ngSubmit)="continue()">
                   <div class="row w-75 mx-auto">
-                    <div class="questionsStyle col-sm-7 text-left mx-auto" *ngIf="currentQuestion.question">
+                    <div class="questionsStyle col-sm-7 mx-auto" *ngIf="currentQuestion.question">
                         {{currentQuestion.question}}
                     </div>
                     <!-- radio buttons -->
@@ -62,7 +62,7 @@
                     </div>
                     <!-- dates -->
                     <div *ngIf="currentQuestion.type === 'date'" class="col-sm-7 mx-auto">
-                        <input matInput [matDatepicker]="dp3" [value]="dateValue"
+                        <input matInput readonly [matDatepicker]="dp3" [value]="dateValue"
                           (dateChange)="dateSelected('change', $event)" class="inputDate t1" 
                           style="width:40%" placeholder="Date of Birth">
                         <div class="calenderIcon">
@@ -129,11 +129,9 @@
                     </div>
                   </div>
                   <!-- submit/skip -->
-                  <div class="text-center">
+                  <div class="text-center button-container">
                     <button [disabled]="formGroup.invalid" type="submit" class="submitBtn" >Continue</button>
-                    <div>
-                      <button *ngIf="formSection === 2" class="skipText" (click)="continue()">Skip for now</button>
-                    </div>
+                    <button *ngIf="formSection === 2" class="skipText" (click)="continue()">Skip for now</button>
                   </div>
                 </form>
             </section>
