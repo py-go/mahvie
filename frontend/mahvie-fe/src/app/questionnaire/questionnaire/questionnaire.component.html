@@ -75,43 +75,17 @@
                     </div>
                     <!-- preferences -->
                     <div *ngIf="currentQuestion.type === 'products-radio'" class="row mt-4 w-100 mt-3 mx-auto">
-                        <div class="col-md-4 mt-4 text-center">
-                            <a href="javascript:void(0)" class="preference life-insurance"
-                              [ngClass]="{ 'active': currentQuestion.options[0].active }" 
-                              (click)="radioSelection(0)">
-                              <span class="title">life insurance</span>
-                              <div class="show-on-hover">
-                                If I were to pass away, I would like to give money to a person(s) of my choice.
-                              </div>
-                              <input [formControlName]="currentQuestion.name" type="radio"
-                                class="inpChecked form-control" [value]="currentQuestion.options[0].text" [name]="currentQuestion.name" 
-                                [checked]="currentQuestion.options[0].active">
-                            </a>
-                        </div>
-                        <div class="col-md-4 mt-4 text-center">
-                            <a href="javascript:void(0)" class="preference critical-illness"
-                              [ngClass]="{ 'active': currentQuestion.options[1].active }" 
-                              (click)="radioSelection(1)">
-                              <span class="title">critical illness</span>
-                              <div class="show-on-hover">
-                                If I were to suffer a stroke, heart attack or  get cancer, I would like to personally receive a large amount of money.
-                              </div>
-                              <input [formControlName]="currentQuestion.name" type="radio"
-                                class="inpChecked form-control" [value]="currentQuestion.options[1].text" [name]="currentQuestion.name" 
-                                [checked]="currentQuestion.options[1].active">
-                            </a>
-                        </div>
-                        <div class="col-md-4 mt-4 text-center">
-                            <a href="javascript:void(0)" class="preference long-term-care"
-                              [ngClass]="{ 'active': currentQuestion.options[2].active }" 
-                              (click)="radioSelection(2)">
-                              <span class="title">long term care</span>
-                              <div class="show-on-hover">
-                                If I were unable to perform my daily tasks independently, I would like to receive money to hire assistance.
-                              </div>
-                              <input [formControlName]="currentQuestion.name" type="radio"
-                                class="inpChecked form-control" [value]="currentQuestion.options[2].text" [name]="currentQuestion.name" 
-                                [checked]="currentQuestion.options[2].active">
+                        <div *ngFor="let checkboxItem of currentQuestion.options; let i = index;" class="col-md-4 mt-4 text-center">
+                            <a href="javascript:void(0)" class="preference"
+                              [ngClass]="{ 
+                                'active': checkboxItem.active, 
+                                'life-insurance': checkboxItem.text === 'life-insurance', 
+                                'critical-illness': checkboxItem.text === 'critical-illness', 
+                                'long-term-care': checkboxItem.text === 'long-term-care'
+                              }" 
+                              (click)="checkboxSelection(i)">
+                              <span class="title">{{ checkboxItem.htmlTitle }}</span>
+                              <div class="show-on-hover">{{ checkboxItem.hoverText }}</div>
                             </a>
                         </div>
                     </div>

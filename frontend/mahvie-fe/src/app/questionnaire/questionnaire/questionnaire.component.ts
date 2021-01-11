@@ -73,9 +73,9 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
       question: '',
       type: 'products-radio',
       options: [
-        { text: 'life-insurance', active: false },
-        { text: 'critical-illness', active: false },
-        { text: 'long-term-care', active: false },
+        { text: 'life-insurance', active: false, htmlTitle: 'life insurance', hoverText: 'If I were to pass away, I would like to give money to a person(s) of my choice.' },
+        { text: 'critical-illness', active: false, htmlTitle: 'critical illness', hoverText: 'If I were to suffer a stroke, heart attack or  get cancer, I would like to personally receive a large amount of money.' },
+        { text: 'long-term-care', active: false, htmlTitle: 'long term care', hoverText: 'If I were unable to perform my daily tasks independently, I would like to receive money to hire assistance.' }, 
       ],
       controls: ['products'],
       validations: { required: true },
@@ -324,10 +324,8 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Check active status of form control
+   * Options selections event
    * @param index
-   * @param options Options of current question
-   * @param event Click event
    */
   radioSelection(index: number) {
     this.questionSet.forEach(question => {
@@ -337,6 +335,26 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
         });
         question.options[index].active = true;
         this.formGroup.get(this.currentQuestion.name)!.setValue(question.options[index].text);
+      }
+    });
+    localStorage.setItem('questions', JSON.stringify(this.questionSet));
+  }
+
+  /**
+   * Common checkbox selection event
+   * @param index 
+   */
+  checkboxSelection(index: number) {
+    this.questionSet.forEach(question => {
+      if (question.id === this.currentQuestion.id) {
+        let checkedValues = '';
+        question.options.forEach((option: Option, ind: number) => {
+          index === ind 
+            && (option.active = !option.active);
+          option.active
+            && (checkedValues += `${option.text},`);
+        });
+        this.formGroup.get(this.currentQuestion.name)!.setValue(checkedValues ? checkedValues.slice(0, -1) : '');
       }
     });
     localStorage.setItem('questions', JSON.stringify(this.questionSet));

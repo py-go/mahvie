@@ -4,6 +4,8 @@
 export type Option = {
   text: string;
   active: boolean;
+  htmlTitle?: string;
+  hoverText?: string;
 }
 
 /**
