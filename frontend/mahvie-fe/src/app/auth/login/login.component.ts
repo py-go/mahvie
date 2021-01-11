@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
           this.loaderService.hideLoader();
           this.alertboxService.showAlert('success','login successfull');
           this.cookieService.set('token',JSON.stringify(data))
-          this.router.navigate(['/dashboard'])
+          this.router.navigate(['/questionnaire']);
         },
         (err)=>{
           this.loaderService.hideLoader();

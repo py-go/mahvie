@@ -1,0 +1,474 @@
+@import 'base';
+
+$preference-list: 'life-insurance', 'critical-illness', 'long-term-care';
+
+/*
+.questionContainer {
+  height: 1000px;
+}
+
+h1 {
+  font-family: "Playfair Display", serif;
+  color: #18344e;
+  font-size: 40px;
+}
+
+.contain {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  margin-top: 100px;
+}
+
+p {
+  border: 2px solid rgb(28, 106, 179);
+  height: 80px;
+  font-size: 20px;
+  padding: 30px;
+  text-align: start;
+  margin: auto;
+  width: 100%;
+  border: 2px solid rgb(28, 106, 179);
+  align-items: center;
+}
+
+p input {
+  transform: scale(2.5);
+  margin-right: 20px;
+}
+
+p input:checked {
+  border-color: orangered !important;
+}
+
+.centered-wrapper {
+  position: relative;
+  text-align: center;
+}
+
+.centered-wrapper:before {
+  content: "";
+  position: relative;
+  display: inline-block;
+  width: 0;
+  height: 100%;
+  vertical-align: middle;
+}
+
+.centered-content {
+  display: inline-block;
+  vertical-align: middle;
+  width: 800px;
+}
+
+.continue {
+  width: 200px;
+  font-size: 20px;
+  font-weight: 900;
+  padding: 20px;
+  border: none;
+  background: black;
+  color: white;
+}
+
+.center {
+  text-align: start;
+  color: rgb(28, 106, 179);
+  font-size: 25px;
+  margin-top: 100px !important;
+}
+
+.email {
+  border: 2px solid rgb(28, 106, 179);
+  height: 90px;
+  width: 100%;
+  font-size: 20px;
+  padding: 30px;
+  text-align: start;
+}
+
+.emailText {
+  color: rgb(28, 106, 179);
+  font-size: 25px;
+  float: left;
+}
+
+.continue:disabled {
+  background-color: lightgray;
+}
+
+.mat-form-field {
+  margin-right: 12px;
+}
+
+.skipText {
+  color: orangered !important;
+  font-size: 20px;
+  font-weight: 700;
+}
+*/
+/*--css--*/
+
+.mt-132 {
+  margin-top: 22px;
+}
+
+.mt-46 {
+  margin-top: 64px;
+}
+
+.titleText {
+  width: 100%;
+  height: 100px;
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 40px;
+  line-height: 140%;
+  /* or 56px */
+  align-items: center;
+  text-align: center;
+  color: #18344e;
+  margin: 0 !important;
+}
+
+.inputHalf {
+  flex-direction: row;
+  align-items: center;
+  padding: 28px 16px;
+  position: static;
+  width: 360px;
+  height: 80px;
+  background: #ffffff;
+  border: 2px solid #2b5d8c;
+  box-sizing: border-box;
+  /* Inside Auto Layout */
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  margin: 8px 3px;
+}
+
+.inputText {
+  font-family: 'Source Sans Pro';
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 24px;
+  color: #a0a0a0;
+  padding-left: 20px;
+}
+
+.submitBtn {
+  height: 64px;
+  width: 358px;
+  /* background: #E7E7E7; */
+  background: #f45d01;
+  border: 1px solid #e7e7e7;
+  border-radius: 4px;
+  font-family: Lato;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 29px;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.04em;
+  color: $w;
+  margin-top: 100px;
+}
+
+.skipText {
+  font: 600 24px 'Source Sans Pro';
+  font-style: normal;
+  line-height: 24px;
+  text-align: center;
+  color: #f45d01;
+  height: 64px;
+  width: 358px;
+  border-radius: 4px;
+  background: $t;
+  margin-top: 64px;
+}
+
+.inputFull {
+  height: 75px;
+  width: 100%;
+  border-radius: 0;
+  padding: 20px 16px;
+  margin-top: 15px;
+  background: #ffffff;
+  border: 2px solid #2b5d8c;
+  box-sizing: border-box;
+  display: flex;
+  cursor: pointer;
+}
+
+.inputFull input[type="radio"] {
+  height: 40px;
+  width: 40px;
+  border-radius: 0;
+  background: $w;
+  border: 2px solid #2b5d8c !important;
+  box-sizing: border-box;
+  align-self: center;
+  margin: 0 20px;
+  pointer-events: none;
+}
+
+.inputFull input[type="radio"]:checked:after {
+  display: inline-block;
+  visibility: visible;
+  background: #333 !important;
+  border: 2px solid #333 !important;
+  content: "";
+  height: 25px;
+  width: 25px;
+  border-radius: 50px;
+  margin: 7.5px !important;
+}
+
+.inputDate {
+  flex-direction: row;
+  align-items: center;
+  padding: 28px 16px;
+  position: static;
+  height: 80px;
+  background: #ffffff;
+  border: 2px solid #2b5d8c;
+  box-sizing: border-box;
+  /* Inside Auto Layout */
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+
+.t1 {
+  font-family: Source Sans Pro;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 140%;
+  /* identical to box height, or 34px */
+  text-align: right;
+  color: #18344e;
+  border: 2px solid #2b5d8c;
+}
+
+.t2 {
+  font-family: Lato;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 29px;
+  /* identical to box height */
+  text-align: center;
+  color: #a0a0a0;
+  border: 2px solid #2b5d8c;
+}
+
+.calenderIcon {
+  position: absolute;
+  top: 30%;
+  left: 5%;
+}
+
+.centered-content {
+  display: inline-block;
+  vertical-align: middle;
+  /* width: 800px; */
+  width: 100%;
+}
+
+.questionsStyle {
+  font-family: Source Sans Pro;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 28px;
+  line-height: 24px;
+  align-items: center;
+  color: #2b5d8c;
+  text-align: center;
+  height: 42px;
+}
+
+.optStyle {
+  font-family: Lato;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 29px;
+  /* identical to box height */
+  text-align: center;
+  color: #18344e;
+  align-self: center;
+  pointer-events: none;
+}
+
+.slideInpText {
+  font-family: Lato;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 40px;
+  line-height: 48px;
+  /* identical to box height */
+  text-align: center;
+  color: #a0a0a0;
+  left: 415px;
+  top: 518px;
+  position: absolute;
+}
+
+.inputSlide {
+  padding-left: 150px;
+  padding-right: 15px;
+  text-align: right;
+  font-family: Lato;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 40px;
+  line-height: 48px;
+  color: #a0a0a0;
+}
+
+mat-slider {
+  width: 100%;
+}
+
+.mb-74 {
+  margin-bottom: 74px;
+}
+
+.sliderLabel {
+  margin-top: 16px;
+  font-family: Lato;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 29px;
+  /* identical to box height */
+  text-align: center;
+  color: #18344e;
+}
+
+/*cs2*/
+
+.inputFull.active {
+  background-color: #f5c0a0 !important;
+  border: 2px solid #f45d01 !important;
+  z-index: 999 !important;
+}
+
+/* .inputFull {
+    height: 80px;
+    width: 552px;
+    border-radius: 0;
+    padding: 20px, 16px, 20px, 16px;
+    margin-top: 16px;
+    border: 2px solid #2B5D8C;
+    box-sizing: border-box;
+    margin: auto;
+    margin-top: 16px;
+    display: flex;
+} */
+
+/* .inputFull input[type='radio'] {
+    height: 40px;
+    width: 40px;
+    border-radius: 0;
+    background: #FFFFFF;
+    border: 2px solid #2B5D8C !important;
+    box-sizing: border-box;
+    align-self: center;
+    margin: 0 20px;
+} */
+
+/* 
+.inputFull input[type='radio']:checked:after {
+    display: inline-block;
+    visibility: visible;
+    background: #F45D01 !important;
+    height: 25px;
+    width: 25px;
+    border-radius: 50px;
+    margin: 7.5px !important;
+} */
+
+/*css3*/
+
+.product-des {
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: 0.02em;
+  color: #18344e;
+}
+
+.product-h {
+  height: 72px;
+}
+
+.img-fluid {
+  width: 75px !important;
+}
+
+/* preferences */
+.preference {
+  display: block;
+  position: relative;
+  padding-top: 95px;
+
+  * {
+    @include transit(0.4s);
+  }
+  @each $item in $preference-list {
+    &.#{$item}:before {
+      @include svg($item);
+      background-position: center;
+    }
+  }
+  &:before {
+    @include tl(0, 0);
+    content: '';
+    width: 100%;
+    height: 72px;
+  }
+  span.title {
+    color: $secondary;
+    text-transform: uppercase;
+    font-size: 1.45rem;
+    font-weight: bold;
+  }
+  .show-on-hover {
+    @include radius(5px);
+    @include box-shadow(0, 5px, 10px, 0, 0, 0, 0.05);
+    @include tl(calc(100% + 15px), 0);
+    width: 100%;
+    padding: 30px;
+    background: #e7e7e7;
+    border: 1px solid ligthen($light-border, 10%);
+    color: $secondary;
+    display: grid;
+    place-items: center;
+    text-align: left;
+    opacity: 0;
+    pointer-events: none;
+  }
+  &:hover, &.active {
+    @each $item in $preference-list {
+      &.#{$item}:before {
+        $item: $item + '-hover';
+        @include svg($item);
+        background-position: center;
+      }
+    }
+    span.title {
+      color: $primary;
+    }
+  }
+  &:hover {
+    .show-on-hover {
+      opacity: 1;
+    }
+  }
+}
