@@ -63,7 +63,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
       options: ['First Name', 'Last Name'],
       controls: ['firstName', 'lastName'],
       validations: { required: true },
-      title: 'Lets get to know you!',
+      title: 'Welcome to G2G, your recommendation is only minutes away!',
       subtitle: '',
       inline: true,
     },
