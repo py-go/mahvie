@@ -10,9 +10,7 @@ import { QuestionnaireModule } from './questionnaire/questionnaire.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { CookieService } from 'ngx-cookie-service';
-import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
-
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,7 +21,6 @@ import { CoreModule } from './core/core.module';
     QuestionnaireModule,
     BrowserAnimationsModule,
     CoreModule,
-    SharedModule,
   ],
   exports: [],
   providers: [
