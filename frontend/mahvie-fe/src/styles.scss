@@ -48,6 +48,12 @@ button {
   }
 }
 
+.form-control {
+  &:focus {
+    box-shadow: none !important;
+  }
+}
+
 select {
   &:focus {
     border: none;

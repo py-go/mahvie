@@ -11,27 +11,36 @@ $preference-list: "life-insurance", "critical-illness", "long-term-care";
 }
 
 .titleText {
-  width: 100%;
   font: 500 1.75rem "Playfair Display";
   color: #18344e;
   margin: 0 auto 30px;
+  width: 60%;
+}
+
+.inline-container {
+  margin: auto;
+  width: 42%;
+  display: flex;
+  align-content: center;
+  flex-direction: column;
+  justify-content: space-between;
+
+  &.inline {
+    flex-direction: row;
+    width: 65%;
+
+    input[type="text"] {
+      width: 49%;
+    }
+  }
 }
 
 .inputHalf {
   padding: 0 15px;
-  width: 360px;
   height: 50px;
   background: $w;
   border: 2px solid #2b5d8c;
   margin: 8px 0;
-}
-
-.mx-auto {
-  position: relative;
-
-  .inputHalf:last-child {
-    margin-left: 10px;
-  }
 }
 
 .inputText {
@@ -97,6 +106,9 @@ $preference-list: "life-insurance", "critical-illness", "long-term-care";
   align-items: center;
   justify-content: flex-start;
 
+  &.mat-input-element {
+    margin-top: 0;
+  }
   &.active {
     background-color: #f5c0a0;
     border: 2px solid #f45d01;
@@ -178,7 +190,7 @@ $preference-list: "life-insurance", "critical-illness", "long-term-care";
   color: $secondary;
   text-align: center;
   width: 75%;
-  margin: auto;
+  margin: auto auto 30px;
 }
 
 .optStyle {
@@ -439,6 +451,18 @@ mat-slider {
 }
 
 @media only screen and (max-width: 768px) {
+  .inline-container {
+    width: 100%;
+
+    &.inline {
+      flex-direction: column;
+      width: 100%;
+  
+      input[type="text"] {
+        width: 100%;
+      }
+    }
+  }
   .popup {
     .content {
       flex-direction: column;

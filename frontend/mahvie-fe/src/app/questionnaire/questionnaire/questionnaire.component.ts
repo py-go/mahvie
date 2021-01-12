@@ -4,6 +4,7 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
+import { ConstantService } from 'src/app/config/constant.service';
 import { Option, Question } from 'src/app/core/models/core.model';
 import { QuestionnaireService } from 'src/app/core/services/questionnaire.service';
 import { SubSink } from 'subsink';
@@ -38,7 +39,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
       controls: ['email'],
       validations: {
         required: true,
-        pattern: '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$',
+        pattern: this.constants.emailRegex,
       },
       title: 'Before we get started...',
       subtitle: '',
@@ -175,6 +176,74 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
       subtitle:
         'Your recommendation is as unique as you are. Using real info here will help us give you the most accurate recommendation.',
     },
+    {
+      id: 13,
+      name: 'without-income',
+      question: '',
+      type: 'radio',
+      options: [
+        { text: 'yes', active: false },
+        { text: 'no', active: false },
+      ],
+      controls: ['without-income'],
+      validations: { required: true },
+      title: 'Can you, your spouse or your family survive without your income?',
+      subtitle: '',
+    },
+    {
+      id: 14,
+      name: 'income-replaced',
+      question: '',
+      type: 'slider',
+      options: [],
+      controls: ['income-replaced'],
+      validations: { required: true, min: 0, max: 500000 },
+      title: 'How many years of income would you like to replace?',
+      subtitle:
+        'Feel free to use close estimates when it comes to your finances.',
+    },
+    {
+      id: 15,
+      name: 'survive-without-income',
+      question: '',
+      type: 'radio',
+      options: [
+        { text: 'yes', active: false },
+        { text: 'no', active: false },
+      ],
+      controls: ['survive-without-income'],
+      validations: { required: true },
+      title: 'If you were not alive, can your spouse or family survive without your income?',
+      subtitle: '',
+    },
+    {
+      id: 16,
+      name: 'income-to-spouse',
+      question: '',
+      type: 'slider',
+      options: [],
+      controls: ['income-to-spouse'],
+      validations: { required: true, min: 0, max: 500000 },
+      title: 'How many years of income would you like to give your spouse or family?',
+      subtitle:
+        'Feel free to use close estimates when it comes to your finances.',
+    },
+    {
+      id: 17,
+      name: 'name-address',
+      question: '',
+      type: 'text',
+      options: ['Full Name', 'Email Address'],
+      controls: ['fullName', 'email'],
+      validations: {
+        required: true,
+        pattern: this.constants.emailRegex,
+      },
+      title: 'Thanks, that\'s all we need!',
+      subtitle: 'We’ll use this email address to save your recommendation and keep in touch. Your email is always safe with us!',
+      inline: false,
+      last: true
+    },
   ];
   questionSet: Question[];
   submitBtn: any = true;
@@ -191,10 +260,12 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
   dateValue!: Date;
   isChildrenPopupVisible = false;
   isOntarioPopupVisible = false;
+  lastQuestionIndex!: number;
 
   constructor(
     private questionService: QuestionnaireService,
     private router: Router,
+    private constants: ConstantService,
   ) {
     this.formSection = parseInt(localStorage.getItem('questionId') || '1');
     const cachedQuestions: Question[] = JSON.parse(localStorage.getItem('questions') || '{}');
@@ -206,6 +277,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.assignQuestions();
+    this.lastQuestionIndex = this.questionSet.filter(question => !!question?.last)[0].id;
 
     // subscribe to back button clicks
     this.questionService.backButtonClick.subscribe(_ => this.previousQuestion());
@@ -234,28 +306,16 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
       if (localStorage.getItem('questionId') == question.id) {
         this.currentQuestion = question;
         const cachedPayload = JSON.parse(localStorage.getItem('payload') || '{}');
-        const validations: any[] = [];
-        // creates validations array for a control
-        Object.keys(question.validations).forEach(validation => {
-          validation === 'required' && question.validations[validation]
-            && validations.push(Validators.required);
-          validation === 'pattern'
-            && validations.push(Validators.pattern(question.validations.pattern));
-          validation === 'min'
-            && validations.push(Validators.min(question.validations.min + 100));
-          validation === 'max'
-            && validations.push(Validators.max(question.validations.max));
-        });
         // enable submit button if there are no controls
         if (!question?.controls?.length) this.formGroup.setErrors(null);
         // creates form controls & updates with empty/cached value
         else {
           question.controls.forEach((controlName: string) => {
-            this.formGroup.addControl(controlName, new FormControl(cachedPayload[controlName] ?? '', validations));
+            this.formGroup.addControl(controlName, new FormControl(cachedPayload[controlName] ?? '', this.getValidations(question, controlName)));
           });
         }
         // removes validations of all form controls except the current question's
-        Object.keys(this.formGroup.controls).forEach((key) => {
+        Object.keys(this.formGroup.controls).forEach(key => {
           !question?.controls?.includes(key) &&
             this.formGroup.get(key)!.setErrors(null);
         });
@@ -269,9 +329,38 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
           && (this.dateValue = cachedPayload[question.name]);
         question.name === 'children'
           && this.formGroup.get('children-length')?.setValue(cachedPayload['children-length'] || 1);
-        validations.length = 0;
       }
     });
+  }
+
+  /**
+   * Creates validations array for a control
+   */
+  getValidations(question: Question, controlName: string): any[] {
+    const allValidations: any[] = [];
+    Object.keys(question.validations).forEach(validation => {
+      switch (validation) {
+        case 'required':
+          question.validations[validation]
+            && allValidations.push(Validators.required);
+          break;
+        case 'pattern':
+          if (question.id === 17) {
+            controlName === 'email'
+              && allValidations.push(Validators.pattern(question.validations.pattern!));
+          } else {
+            allValidations.push(Validators.pattern(question.validations.pattern!));
+          }
+          break;
+        case 'min':
+          allValidations.push(Validators.min(question.validations.min! + 100));
+          break;
+        case 'max':
+          allValidations.push(Validators.max(question.validations.max!));
+          break;
+      }
+    });
+    return allValidations;
   }
 
   /**
@@ -280,8 +369,10 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
   continue() {
     // reset slider value on continue
     this.currentQuestion.type === 'slider' && (this.sliderValue = 0);
-    this.formSection++;
-    this.loadQuestion();
+    if (this.currentQuestion.id < this.lastQuestionIndex) {
+      this.formSection++;
+      this.loadQuestion();
+    }
     const payload = { ...(JSON.parse(localStorage.getItem('payload') || '{}')), ...this.formGroup.value };
     localStorage.setItem('payload', JSON.stringify(payload));
   }

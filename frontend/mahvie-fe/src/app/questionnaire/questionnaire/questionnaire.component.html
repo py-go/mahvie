@@ -38,15 +38,11 @@
                         </ng-container>
                       </div>
                     </div>
-                    <!-- 2 textboxes -->
-                    <div *ngIf="currentQuestion.type === 'text' && currentQuestion.inline" class="mx-auto">
-                        <input formControlName="{{currentQuestion.controls[i]}}" type="text" class="inputText inputHalf col-sm-6" placeholder={{fields}} 
+                    <!-- textboxes -->
+                    <div *ngIf="currentQuestion.type === 'text'" class="inline-container" [class.inline]="currentQuestion.inline">
+                        <input [formControlName]="currentQuestion.controls[i]" type="text" 
+                          class="inputText inputHalf" [placeholder]="fields" 
                           *ngFor="let fields of currentQuestion.options; let i = index;">
-                    </div>
-                    <!-- single textbox -->
-                    <div *ngIf="currentQuestion.type === 'text' && !currentQuestion.inline" class="col-sm-7 mx-auto">
-                        <input formControlName="{{currentQuestion.controls[0]}}" type="text" class="inputText inputFull" placeholder={{fields}} 
-                          *ngFor="let fields of currentQuestion.options">
                     </div>
                     <!-- slider control -->
                     <div *ngIf="currentQuestion.type === 'slider'" class="col-sm-7 mx-auto">
@@ -108,7 +104,9 @@
                   </div>
                   <!-- submit/skip -->
                   <div class="text-center button-container">
-                    <button [disabled]="formGroup.invalid" type="submit" class="submitBtn" >Continue</button>
+                    <button [disabled]="formGroup.invalid" type="submit" class="submitBtn" >
+                      {{ currentQuestion.last ? 'See Recommendation': 'Continue' }}
+                    </button>
                     <button *ngIf="formSection === 2" class="skipText" (click)="continue()">Skip for now</button>
                   </div>
                 </form>
