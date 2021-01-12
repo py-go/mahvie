@@ -51,7 +51,8 @@ $preference-list: "life-insurance", "critical-illness", "long-term-care";
   &::placeholder {
     color: $placeholder;
   }
-  &:focus, &.ng-valid {
+  &:focus,
+  &.ng-valid {
     @include radius(0);
     outline: 2px solid lighten($primary, 35%);
     border: 2px solid $primary;
@@ -71,7 +72,8 @@ $preference-list: "life-insurance", "critical-illness", "long-term-care";
   }
 }
 
-.submitBtn, .skipText {
+.submitBtn,
+.skipText {
   font-size: 1.25rem;
   height: 50px;
   width: 350px;
@@ -159,14 +161,16 @@ $preference-list: "life-insurance", "critical-illness", "long-term-care";
 }
 
 .t1 {
-  font: 700 1rem 'Source Sans Pro';
+  width: 40%;
+  font: 700 1rem "Source Sans Pro";
   text-align: right;
   color: #18344e;
   border: 2px solid $secondary;
 }
 
 .t2 {
-  font: 700 1rem 'Lato';
+  width: 20%;
+  font: 700 1rem "Lato";
   text-align: center;
   color: #a0a0a0;
   border: 2px solid $secondary;
@@ -217,7 +221,7 @@ $preference-list: "life-insurance", "critical-illness", "long-term-care";
 
 .inputSlide {
   text-align: right;
-  font: 1.4rem 'Lato';
+  font: 1.4rem "Lato";
   color: #a0a0a0;
 }
 
@@ -231,7 +235,7 @@ mat-slider {
 
 .sliderLabel {
   margin-top: 16px;
-  font: 1.4rem 'Lato';
+  font: 1.4rem "Lato";
   text-align: center;
   color: #18344e;
 }
@@ -384,9 +388,10 @@ mat-slider {
   text-align: center;
   margin: 50px auto 0;
 
-  p, span {
+  p,
+  span {
     color: $secondary;
-    font: 1rem 'Source Sans Pro';
+    font: 1rem "Source Sans Pro";
     margin-bottom: 0;
   }
   p {
@@ -457,7 +462,7 @@ mat-slider {
     &.inline {
       flex-direction: column;
       width: 100%;
-  
+
       input[type="text"] {
         width: 100%;
       }
@@ -492,4 +497,46 @@ mat-slider {
   width: 20px;
   height: 20px;
   background-size: 20px;
+}
+
+@media only screen and (max-width: 1290px) {
+  .calenderIcon {
+    left: 46px;
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .date-container {
+    width: 100%;
+    margin: 0;
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  .calenderIcon {
+    left: 60px;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .inputDate {
+    &.t1 {
+      width: 100% !important;
+      text-align: center;
+    }
+    &.t2 {
+      width: calc(100% / 3) !important;
+    }
+  }
+  .date-container {
+    .inputDate.t2 {
+      border-top: none;
+    }
+    .date {
+      border-left: 2px solid $secondary;
+    }
+  }
+  .calenderIcon {
+    top: 30px;
+    left: 30px;
+  }
 }

@@ -57,17 +57,17 @@
                         </section>
                     </div>
                     <!-- dates -->
-                    <div *ngIf="currentQuestion.type === 'date'" class="col-sm-7 mx-auto">
+                    <div *ngIf="currentQuestion.type === 'date'" class="col-sm-7 mx-auto date-container">
                         <input matInput readonly [matDatepicker]="dp3" [value]="dateValue"
                           (dateChange)="dateSelected('change', $event)" class="inputDate t1" 
-                          style="width:40%" placeholder="Date of Birth">
+                          placeholder="Date of Birth">
                         <div class="calenderIcon">
                             <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
                             <mat-datepicker #dp3 disabled="false"></mat-datepicker>
                         </div>
-                        <input type="text" class="inputDate t2" style="width:20%" placeholder="MM" readonly [(ngModel)]="date" [ngModelOptions]="{standalone: true}">
-                        <input type="text" class="inputDate t2" style="width:20%" placeholder="DD" readonly [(ngModel)]="month" [ngModelOptions]="{standalone: true}">
-                        <input type="text" class="inputDate t2" style="width:20%" placeholder="YYYY" readonly [(ngModel)]="year" [ngModelOptions]="{standalone: true}">
+                        <input type="text" class="inputDate t2 date" placeholder="MM" readonly [(ngModel)]="date" [ngModelOptions]="{standalone: true}">
+                        <input type="text" class="inputDate t2" placeholder="DD" readonly [(ngModel)]="month" [ngModelOptions]="{standalone: true}">
+                        <input type="text" class="inputDate t2" placeholder="YYYY" readonly [(ngModel)]="year" [ngModelOptions]="{standalone: true}">
                     </div>
                     <!-- preferences -->
                     <div *ngIf="currentQuestion.type === 'products-radio'" class="row mt-4 w-100 mt-3 mx-auto">

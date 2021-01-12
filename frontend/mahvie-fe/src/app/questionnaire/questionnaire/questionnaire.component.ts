@@ -306,34 +306,43 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
       if (localStorage.getItem('questionId') == question.id) {
         this.currentQuestion = question;
         const cachedPayload = JSON.parse(localStorage.getItem('payload') || '{}');
+
         // enable submit button if there are no controls
         if (!question?.controls?.length) this.formGroup.setErrors(null);
         // creates form controls & updates with empty/cached value
         else {
           question.controls.forEach((controlName: string) => {
-            this.formGroup.addControl(controlName, new FormControl(cachedPayload[controlName] ?? '', this.getValidations(question, controlName)));
+            this.formGroup.addControl(
+              controlName,
+              new FormControl(cachedPayload[controlName] ?? '', this.getValidations(question, controlName))
+            );
           });
         }
+
         // removes validations of all form controls except the current question's
         Object.keys(this.formGroup.controls).forEach(key => {
           !question?.controls?.includes(key) &&
             this.formGroup.get(key)!.setErrors(null);
         });
+
         // set default/cached value for slider control
         if (question.type === 'slider') {
           this.sliderValue = cachedPayload[question.name] || 0;
           this.formGroup.get(question.name)?.setValue(this.sliderValue);
         }
+
         // set default/cached value for date
         if (question.type === 'date') {
           this.dateValue = cachedPayload[question.name];
           if (this.dateValue) {
             const cachedDate = new Date(this.dateValue);
             this.date = cachedDate.getDate();
-            this.month = cachedDate.getMonth();
+            this.month = cachedDate.getMonth() + 1;
             this.year = cachedDate.getFullYear();
           }
         }
+
+        // set default/cached value of children length
         question.name === 'children'
           && this.formGroup.get('children-length')?.setValue(cachedPayload['children-length'] || 1);
       }
