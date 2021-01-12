@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import CoverageRange, AgeRange, PremiumRange
 
-# Register your models here.
+admin.site.register(CoverageRange)
+admin.site.register(AgeRange)
+admin.site.register(PremiumRange)
