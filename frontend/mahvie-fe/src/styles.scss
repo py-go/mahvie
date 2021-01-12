@@ -134,3 +134,34 @@ select {
 .mat-progress-spinner circle, .mat-spinner circle {
   stroke: $secondary;
 }
+
+header.temp {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px;
+
+  &.flex-start {
+    justify-content: flex-start;
+
+    a:not(:first-child) {
+      margin-left: 15px;
+    }
+  }
+  a {
+    @include radius(5px);
+    flex: 0 0 22%;
+    text-align: center;
+    display: block;
+    background: #ebebeb;
+    color: $primary;
+    text-transform: uppercase;
+    padding: 30px 0;
+
+    &:hover {
+      @include box-shadow(0, 0, 8px, 0, 0, 0, 0.1);
+      background: darken(#ebebeb, 8%);
+      color: $primary;
+    }
+  }
+}
