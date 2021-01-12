@@ -325,8 +325,15 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
           this.formGroup.get(question.name)?.setValue(this.sliderValue);
         }
         // set default/cached value for date
-        question.type === 'date'
-          && (this.dateValue = cachedPayload[question.name]);
+        if (question.type === 'date') {
+          this.dateValue = cachedPayload[question.name];
+          if (this.dateValue) {
+            const cachedDate = new Date(this.dateValue);
+            this.date = cachedDate.getDate();
+            this.month = cachedDate.getMonth();
+            this.year = cachedDate.getFullYear();
+          }
+        }
         question.name === 'children'
           && this.formGroup.get('children-length')?.setValue(cachedPayload['children-length'] || 1);
       }
