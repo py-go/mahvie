@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { AlertboxService } from '../../shared/services/alertbox.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LoaderService } from '../../shared/services/loader.service';
-import { AuthService } from 'src/app/core/services/auth.service';
+import { ConstantService } from '@config/constant.service';
+import { AlertboxService } from '@services/alertbox.service';
+import { AuthService } from '@services/auth.service';
 
 @Component({
   selector: 'app-registeration',
@@ -11,54 +11,31 @@ import { AuthService } from 'src/app/core/services/auth.service';
   styleUrls: ['./registeration.component.css'],
 })
 export class RegisterationComponent implements OnInit {
-  registerForm: any;
-  submitClicked: boolean = false;
+  registerForm!: FormGroup;
 
   constructor(
-    private fb: FormBuilder,
+    private formBuilder: FormBuilder,
     private authService: AuthService,
     private alertboxService: AlertboxService,
     private router: Router,
-    private loaderService: LoaderService
+    private constantService: ConstantService,
   ) {}
 
   ngOnInit(): void {
-    this.registerForm = this.fb.group({
+    this.registerForm = this.formBuilder.group({
       username: ['', Validators.required],
-      email: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
-        ],
-      ],
+      password: ['', Validators.required],
+      email: ['', [Validators.required, Validators.pattern(this.constantService.emailRegex)]],
       first_name: ['', Validators.required],
       last_name: ['', Validators.required],
-      phone_number: [
-        '',
-        [
-          Validators.required,
-          Validators.maxLength(10),
-          Validators.pattern('^[0-9]*$'),
-        ],
-      ],
-      password: ['', Validators.required],
+      phone_number: ['', [Validators.required, Validators.maxLength(12), Validators.pattern(this.constantService.numbersOnly)]],
     });
   }
 
   onSubmit() {
-    this.submitClicked = true;
-    if (this.registerForm.status == 'VALID') {
-      this.loaderService.showLoader();
-      this.authService.registerUser(this.registerForm.value).subscribe(_ => {
-        this.loaderService.hideLoader();
-        this.alertboxService.showAlert('success', 'user created');
-        this.router.navigate(['']);
-      },
-      (err) => {
-        this.loaderService.hideLoader();
-        this.alertboxService.showAlert('error', 'user created failed');
-      });
-    }
+    this.authService.registerUser(this.registerForm.value).subscribe(_ => {
+      this.alertboxService.showAlert('success', 'New user registered');
+      this.router.navigate(['']);
+    });
   }
 }

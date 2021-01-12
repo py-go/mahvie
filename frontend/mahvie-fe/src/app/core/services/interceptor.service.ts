@@ -1,18 +1,27 @@
 import { Injectable } from '@angular/core';
-import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { Observable, ObservableInput, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { LoaderService } from './loader.service';
+import { AlertboxService } from './alertbox.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class InterceptorService implements HttpInterceptor {
-  constructor() {}
+
+  constructor(
+    private loaderService: LoaderService,
+    private alertboxService: AlertboxService,
+  ) {}
 
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+    // show loader
+    this.loaderService.showLoader();
+    
     // add authorization header with jwt token if available
     request = request.clone({
       setHeaders: {
@@ -20,6 +29,25 @@ export class InterceptorService implements HttpInterceptor {
       },
     });
 
-    return next.handle(request);
+    return next.handle(request).pipe(
+      map((event: HttpEvent<any>) => {
+        event instanceof HttpResponse && this.loaderService.hideLoader();
+        return event;
+      }),
+      catchError(this.handleAppError.bind(this))
+    );
+  }
+
+  /**
+   * Common HTTP error handler
+   * @param error Error response from API
+   */
+  handleAppError(error: HttpErrorResponse): ObservableInput<any> {
+    this.loaderService.hideLoader();
+    
+    // general error message from API
+    this.alertboxService.showAlert('error', error?.error || 'Server Error');
+
+    return throwError(error);
   }
 }

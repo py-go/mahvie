@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { LoaderService } from '@services/loader.service';
 import { SubSink } from 'subsink';
-import { LoaderService } from '../../../shared/services/loader.service';
 
 @Component({
   selector: 'app-loader',
@@ -8,17 +8,17 @@ import { LoaderService } from '../../../shared/services/loader.service';
   styleUrls: ['./loader.component.css'],
 })
 export class LoaderComponent implements OnInit, OnDestroy {
-  showLoader: any;
+  showLoader: boolean;
   subsink = new SubSink();
 
   constructor(
     private loaderService: LoaderService,
   ) {
+    this.showLoader = false;
     this.subsink.sink = this.loaderService.loaderSubject.subscribe(data => this.showLoader = data);
   }
 
   ngOnInit(): void {
-    this.showLoader = false;
   }
 
   ngOnDestroy(): void {

@@ -2,11 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { Router } from '@angular/router';
+import { ConstantService } from '@config/constant.service';
+import { Option, Question } from '@models/core.model';
+import { QuestionnaireService } from '@services/questionnaire.service';
 import { Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { ConstantService } from 'src/app/config/constant.service';
-import { Option, Question } from 'src/app/core/models/core.model';
-import { QuestionnaireService } from 'src/app/core/services/questionnaire.service';
 import { SubSink } from 'subsink';
 
 @Component({
@@ -39,7 +39,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
       controls: ['email'],
       validations: {
         required: true,
-        pattern: this.constants.emailRegex,
+        pattern: this.constantService.emailRegex,
       },
       title: 'Before we get started...',
       subtitle: '',
@@ -237,7 +237,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
       controls: ['fullName', 'email'],
       validations: {
         required: true,
-        pattern: this.constants.emailRegex,
+        pattern: this.constantService.emailRegex,
       },
       title: 'Thanks, that\'s all we need!',
       subtitle: 'We’ll use this email address to save your recommendation and keep in touch. Your email is always safe with us!',
@@ -265,7 +265,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
   constructor(
     private questionService: QuestionnaireService,
     private router: Router,
-    private constants: ConstantService,
+    private constantService: ConstantService,
   ) {
     this.formSection = parseInt(localStorage.getItem('questionId') || '1');
     const cachedQuestions: Question[] = JSON.parse(localStorage.getItem('questions') || '{}');

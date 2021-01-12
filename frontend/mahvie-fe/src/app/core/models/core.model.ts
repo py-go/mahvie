@@ -75,3 +75,16 @@ export type ResetPassword = Pick<Register, 'email'>;
 export type ConfirmPassword = Pick<Register, 'password'>;
 
 export type Token = Record<'token', string>;
+
+/**
+ * User alert info
+ */
+export type Alert = {
+  type: AlertTypes;
+  text: string;
+}
+
+/**
+ * Literal alert types
+ */
+export type AlertTypes = 'success' | 'error' | 'info' | 'warning' | '';

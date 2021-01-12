@@ -1,25 +1,29 @@
-import { Component, OnInit } from '@angular/core';
-import { AlertboxService } from '../../../shared/services/alertbox.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { SubSink } from 'subsink';
+import { Alert } from '@models/core.model';
+import { AlertboxService } from '@services/alertbox.service';
 
 @Component({
   selector: 'app-alertbox',
   templateUrl: './alertbox.component.html',
-  styleUrls: ['./alertbox.component.css']
+  styleUrls: ['./alertbox.component.css'],
 })
-export class AlertboxComponent implements OnInit {
+export class AlertboxComponent implements OnInit, OnDestroy {
+  alertInfo!: Alert;
+  subsink = new SubSink();
 
-  localServiceVar:any;
-
-  constructor(private alertboxService:AlertboxService) { 
-    this.localServiceVar = this.alertboxService.alertSubject.subscribe(
-      (data)=>{
-        this.localServiceVar = data;
-      }
-    )
+  constructor(
+    private alertboxService: AlertboxService,
+  ) {
+    this.subsink.sink = this.alertboxService.alertSubject$
+      .subscribe((data: Alert) => this.alertInfo = data);
   }
 
   ngOnInit(): void {
-    this.localServiceVar = this.alertboxService.show;
+    this.alertInfo = this.alertboxService.show;
   }
 
+  ngOnDestroy(): void {
+    this.subsink.unsubscribe();
+  }
 }

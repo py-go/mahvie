@@ -1,8 +1,7 @@
-/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": "src",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -16,10 +15,18 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "es2020",
-    "lib": [
-      "es2018",
-      "dom"
-    ]
+    "lib": ["es2018", "dom"],
+    "paths": {
+      "@auth/*": ["app/auth/*"],
+      "@config/*": ["app/config/*"],
+      "@models/*": ["app/core/models/*"],
+      "@services/*": ["app/core/services/*"],
+      "@core/*": ["app/core/*"],
+      "@dashboard/*": ["app/dashboard/*"],
+      "@questionnaire/*": ["app/questionnaire/*"],
+      "@shared/*": ["app/shared/*"],
+      "@environments/*": ["environments/*"],
+    }
   },
   "angularCompilerOptions": {
     "strictInjectionParameters": true,

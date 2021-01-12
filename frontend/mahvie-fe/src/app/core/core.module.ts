@@ -1,11 +1,11 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { RouterModule } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { AboutUsComponent } from './components/about-us/about-us.component';
-import { RouterModule } from '@angular/router';
 import { AlertboxComponent } from './components/alertbox/alertbox.component';
 import { LoaderComponent } from './components/loader/loader.component';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ClientdashboardComponent } from './components/clientdashboard/clientdashboard.component';
 
 @NgModule({

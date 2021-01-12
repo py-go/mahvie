@@ -1,20 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { AlertboxService } from '../../shared/services/alertbox.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { LoaderService } from '../../shared/services/loader.service';
-import { ConstantService } from 'src/app/config/constant.service';
-import { AuthService } from 'src/app/core/services/auth.service';
+import { ConstantService } from '@config/constant.service';
+import { AlertboxService } from '@services/alertbox.service';
+import { AuthService } from '@services/auth.service';
 
 @Component({
   selector: 'app-forget-password',
   templateUrl: './forget-password.component.html',
-  styleUrls: ['./forget-password.component.css'],
+  styleUrls: ['./forget-password.component.scss'],
 })
 export class ForgetPasswordComponent implements OnInit {
-  forgetForm: any;
-  resetForm: any;
-  submitClicked = false;
+  forgetForm!: FormGroup;
+  resetForm!: FormGroup;
   sectionSwitch = 'forget';
   tokenValue: any = null;
   tokenValid = false;
@@ -23,25 +21,18 @@ export class ForgetPasswordComponent implements OnInit {
     private formBuilder: FormBuilder,
     private alertboxService: AlertboxService,
     private router: Router,
-    private routes: ActivatedRoute,
-    private loaderService: LoaderService,
-    private constants: ConstantService,
+    private activatedRoute: ActivatedRoute,
+    private constantService: ConstantService,
     private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
-    this.tokenValue = this.routes.snapshot.queryParams['token'];
+    this.tokenValue = this.activatedRoute.snapshot.queryParams['token'];
     this.tokenValue
       ? (this.sectionSwitch = 'reset')
       : (this.sectionSwitch = 'forget');
     this.forgetForm = this.formBuilder.group({
-      email: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(this.constants.emailRegex),
-        ],
-      ],
+      email: ['', [Validators.required,  Validators.pattern(this.constantService.emailRegex)]],
     });
     this.resetForm = this.formBuilder.group({
       password: ['', Validators.required],
@@ -50,24 +41,16 @@ export class ForgetPasswordComponent implements OnInit {
   }
 
   onSubmit(params: string) {
-    this.loaderService.showLoader();
-    this.submitClicked = true;
-    if (params == 'forget') {
-      if (this.forgetForm.status == 'VALID') {
-        this.authService.resetPassword(this.forgetForm.value).subscribe(_ => {
-          this.alertboxService.showAlert('success', 'please verify your email');
-          this.router.navigate(['']);
-          this.loaderService.hideLoader();
-        });
-      }
+    if (params === 'forget') {
+      this.authService.resetPassword(this.forgetForm.value).subscribe(_ => {
+        this.alertboxService.showAlert('success', 'Please verify your email');
+        this.router.navigate(['']);
+      });
     } else {
-      if (this.resetForm.status == 'VALID') {
-        this.authService.confirmPassword(this.resetForm.value).subscribe(_ => {
-          this.alertboxService.showAlert('success', 'password reset successfull');
-          this.router.navigate(['']);
-          this.loaderService.hideLoader();
-        });
-      }
+      this.authService.confirmPassword(this.resetForm.value).subscribe(_ => {
+        this.alertboxService.showAlert('success', 'Password reset successful');
+        this.router.navigate(['']);
+      });
     }
   }
 
@@ -77,7 +60,7 @@ export class ForgetPasswordComponent implements OnInit {
         this.tokenValid = true;
       },
       (err) => {
-        this.alertboxService.showAlert('error', 'invalid token');
+        this.alertboxService.showAlert('error', 'Invalid token');
         this.router.navigate(['']);
       });
     }

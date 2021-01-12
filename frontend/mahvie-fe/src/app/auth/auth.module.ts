@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Routes, RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 import { RegisterationComponent } from './registeration/registeration.component';
-import { Routes, RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { ReactiveFormsModule }   from '@angular/forms';
 
 const routes: Routes = [
-  { path: 'login', component:LoginComponent },
-  { path: 'forget', component:ForgetPasswordComponent },
-  { path: 'register', component:RegisterationComponent }
+  { path: 'login', component: LoginComponent },
+  { path: 'forget', component: ForgetPasswordComponent },
+  { path: 'register', component: RegisterationComponent },
 ];
 
 @NgModule({
@@ -23,7 +23,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forChild(routes)
-  ]
+    RouterModule.forChild(routes),
+  ],
 })
-export class AuthModule { }
+export class AuthModule {}

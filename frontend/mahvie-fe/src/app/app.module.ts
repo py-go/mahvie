@@ -3,14 +3,13 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
-import { InterceptorService } from '../app/core/services/interceptor.service';
-
-import { QuestionnaireModule } from './questionnaire/questionnaire.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { CookieService } from 'ngx-cookie-service';
-import { CoreModule } from './core/core.module';
+import { QuestionnaireModule } from '@questionnaire/questionnaire.module';
+import { CoreModule } from '@core/core.module';
+import { InterceptorService } from '@services/interceptor.service';
 
 @NgModule({
   declarations: [AppComponent],

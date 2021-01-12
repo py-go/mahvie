@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { QuestionnaireService } from 'src/app/core/services/questionnaire.service';
+import { QuestionnaireService } from '@services/questionnaire.service';
 
 @Component({
   selector: 'app-header',
@@ -10,7 +10,7 @@ export class HeaderComponent implements OnInit {
   isButtonVisible = parseInt(localStorage.getItem('questionId') || '1') > 1;
 
   constructor(
-    private questionService: QuestionnaireService
+    private questionService: QuestionnaireService,
   ) { }
 
   ngOnInit(): void {
