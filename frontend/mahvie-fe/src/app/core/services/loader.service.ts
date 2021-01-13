@@ -9,11 +9,11 @@ export class LoaderService {
 
   constructor() {}
 
-  showLoader() {
+  showLoader(): void {
     this.loaderSubject.next(true);
   }
 
-  hideLoader() {
+  hideLoader(): void {
     this.loaderSubject.next(false);
   }
 }

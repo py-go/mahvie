@@ -13,10 +13,10 @@ export class QuestionnaireService {
 
   constructor(
     private http: HttpClient,
-  ) { 
+  ) {
     this.baseUrl = environment.baseUrl;
   }
-    
+
   /**
    * Posts current answers. Invoked on each 'continue' click event.
    */

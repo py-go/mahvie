@@ -12,7 +12,7 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-  ) { 
+  ) {
     this.baseUrl = environment.baseUrl;
   }
 

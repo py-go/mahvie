@@ -23,9 +23,9 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
       type: '',
       options: [],
       validations: {},
-      title: "Great, let's get to know you!",
+      title: 'Great, let\'s get to know you!',
       subtitle:
-        "We'll recommend your coverage amount and policy length by assessing",
+        'We\'ll recommend your coverage amount and policy length by assessing',
     },
     {
       id: 2,
@@ -76,7 +76,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
       options: [
         { text: 'life-insurance', active: false, htmlTitle: 'life insurance', hoverText: 'If I were to pass away, I would like to give money to a person(s) of my choice.' },
         { text: 'critical-illness', active: false, htmlTitle: 'critical illness', hoverText: 'If I were to suffer a stroke, heart attack or  get cancer, I would like to personally receive a large amount of money.' },
-        { text: 'long-term-care', active: false, htmlTitle: 'long term care', hoverText: 'If I were unable to perform my daily tasks independently, I would like to receive money to hire assistance.' }, 
+        { text: 'long-term-care', active: false, htmlTitle: 'long term care', hoverText: 'If I were unable to perform my daily tasks independently, I would like to receive money to hire assistance.' },
       ],
       controls: ['products'],
       validations: { required: true },
@@ -266,7 +266,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     private constantService: ConstantService,
     private router: Router,
   ) {
-    this.questionId = parseInt(localStorage.getItem('questionId') || '1');
+    this.questionId = Number(localStorage.getItem('questionId') || '1');
     const cachedQuestions: Question[] = JSON.parse(localStorage.getItem('questions') || '{}');
     this.questionSet = Array.isArray(cachedQuestions) && cachedQuestions.length
       ? cachedQuestions
@@ -301,8 +301,8 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
    * Shows question based on question id in local storage
    */
   assignQuestions(): void {
-    this.questionSet.forEach((question: any) => {
-      if (localStorage.getItem('questionId') == question.id) {
+    this.questionSet.forEach((question: Question) => {
+      if (Number(localStorage.getItem('questionId')) === question.id) {
         this.currentQuestion = question;
         const cachedPayload = JSON.parse(localStorage.getItem('payload') || '{}');
 
@@ -382,7 +382,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
    */
   continue(skipQuestion = false): void {
     this.saveState(skipQuestion);
-    
+
     // reset slider value on continue
     this.currentQuestion.type === 'slider' && (this.sliderValue = 0);
     if (this.currentQuestion.id < this.lastQuestionIndex) {
@@ -399,7 +399,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
       ...(JSON.parse(localStorage.getItem('payload') || '{}')),
       ...this.formGroup.value
     };
-    const payload = { 
+    const payload = {
       questions: localStorage.getItem('questions'),
       answers,
     };
@@ -450,10 +450,10 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
 
   /**
    * Options selections event
-   * @param index
+   * @param index Index of selected radio
    */
   radioSelection(index: number): void {
-    this.questionSet.forEach(question => {
+    this.questionSet.forEach((question: Question) => {
       if (question.id === this.currentQuestion.id) {
         question.options.forEach((option: Option) => {
           option.active = false;
@@ -467,14 +467,14 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
 
   /**
    * Common checkbox selection event
-   * @param index 
+   * @param index Index of selected checkbox
    */
   checkboxSelection(index: number): void {
-    this.questionSet.forEach(question => {
+    this.questionSet.forEach((question: Question) => {
       if (question.id === this.currentQuestion.id) {
         let checkedValues = '';
         question.options.forEach((option: Option, ind: number) => {
-          index === ind 
+          index === ind
             && (option.active = !option.active);
           option.active
             && (checkedValues += `${option.text},`);

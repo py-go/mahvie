@@ -4,7 +4,7 @@
 export type Checkboxes = {
   htmlTitle: string;
   hoverText: string;
-}
+};
 
 /**
  * Radio button iterator in questionnaire
@@ -12,7 +12,7 @@ export type Checkboxes = {
 export type Option = Partial<Checkboxes> & {
   text: string;
   active: boolean;
-}
+};
 
 /**
  * Validations for questionnaire
@@ -22,7 +22,7 @@ export type Validation = {
   min: number;
   max: number;
   pattern: string;
-}
+};
 
 /**
  * Single question instance
@@ -40,7 +40,7 @@ export type Question = {
   skip?: boolean;
   inline?: boolean;
   last?: boolean;
-}
+};
 
 /**
  * Environment variables
@@ -48,7 +48,7 @@ export type Question = {
 export type Environment = {
   production: boolean;
   baseUrl: string;
-}
+};
 
 /**
  * Login API params
@@ -56,7 +56,7 @@ export type Environment = {
 export type Login = {
   username: string;
   password: string;
-}
+};
 
 /**
  * Register API params
@@ -68,7 +68,7 @@ export type Register = {
   last_name: string;
   phone_number: string;
   password: string;
-}
+};
 
 export type ResetPassword = Pick<Register, 'email'>;
 
@@ -87,7 +87,7 @@ export type AlertTypes = 'success' | 'error' | 'info' | 'warning' | '';
 export type Alert = {
   type: AlertTypes;
   text: string;
-}
+};
 
 /**
  * User credentials
@@ -95,4 +95,4 @@ export type Alert = {
 export type AppTokens = {
   accessToken: string;
   refreshToken: string;
-}
+};

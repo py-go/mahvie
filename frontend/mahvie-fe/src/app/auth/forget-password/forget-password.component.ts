@@ -27,7 +27,7 @@ export class ForgetPasswordComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.tokenValue = this.activatedRoute.snapshot.queryParams['token'];
+    this.tokenValue = this.activatedRoute.snapshot.queryParams?.token;
     this.tokenValue
       ? (this.sectionSwitch = 'reset')
       : (this.sectionSwitch = 'forget');
@@ -40,7 +40,7 @@ export class ForgetPasswordComponent implements OnInit {
     this.validateToken(this.tokenValue);
   }
 
-  onSubmit(params: string) {
+  onSubmit(params: string): void {
     if (params === 'forget') {
       this.authService.resetPassword(this.forgetForm.value).subscribe(_ => {
         this.alertboxService.showAlert('success', 'Please verify your email');
@@ -54,9 +54,9 @@ export class ForgetPasswordComponent implements OnInit {
     }
   }
 
-  validateToken(token: string) {
+  validateToken(token: string): void {
     if (token) {
-      this.authService.validateToken({ token: token }).subscribe(_ => {
+      this.authService.validateToken({ token }).subscribe(_ => {
         this.tokenValid = true;
       },
       (err) => {

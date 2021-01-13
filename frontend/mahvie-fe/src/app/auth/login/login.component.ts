@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  onSubmit(): void {
     this.authService.loginUser(this.loginForm.value).subscribe(data => {
       this.alertboxService.showAlert('success', 'Login successful');
       this.cookieService.set('user-tokens', JSON.stringify(data));

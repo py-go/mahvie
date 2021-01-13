@@ -32,7 +32,7 @@ export class RegisterationComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+  onSubmit(): void {
     this.authService.registerUser(this.registerForm.value).subscribe(_ => {
       this.alertboxService.showAlert('success', 'New user registered');
       this.router.navigate(['']);

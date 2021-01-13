@@ -28,8 +28,8 @@ import { ClientdashboardComponent } from './components/clientdashboard/clientdas
     LoaderComponent,
   ]
 })
-export class CoreModule { 
-  
+export class CoreModule {
+
   constructor(
     @Optional() @SkipSelf() parentModule: CoreModule
   ) {

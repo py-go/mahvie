@@ -14,7 +14,7 @@ export class AlertboxService {
 
   constructor() {}
 
-  showAlert(type: AlertTypes, text: string) {
+  showAlert(type: AlertTypes, text: string): void {
     this.show.type = type;
     this.show.text = text;
     this.alertSubject$.next(this.show);

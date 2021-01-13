@@ -10,6 +10,6 @@ export class AppComponent {
 
   constructor() {
     // disables console logs in production
-    environment.production && (console.log = function () {})();
+    environment.production && (console.log = () => {})();
   }
 }

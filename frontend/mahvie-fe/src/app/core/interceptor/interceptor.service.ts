@@ -21,7 +21,7 @@ export class InterceptorService implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     // show loader
     this.loaderService.showLoader();
-    
+
     // add authorization header with jwt token if available
     request = request.clone({
       setHeaders: {
@@ -44,7 +44,7 @@ export class InterceptorService implements HttpInterceptor {
    */
   handleAppError(error: HttpErrorResponse): ObservableInput<any> {
     this.loaderService.hideLoader();
-    
+
     // general error message from API
     this.alertboxService.showAlert('error', error.error?.error || 'Server Error');
 
