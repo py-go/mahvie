@@ -145,9 +145,14 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
+            'NAME': config('DATABASE_NAME'),
+            'USER': config('DATABASE_USER'),
+            'PASSWORD': config('DATABASE_PASSWORD'),
+            'HOST': config('DATABASE_HOST'),
             'OPTIONS': {
-                'read_default_file': config('DB_CONFIG_FILE'),
+                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
             },
+
         }
     }
     # Password validation
