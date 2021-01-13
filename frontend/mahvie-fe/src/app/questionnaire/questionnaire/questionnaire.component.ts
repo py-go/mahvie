@@ -18,6 +18,17 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
   questionPool: Question[] = [
     {
       id: 1,
+      name: 'gettoknowyou',
+      question: '',
+      type: '',
+      options: [],
+      validations: {},
+      title: "Great, let's get to know you!",
+      subtitle:
+        "We'll recommend your coverage amount and policy length by assessing",
+    },
+    {
+      id: 2,
       name: 'ontario',
       question: 'Do you live in Ontario?',
       type: 'radio',
@@ -31,7 +42,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
       subtitle: '',
     },
     {
-      id: 2,
+      id: 3,
       name: 'email',
       question: 'What is your email?',
       type: 'text',
@@ -44,17 +55,6 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
       title: 'Before we get started...',
       subtitle: '',
       skip: true,
-    },
-    {
-      id: 3,
-      name: 'gettoknowyou',
-      question: '',
-      type: '',
-      options: [],
-      validations: {},
-      title: "Great, let's get to know you!",
-      subtitle:
-        "We'll recommend your coverage amount and policy length by assessing",
     },
     {
       id: 4,
@@ -85,6 +85,18 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     },
     {
       id: 6,
+      name: 'dob',
+      question: '',
+      type: 'date',
+      options: [],
+      controls: ['dob'],
+      validations: { required: true },
+      title: 'When were you born?',
+      subtitle:
+        'Your recommendation is as unique as you are. Using real info here will help us give you the most accurate recommendation.',
+    },
+    {
+      id: 7,
       name: 'gender',
       question: '',
       type: 'radio',
@@ -99,7 +111,22 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
         'Your recommendation is as unique as you are. Using real info here will help us give you the most accurate recommendation.',
     },
     {
-      id: 7,
+      id: 8,
+      name: 'smoke',
+      question: '',
+      type: 'radio',
+      options: [
+        { text: 'yes', active: false },
+        { text: 'no', active: false },
+      ],
+      controls: ['smoke'],
+      validations: { required: true },
+      title: 'Have you smoked in the last 12 months?',
+      subtitle:
+        'Your recommendation is as unique as you are. Using real info here will help us give you the most accurate recommendation.',
+    },
+    {
+      id: 9,
       name: 'children',
       question: '',
       type: 'radio',
@@ -114,7 +141,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
         'Your recommendation is as unique as you are. Using real info here will help us give you the most accurate recommendation.',
     },
     {
-      id: 8,
+      id: 10,
       name: 'income',
       question: '',
       type: 'slider',
@@ -126,7 +153,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
         'Feel free to use close estimates when it comes to your finances.',
     },
     {
-      id: 9,
+      id: 11,
       name: 'mortgage',
       question: '',
       type: 'slider',
@@ -138,7 +165,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
         'Feel free to use close estimates when it comes to your finances.',
     },
     {
-      id: 10,
+      id: 12,
       name: 'expenses',
       question: '',
       type: 'slider',
@@ -148,33 +175,6 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
       title: 'What is your monthly expenses excluding your mortgage?',
       subtitle:
         'Feel free to use close estimates when it comes to your finances.',
-    },
-    {
-      id: 11,
-      name: 'dob',
-      question: '',
-      type: 'date',
-      options: [],
-      controls: ['dob'],
-      validations: { required: true },
-      title: 'When were you born?',
-      subtitle:
-        'Your recommendation is as unique as you are. Using real info here will help us give you the most accurate recommendation.',
-    },
-    {
-      id: 12,
-      name: 'smoke',
-      question: '',
-      type: 'radio',
-      options: [
-        { text: 'yes', active: false },
-        { text: 'no', active: false },
-      ],
-      controls: ['smoke'],
-      validations: { required: true },
-      title: 'Have you smoked in the last 12 months?',
-      subtitle:
-        'Your recommendation is as unique as you are. Using real info here will help us give you the most accurate recommendation.',
     },
     {
       id: 13,

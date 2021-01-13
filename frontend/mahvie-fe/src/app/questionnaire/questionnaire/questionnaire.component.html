@@ -105,9 +105,13 @@
                   <!-- submit/skip -->
                   <div class="text-center button-container">
                     <button [disabled]="formGroup.invalid" type="submit" class="submitBtn" >
-                      {{ currentQuestion.last ? 'See Recommendation': 'Continue' }}
+                      {{ 
+                        currentQuestion.last 
+                          ? 'See Recommendation' 
+                          : (currentQuestion.id === 1 ? 'Start' : 'Continue') 
+                      }}
                     </button>
-                    <button *ngIf="formSection === 2" class="skipText" (click)="continue()">Skip for now</button>
+                    <button *ngIf="currentQuestion.skip" class="skipText" (click)="continue()">Skip for now</button>
                   </div>
                 </form>
             </section>
