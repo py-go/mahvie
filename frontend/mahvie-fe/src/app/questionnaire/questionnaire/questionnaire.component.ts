@@ -246,7 +246,6 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     },
   ];
   questionSet: Question[];
-  submitBtn: any = true;
   questionId: number;
   currentQuestion: any;
   sliderValue: any = 0;

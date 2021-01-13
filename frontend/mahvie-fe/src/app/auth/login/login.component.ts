@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.cookieService.delete('token');
+    this.cookieService.delete('user-tokens');
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required],
@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this.authService.loginUser(this.loginForm.value).subscribe(data => {
       this.alertboxService.showAlert('success', 'Login successful');
-      this.cookieService.set('token', JSON.stringify(data));
+      this.cookieService.set('user-tokens', JSON.stringify(data));
       this.router.navigate(['/dashboard']);
     });
   }
