@@ -50,13 +50,14 @@ ACCOUNT_AUTHENTICATION_METHOD = "email"
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ),
+    'EXCEPTION_HANDLER': 'api_v1.utils.custom_exception_handler'
 }
+
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
-
 
 # Application definition
 INSTALLED_APPS = [
