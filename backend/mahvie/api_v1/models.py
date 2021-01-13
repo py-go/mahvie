@@ -50,6 +50,7 @@ class PremiumRange(TimeStampedModel):
 class UserResponse(TimeStampedModel):
     user = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE)
+    questionnaire_questions = models.JSONField()
     response_json = models.JSONField()
 
     def __str__(self):

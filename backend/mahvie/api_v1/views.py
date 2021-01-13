@@ -21,39 +21,41 @@ class QuestionnaireResponse(APIView):
         user_response = {}
 
         if self.request.user.is_authenticated:
-            questionnaire_response = request.data
+            questionnaire_questions = request.data.get('questions')
+            questionnaire_response = request.data.get('answers')
 
             try:
                 user_response = UserResponse.objects.get(
                     user=self.request.user)
-                user_response.response_json = questionnaire_response
 
             except UserResponse.DoesNotExist:
                 user_response = UserResponse()
                 user_response.user = self.request.user
-                user_response.response_json = questionnaire_response
 
+            user_response.response_json = questionnaire_response
+            user_response.questionnaire_questions = questionnaire_questions
             user_response.save()
 
-        email = request.data.get('email')
-        smoke = request.data.get('smoke')
-        first_name = request.data.get('firstName')
-        last_name = request.data.get('lastName')
-        expenses = request.data.get('expenses')
-        gender = request.data.get('gender')
-        no_of_childern = request.data.get('children-length')
-        mortgage = request.data.get('mortgage')
-        dob = request.data.get('dob')
+        email = questionnaire_response.get('email')
+        smoke = questionnaire_response.get('smoke')
+        first_name = questionnaire_response.get('firstName')
+        last_name = questionnaire_response.get('lastName')
+        expenses = questionnaire_response.get('expenses')
+        gender = questionnaire_response.get('gender')
+        no_of_childern = questionnaire_response.get('children-length')
+        mortgage = questionnaire_response.get('mortgage')
+        dob = questionnaire_response.get('dob')
 
-        country = request.data.get('ontario')
-        income = request.data.get('income')
-        products = request.data.get('products')
-        children = request.data.get('children')
-        without_income = request.data.get('without-income')
-        income_replaced = request.data.get('income-replaced')
-        survive_without_income = request.data.get('survive-without-income')
-        income_to_spouse = request.data.get('income-to-spouse')
-        full_name = request.data.get('fullName')
+        country = questionnaire_response.get('ontario')
+        income = questionnaire_response.get('income')
+        products = questionnaire_response.get('products')
+        children = questionnaire_response.get('children')
+        without_income = questionnaire_response.get('without-income')
+        income_replaced = questionnaire_response.get('income-replaced')
+        survive_without_income = questionnaire_response.get(
+            'survive-without-income')
+        income_to_spouse = questionnaire_response.get('income-to-spouse')
+        full_name = questionnaire_response.get('fullName')
 
         data = {}
         # https://github.com/Mahvie-Inc/mahvie/issues/11
@@ -101,4 +103,8 @@ class GetQuestionnaireResponse(APIView):
         except UserResponse.DoesNotExist:
             raise NotFound("No Questionnaire found")
 
-        return Response(user_response.response_json, status=status.HTTP_200_OK)
+        response_data = {}
+        response_data['questions'] = user_response.questionnaire_questions
+        response_data['answers'] = user_response.response_json
+
+        return Response(response_data, status=status.HTTP_200_OK)
