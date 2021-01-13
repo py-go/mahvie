@@ -418,8 +418,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
 
   /**
    * Sets selected date in related textboxes
-   * @param type
-   * @param event
+   * @param event Matdatepicker emitted value
    */
   dateSelected(event: MatDatepickerInputEvent<Date>) {
     const newDate = new Date(event.value!);

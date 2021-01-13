@@ -9,7 +9,7 @@ import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { QuestionnaireModule } from '@questionnaire/questionnaire.module';
 import { CoreModule } from '@core/core.module';
-import { InterceptorService } from '@services/interceptor.service';
+import { InterceptorService } from '@core/interceptor/interceptor.service';
 
 @NgModule({
   declarations: [AppComponent],

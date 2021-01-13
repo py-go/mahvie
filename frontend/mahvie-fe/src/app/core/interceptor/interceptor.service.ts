@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable, ObservableInput, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { LoaderService } from './loader.service';
-import { AlertboxService } from './alertbox.service';
+import { LoaderService } from '../services/loader.service';
+import { AlertboxService } from '../services/alertbox.service';
 
 @Injectable({
   providedIn: 'root',
