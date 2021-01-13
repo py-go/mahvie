@@ -59,7 +59,7 @@
                     <!-- dates -->
                     <div *ngIf="currentQuestion.type === 'date'" class="col-sm-7 mx-auto date-container">
                         <input matInput readonly [matDatepicker]="dp3" [value]="dateValue"
-                          (dateChange)="dateSelected('change', $event)" class="inputDate t1" 
+                          (dateChange)="dateSelected($event)" class="inputDate t1" 
                           placeholder="Date of Birth">
                         <div class="calenderIcon">
                             <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>

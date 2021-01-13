@@ -333,12 +333,11 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
 
         // set default/cached value for date
         if (question.type === 'date') {
-          this.dateValue = cachedPayload[question.name];
-          if (this.dateValue) {
-            const cachedDate = new Date(this.dateValue);
-            this.date = cachedDate.getDate();
-            this.month = cachedDate.getMonth() + 1;
-            this.year = cachedDate.getFullYear();
+          this.dateValue = new Date(cachedPayload[question.name]);
+          if (this.dateValue.getDate()) {
+            this.date = this.dateValue.getDate();
+            this.month = this.dateValue.getMonth() + 1;
+            this.year = this.dateValue.getFullYear();
           }
         }
 
@@ -422,12 +421,12 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
    * @param type
    * @param event
    */
-  dateSelected(type: string, event: MatDatepickerInputEvent<Date>) {
-    this.events = `${type}: ${event.value}`;
-    this.date = new Date(this.events).getDate();
-    this.month = new Date(this.events).getMonth() + 1;
-    this.year = new Date(this.events).getFullYear();
-    this.formGroup.get(this.currentQuestion.name)?.setValue(event.value);
+  dateSelected(event: MatDatepickerInputEvent<Date>) {
+    const newDate = new Date(event.value!);
+    this.date = newDate.getDate();
+    this.month = newDate.getMonth() + 1;
+    this.year = newDate.getFullYear();
+    this.formGroup.get(this.currentQuestion.name)?.setValue(newDate.toLocaleDateString('en-US'));
   }
 
   /**
