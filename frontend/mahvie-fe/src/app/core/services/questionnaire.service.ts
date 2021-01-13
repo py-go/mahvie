@@ -20,7 +20,7 @@ export class QuestionnaireService {
   /**
    * Posts current answers. Invoked on each 'continue' click event.
    */
-  saveAnswer(payload: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}post`, payload);
+  submitAnswers(payload: Record<string, any>): Observable<any> {
+    return this.http.post(`${this.baseUrl}v1/submit-questionnaire/`, payload);
   }
 }

@@ -247,7 +247,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
   ];
   questionSet: Question[];
   submitBtn: any = true;
-  formSection: number;
+  questionId: number;
   currentQuestion: any;
   sliderValue: any = 0;
   events: any;
@@ -264,10 +264,10 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
 
   constructor(
     private questionService: QuestionnaireService,
-    private router: Router,
     private constantService: ConstantService,
+    private router: Router,
   ) {
-    this.formSection = parseInt(localStorage.getItem('questionId') || '1');
+    this.questionId = parseInt(localStorage.getItem('questionId') || '1');
     const cachedQuestions: Question[] = JSON.parse(localStorage.getItem('questions') || '{}');
     this.questionSet = Array.isArray(cachedQuestions) && cachedQuestions.length
       ? cachedQuestions
@@ -301,7 +301,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
   /**
    * Shows question based on question id in local storage
    */
-  assignQuestions() {
+  assignQuestions(): void {
     this.questionSet.forEach((question: any) => {
       if (localStorage.getItem('questionId') == question.id) {
         this.currentQuestion = question;
@@ -381,29 +381,50 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
   /**
    * Continue click event
    */
-  continue() {
+  continue(skipQuestion = false): void {
+    this.saveState(skipQuestion);
+    
     // reset slider value on continue
     this.currentQuestion.type === 'slider' && (this.sliderValue = 0);
     if (this.currentQuestion.id < this.lastQuestionIndex) {
-      this.formSection++;
+      this.questionId++;
       this.loadQuestion();
     }
-    const payload = { ...(JSON.parse(localStorage.getItem('payload') || '{}')), ...this.formGroup.value };
-    localStorage.setItem('payload', JSON.stringify(payload));
+  }
+
+  /**
+   * Save questions & answers state in backend
+   */
+  saveState(skipped: boolean): void {
+    const answers = {
+      ...(JSON.parse(localStorage.getItem('payload') || '{}')),
+      ...this.formGroup.value
+    };
+    const payload = { 
+      questions: localStorage.getItem('questions'),
+      answers,
+    };
+    localStorage.setItem('payload', JSON.stringify(answers));
+    if (
+      this.currentQuestion.id > 1 &&
+      !skipped
+    ) {
+      this.questionService.submitAnswers(payload).subscribe();
+    }
   }
 
   /**
    * Shows previous question
    */
-  previousQuestion() {
-    this.formSection--;
+  previousQuestion(): void {
+    this.questionId--;
     this.loadQuestion();
   }
 
   /**
    * Loads current question
    */
-  loadQuestion() {
+  loadQuestion(): void {
     this.saveQuestionId();
     this.assignQuestions();
     this.questionService.backButtonVisibility.next();
@@ -412,15 +433,15 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
   /**
    * Saves current question id in local storage
    */
-  saveQuestionId() {
-    localStorage.setItem('questionId', this.formSection.toString());
+  saveQuestionId(): void {
+    localStorage.setItem('questionId', this.questionId.toString());
   }
 
   /**
    * Sets selected date in related textboxes
    * @param event Matdatepicker emitted value
    */
-  dateSelected(event: MatDatepickerInputEvent<Date>) {
+  dateSelected(event: MatDatepickerInputEvent<Date>): void {
     const newDate = new Date(event.value!);
     this.date = newDate.getDate();
     this.month = newDate.getMonth() + 1;
@@ -432,7 +453,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
    * Options selections event
    * @param index
    */
-  radioSelection(index: number) {
+  radioSelection(index: number): void {
     this.questionSet.forEach(question => {
       if (question.id === this.currentQuestion.id) {
         question.options.forEach((option: Option) => {
@@ -449,7 +470,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
    * Common checkbox selection event
    * @param index 
    */
-  checkboxSelection(index: number) {
+  checkboxSelection(index: number): void {
     this.questionSet.forEach(question => {
       if (question.id === this.currentQuestion.id) {
         let checkedValues = '';
@@ -468,7 +489,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
   /**
    * Route redirection to home page
    */
-  redirectToHome() {
+  redirectToHome(): void {
     localStorage.removeItem('payload');
     localStorage.removeItem('questions');
     localStorage.removeItem('questionId');

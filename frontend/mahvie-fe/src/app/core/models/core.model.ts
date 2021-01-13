@@ -1,17 +1,17 @@
 /**
- * Radio button iterator in questionnaire
- */
-export type Option = Partial<Checkboxes> & {
-  text: string;
-  active: boolean;
-}
-
-/**
  * Meta-data for checkbox controls
  */
 export type Checkboxes = {
   htmlTitle: string;
   hoverText: string;
+}
+
+/**
+ * Radio button iterator in questionnaire
+ */
+export type Option = Partial<Checkboxes> & {
+  text: string;
+  active: boolean;
 }
 
 /**
@@ -77,6 +77,11 @@ export type ConfirmPassword = Pick<Register, 'password'>;
 export type Token = Record<'token', string>;
 
 /**
+ * Literal alert types
+ */
+export type AlertTypes = 'success' | 'error' | 'info' | 'warning' | '';
+
+/**
  * User alert info
  */
 export type Alert = {
@@ -85,6 +90,9 @@ export type Alert = {
 }
 
 /**
- * Literal alert types
+ * User credentials
  */
-export type AlertTypes = 'success' | 'error' | 'info' | 'warning' | '';
+export type AppTokens = {
+  accessToken: string;
+  refreshToken: string;
+}

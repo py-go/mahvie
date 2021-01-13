@@ -111,7 +111,7 @@
                           : (currentQuestion.id === 1 ? 'Start' : 'Continue') 
                       }}
                     </button>
-                    <button *ngIf="currentQuestion.skip" class="skipText" (click)="continue()">Skip for now</button>
+                    <button *ngIf="currentQuestion.skip" class="skipText" (click)="continue(true)">Skip for now</button>
                   </div>
                 </form>
             </section>

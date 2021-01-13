@@ -46,7 +46,7 @@ export class InterceptorService implements HttpInterceptor {
     this.loaderService.hideLoader();
     
     // general error message from API
-    this.alertboxService.showAlert('error', error?.error || 'Server Error');
+    this.alertboxService.showAlert('error', error.error?.error || 'Server Error');
 
     return throwError(error);
   }

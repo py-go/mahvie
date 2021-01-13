@@ -333,6 +333,7 @@ mat-slider {
     @include basvg(down, 10px, 10px, 10px);
     @include tr(50%, 5px);
     margin-top: -5px;
+    pointer-events: none;
   }
   select {
     font-size: 1rem;
