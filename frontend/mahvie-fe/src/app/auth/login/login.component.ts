@@ -4,6 +4,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { AuthService } from '@services/auth.service';
 import { AlertboxService } from '@services/alertbox.service';
+import { UserTokens } from '@models/core.model';
 
 @Component({
   selector: 'app-login',
@@ -30,9 +31,9 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.authService.loginUser(this.loginForm.value).subscribe(data => {
+    this.authService.loginUser(this.loginForm.value).subscribe((response: UserTokens) => {
       this.alertboxService.showAlert('success', 'Login successful');
-      this.cookieService.set('user-tokens', JSON.stringify(data));
+      this.cookieService.set('user-tokens', JSON.stringify(response));
       this.router.navigate(['/dashboard']);
     });
   }

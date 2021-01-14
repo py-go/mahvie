@@ -219,6 +219,16 @@ header.temp {
   }
 }
 
+.mat-progress-spinner {
+  position: absolute !important;
+  top: 14px;
+  right: 30px;
+}
+
+.mat-progress-spinner circle, .mat-spinner circle {
+  stroke: $primary;
+}
+
 @media only screen and (max-width: 768px) {
   .auth-container {
     padding: 30px;
@@ -226,4 +236,9 @@ header.temp {
     width: 100%;
     box-shadow: none;
   } 
+  .mat-progress-spinner {
+    left: 50%;
+    top: 18px;
+    margin-left: -25px;
+  }
 }

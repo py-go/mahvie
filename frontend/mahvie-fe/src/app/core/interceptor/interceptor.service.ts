@@ -4,6 +4,7 @@ import { Observable, ObservableInput, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { LoaderService } from '@services/loader.service';
 import { AlertboxService } from '@services/alertbox.service';
+import { AuthService } from '@services/auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +14,7 @@ export class InterceptorService implements HttpInterceptor {
   constructor(
     private loaderService: LoaderService,
     private alertboxService: AlertboxService,
+    private authService: AuthService,
   ) {}
 
   intercept(
@@ -22,12 +24,12 @@ export class InterceptorService implements HttpInterceptor {
     // show loader
     this.loaderService.showLoader();
 
-    // add authorization header with jwt token if available
-    request = request.clone({
-      setHeaders: {
-        'Access-Control-Allow-Origin': '*',
-      },
-    });
+    // adds bearer token to request header if user is logged in
+    if (this.authService.isUserLoggedIn()) {
+      request = request.clone({
+        headers: request.headers.set('Authorization', `Bearer ${this.authService.getUserCredentails().access}`),
+      });
+    }
 
     return next.handle(request).pipe(
       map((event: HttpEvent<any>) => {

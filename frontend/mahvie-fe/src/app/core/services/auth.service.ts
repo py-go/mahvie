@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '@environments/environment';
-import { ConfirmPassword, Login, Register, ResetPassword, Token } from '@models/core.model';
+import { UserTokens, ConfirmPassword, Login, Register, ResetPassword, Token } from '@models/core.model';
 import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
@@ -40,5 +40,9 @@ export class AuthService {
 
   isUserLoggedIn(): boolean {
     return this.cookieService.check('user-tokens');
+  }
+
+  getUserCredentails(): UserTokens {
+    return JSON.parse(this.cookieService.get('user-tokens'));
   }
 }

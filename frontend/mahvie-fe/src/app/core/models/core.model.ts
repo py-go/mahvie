@@ -92,7 +92,7 @@ export type Alert = {
 /**
  * User credentials
  */
-export type AppTokens = {
-  accessToken: string;
-  refreshToken: string;
+export type UserTokens = {
+  access: string;
+  refresh: string;
 };
