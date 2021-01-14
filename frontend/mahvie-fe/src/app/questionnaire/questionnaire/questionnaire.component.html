@@ -109,7 +109,7 @@
                       {{ 
                         currentQuestion.last 
                           ? 'See Recommendation' 
-                          : (currentQuestion.id === 1 ? 'Start' : 'Continue') 
+                          : (currentQuestion.id === 1 ? 'Let\'s get started' : 'Continue') 
                       }}
                     </button>
                     <button *ngIf="currentQuestion.skip" class="skipText" (click)="continue(true)">Skip for now</button>
