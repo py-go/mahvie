@@ -260,6 +260,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
   isChildrenPopupVisible = false;
   isOntarioPopupVisible = false;
   lastQuestionIndex!: number;
+  maxDate = new Date();
 
   constructor(
     private questionService: QuestionnaireService,
@@ -343,6 +344,16 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
         // set default/cached value of children length
         question.name === 'children'
           && this.formGroup.get('children-length')?.setValue(cachedPayload['children-length'] || 1);
+
+        // set full name from cached names if exists
+        if (
+          question.name === 'name-address' &&
+          cachedPayload?.firstName &&
+          cachedPayload?.lastName
+        ) {
+          this.formGroup.get('fullName')
+            ?.setValue(`${cachedPayload.firstName} ${cachedPayload.lastName}`);
+        }
       }
     });
   }

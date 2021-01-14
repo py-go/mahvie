@@ -31,6 +31,7 @@ export class InterceptorService implements HttpInterceptor {
 
     return next.handle(request).pipe(
       map((event: HttpEvent<any>) => {
+        // hide loader
         event instanceof HttpResponse && this.loaderService.hideLoader();
         return event;
       }),
@@ -43,6 +44,7 @@ export class InterceptorService implements HttpInterceptor {
    * @param error Error response from API
    */
   handleAppError(error: HttpErrorResponse): ObservableInput<any> {
+    // hide loader
     this.loaderService.hideLoader();
 
     // general error message from API

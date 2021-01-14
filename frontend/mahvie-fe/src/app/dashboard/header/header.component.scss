@@ -4,7 +4,7 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  border-bottom: 2px solid #96a2ad;
+  border-bottom: 2px solid #B9B9B9;
   padding: 15px 60px;
 
   .offscreen {
@@ -16,6 +16,7 @@ header {
   img{
     margin-right: auto;
     padding-right: 75px;
+    width: 150px;
   }
   button {
     position: relative;
@@ -43,6 +44,7 @@ header {
     img {
       margin: 0;
       padding: 0;
+      width: 90px;
     }
     button {
       margin: 0;
