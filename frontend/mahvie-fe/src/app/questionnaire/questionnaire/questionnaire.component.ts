@@ -4,6 +4,7 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { Router } from '@angular/router';
 import { ConstantService } from '@config/constant.service';
 import { Option, Question } from '@models/core.model';
+import { AuthService } from '@services/auth.service';
 import { QuestionnaireService } from '@services/questionnaire.service';
 import { Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -259,12 +260,12 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
   dateValue!: Date;
   isChildrenPopupVisible = false;
   isOntarioPopupVisible = false;
-  lastQuestionIndex!: number;
   maxDate = new Date();
 
   constructor(
     private questionService: QuestionnaireService,
     private constantService: ConstantService,
+    private authService: AuthService,
     private router: Router,
   ) {
     this.questionId = Number(localStorage.getItem('questionId') || '1');
@@ -277,7 +278,6 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.assignQuestions();
-    this.lastQuestionIndex = this.questionSet.filter(question => !!question?.last)[0].id;
 
     // subscribe to back button clicks
     this.questionService.backButtonClick.subscribe(_ => this.previousQuestion());
@@ -392,11 +392,12 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
    * Continue click event
    */
   continue(skipQuestion = false): void {
+    // persist state in local & conditionally in backend
     this.saveState(skipQuestion);
 
     // reset slider value on continue
     this.currentQuestion.type === 'slider' && (this.sliderValue = 0);
-    if (this.currentQuestion.id < this.lastQuestionIndex) {
+    if (!this.currentQuestion?.last) {
       this.questionId++;
       this.loadQuestion();
     }
@@ -415,7 +416,10 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
       answers,
     };
     localStorage.setItem('payload', JSON.stringify(answers));
+
+    // persist state in backend
     if (
+      (this.authService.isUserLoggedIn() || this.currentQuestion?.last) &&
       this.currentQuestion.id > 1 &&
       !skipped
     ) {

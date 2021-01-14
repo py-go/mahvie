@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '@environments/environment';
 import { ConfirmPassword, Login, Register, ResetPassword, Token } from '@models/core.model';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
+    private cookieService: CookieService,
   ) {
     this.baseUrl = environment.baseUrl;
   }
@@ -34,5 +36,9 @@ export class AuthService {
 
   validateToken(payload: Token): Observable<any> {
     return this.http.post(`${this.baseUrl}auth/password_reset/validate_token/`, payload);
+  }
+
+  isUserLoggedIn(): boolean {
+    return this.cookieService.check('user-tokens');
   }
 }

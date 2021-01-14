@@ -47,7 +47,7 @@
                     <!-- slider control -->
                     <div *ngIf="currentQuestion.type === 'slider'" class="col-sm-7 mx-auto">
                         <input readonly type="text" class="inputFull inputSlide mb-74" matInput 
-                          [value]="sliderValue | currency">
+                          [value]="sliderValue | currency" [class.hasValue]="(sliderValue | currency) !== '$0.00'">
                         <mat-slider [step]="1000"
                           [max]="currentQuestion.validations.max" [min]="currentQuestion.validations.min" 
                           (change)="sliderValueChange$.next($event.value)" [value]="sliderValue"></mat-slider>
