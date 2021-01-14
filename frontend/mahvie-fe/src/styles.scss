@@ -17,6 +17,7 @@ body {
 
 body {
   margin: 0;
+  background: $body-bg;
   font-family: 'Roboto', 'Helvetica Neue', sans-serif;
 }
 
@@ -181,4 +182,48 @@ header.temp {
 
 .btn-lg {
   font-size: 1rem;
+}
+
+.full-page {
+  width: 100%;
+  height: 100vh;
+  display: grid;
+  place-items: center;
+}
+.auth-container {
+  @include radius(4px);
+  @include material-shadow;
+  width: 380px;
+  padding: 50px 30px;
+  text-align: center;
+  background: $w;
+
+  &.register {
+    padding-top: 30px;
+    padding-bottom: 20px;
+  }
+  a {
+    color: $primary;
+    font-weight: 500;
+  }
+  .btnForget {
+    background: $primary;
+    border: none;
+  }
+  img {
+    max-width: 100px;
+    margin-bottom: 20px;
+  }
+  h2 {
+    margin-bottom: 5px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .auth-container {
+    padding: 30px;
+    background: $t;
+    width: 100%;
+    box-shadow: none;
+  } 
 }
