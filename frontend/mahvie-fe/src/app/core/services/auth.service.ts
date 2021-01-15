@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { environment } from '@environments/environment';
 import { UserTokens, ConfirmPassword, Login, Register, ResetPassword, Token } from '@models/core.model';
 import { CookieService } from 'ngx-cookie-service';
+import { ClientDashboardComponent } from '@core/components/clientdashboard/clientdashboard.component';
+import { HomeComponent } from '@core/components/home/home.component';
 
 @Injectable({
   providedIn: 'root'
@@ -44,5 +46,10 @@ export class AuthService {
 
   getUserCredentails(): UserTokens {
     return JSON.parse(this.cookieService.get('user-tokens'));
+  }
+
+  logoutUser(componentRef: ClientDashboardComponent | HomeComponent): void {
+    componentRef.cookieService.deleteAll();
+    componentRef.router.navigateByUrl('');
   }
 }
