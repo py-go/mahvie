@@ -1,3 +1,4 @@
+import logging
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import status
 from rest_framework import permissions
@@ -10,6 +11,10 @@ from script import noble_wealth_scraper
 from api_v1.models import UserResponse
 
 
+# Get an instance of a logger
+logger = logging.getLogger(__name__)
+
+
 class QuestionnaireResponse(APIView):
 
     permission_classes = [AllowAny]
@@ -19,9 +24,10 @@ class QuestionnaireResponse(APIView):
         Pass form data values to NobleWealth LDA Input
         """
         user_response = {}
-        questionnaire_questions = request.data.get('questions')
-        questionnaire_response = request.data.get('answers')
+
         if self.request.user.is_authenticated:
+            questionnaire_questions = request.data.get('questions')
+            questionnaire_response = request.data.get('answers')
             try:
                 user_response = UserResponse.objects.get(
                     user=self.request.user)
