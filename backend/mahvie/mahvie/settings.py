@@ -214,51 +214,51 @@ STATICFILES_DIRS = (
 )
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+if config('ENV') != 'heroku':
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-
-    'formatters': {
-        'verbose': {
-            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
-            'style': '{',
-        },
-        'simple': {
-            'format': '{levelname} {message}',
-            'style': '{',
-        },
-    },
-
-    'handlers': {
-        'file': {
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(LOGGING_ROOT, "info.log")
+        'formatters': {
+            'verbose': {
+                'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+                'style': '{',
+            },
+            'simple': {
+                'format': '{levelname} {message}',
+                'style': '{',
+            },
         },
 
-        'mail_admins': {
-            'level': 'ERROR',
-            'class': 'django.utils.log.AdminEmailHandler',
-            'include_html': True,
-        }
-    },
+        'handlers': {
+            'file': {
+                'class': 'logging.FileHandler',
+                'filename': os.path.join(LOGGING_ROOT, "info.log")
+            },
 
-    'root': {
-        'handlers': ['file'],
-        'level': 'WARNING',
-    },
+            'mail_admins': {
+                'level': 'ERROR',
+                'class': 'django.utils.log.AdminEmailHandler',
+                'include_html': True,
+            }
+        },
 
-    'loggers': {
-        'django': {
+        'root': {
             'handlers': ['file'],
-            'level': 'ERROR',
-            'propagate': True,
+            'level': 'WARNING',
         },
 
-        'django.request': {
-            'handlers': ['mail_admins'],
-            'level': 'ERROR',
-            'propagate': False,
+        'loggers': {
+            'django': {
+                'handlers': ['file'],
+                'level': 'ERROR',
+                'propagate': True,
+            },
+
+            'django.request': {
+                'handlers': ['mail_admins'],
+                'level': 'ERROR',
+                'propagate': False,
+            },
         },
-    },
-}
+    }
