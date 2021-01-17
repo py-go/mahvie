@@ -11,56 +11,80 @@ $preference-list: "life-insurance", "critical-illness", "long-term-care";
 }
 
 .titleText {
-  width: 100%;
-  font: 500 38px "Playfair Display";
+  font: 500 1.75rem "Playfair Display";
   color: #18344e;
-  margin: 0 auto 30px;
+  margin: 0 auto 20px;
 }
 
-.inputHalf {
-  flex-direction: row;
-  align-items: center;
-  padding: 28px 16px;
-  position: static;
-  width: 360px;
-  height: 80px;
-  background: #ffffff;
-  border: 2px solid #2b5d8c;
-  box-sizing: border-box;
-  /* Inside Auto Layout */
-  flex: none;
-  order: 0;
-  flex-grow: 0;
-  margin: 8px 3px;
-}
+.inline-container {
+  margin: auto;
+  width: 42%;
+  display: flex;
+  align-content: center;
+  flex-direction: column;
+  justify-content: space-between;
 
-.inputText {
-  font-family: "Source Sans Pro";
-  font-style: normal;
-  font-weight: bold;
-  font-size: 24px;
-  line-height: 24px;
-  color: darken($placeholder, 25%);
-  padding-left: 20px;
+  &.inline {
+    flex-direction: row;
+    width: 65%;
 
-  &::placeholder {
-    color: $placeholder;
+    input[type="text"] {
+      width: 49%;
+    }
   }
 }
 
-.submitBtn {
-  height: 64px;
-  width: 358px;
+.inputHalf {
+  padding: 0 15px;
+  height: 50px;
+  background: $w;
+  border: 2px solid #2b5d8c;
+  margin: 8px 0;
+}
+
+.inputText {
+  font: 600 1.2rem "Source Sans Pro";
+  color: darken($placeholder, 25%);
+  padding-left: 20px;
+}
+
+.inputText, .inputSlide { 
+  &::placeholder {
+    color: $placeholder;
+  }
+  &:focus,
+  &.ng-valid,
+  &.hasValue {
+    @include radius(0);
+    outline: 2px solid lighten($primary, 35%);
+    border: 2px solid $primary;
+    border-color: $primary;
+  }
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+
+  .skipText {
+    margin-top: 50px;
+  }
+}
+
+.submitBtn,
+.skipText {
+  font-size: 1.25rem;
+  height: 50px;
+  width: 350px;
   background: #f45d01;
   border: 1px solid $disabled;
   border-radius: 6px;
-  font: 600 24px "Lato";
-  line-height: 29px;
-  align-items: center;
   text-align: center;
   letter-spacing: 0.04em;
   color: $w;
-  margin-top: 100px;
 
   &[disabled] {
     background: $disabled;
@@ -68,109 +92,60 @@ $preference-list: "life-insurance", "critical-illness", "long-term-care";
 }
 
 .skipText {
-  font: 600 24px "Source Sans Pro";
-  font-style: normal;
-  line-height: 24px;
-  text-align: center;
-  color: #f45d01;
-  height: 64px;
-  width: 358px;
-  border-radius: 4px;
-  background: $t;
-  margin-top: 64px;
+  background: $w;
+  font-weight: 600;
+  color: $primary;
+  border: none;
 }
 
 .inputFull {
-  height: 75px;
-  width: 100%;
+  height: 50px;
+  width: 70%;
   border-radius: 0;
-  padding: 20px 16px;
-  margin-top: 15px;
-  background: #ffffff;
+  padding: 20px 15px;
+  margin: 15px auto 0;
+  background: $w;
   border: 2px solid $secondary;
   display: flex;
   align-items: center;
   justify-content: flex-start;
 
+  &.mat-input-element {
+    margin-top: 0;
+  }
   &.active {
     background-color: #f5c0a0;
     border: 2px solid #f45d01;
     z-index: 999 !important;
   }
   input[type="radio"] {
-    height: 40px;
-    width: 40px;
+    height: 20px;
+    width: 20px;
     border-radius: 0;
     background: $w;
     border: none;
-    align-self: center;
-    margin: 0 20px;
+    margin-right: 15px;
     cursor: pointer;
+    position: relative;
 
     &:focus {
       box-shadow: none;
     }
     &:checked:after {
+      @include radius(50%);
+      @include tl(50%, 50%);
       display: inline-block;
-      visibility: visible;
       background: #333;
       content: "";
-      height: 25px;
-      width: 25px;
-      border-radius: 50px;
-      margin: 7.5px;
+      height: 12px;
+      width: 12px;
+      margin: -6px 0 0 -6px;
     }
   }
 }
 
 .show-pointer {
   cursor: pointer;
-}
-
-.inputDate {
-  flex-direction: row;
-  align-items: center;
-  padding: 28px 16px;
-  position: static;
-  height: 80px;
-  background: #ffffff;
-  border: 2px solid $secondary;
-  box-sizing: border-box;
-  /* Inside Auto Layout */
-  flex: none;
-  order: 0;
-  flex-grow: 0;
-}
-
-.t1 {
-  font-family: "Source Sans Pro";
-  font-style: normal;
-  font-weight: bold;
-  font-size: 27px;
-  line-height: 140%;
-  /* identical to box height, or 34px */
-  text-align: right;
-  color: #18344e;
-  border: 2px solid $secondary;
-}
-
-.t2 {
-  font-family: "Lato";
-  font-style: normal;
-  font-weight: bold;
-  font-size: 24px;
-  line-height: 29px;
-  /* identical to box height */
-  text-align: center;
-  color: #a0a0a0;
-  border: 2px solid $secondary;
-  border-left: none;
-}
-
-.calenderIcon {
-  position: absolute;
-  top: 30%;
-  left: 5%;
 }
 
 .centered-content {
@@ -181,17 +156,16 @@ $preference-list: "life-insurance", "critical-illness", "long-term-care";
 }
 
 .questionsStyle {
-  font: 24px "Source Sans Pro";
+  font: 1.2rem "Source Sans Pro";
   color: $secondary;
   text-align: center;
   width: 75%;
-  margin: auto;
+  margin: auto auto 20px;
 }
 
 .optStyle {
-  font: 24px "Lato";
+  font: 1rem "Lato";
   font-weight: bold;
-  line-height: 29px;
   color: #18344e;
   margin-bottom: 0;
   pointer-events: none;
@@ -212,14 +186,8 @@ $preference-list: "life-insurance", "critical-illness", "long-term-care";
 }
 
 .inputSlide {
-  padding-left: 150px;
-  padding-right: 15px;
   text-align: right;
-  font-family: Lato;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 40px;
-  line-height: 48px;
+  font: 1.4rem "Lato";
   color: #a0a0a0;
 }
 
@@ -228,17 +196,12 @@ mat-slider {
 }
 
 .mb-74 {
-  margin-bottom: 74px;
+  margin-bottom: 40px;
 }
 
 .sliderLabel {
   margin-top: 16px;
-  font-family: Lato;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 24px;
-  line-height: 29px;
-  /* identical to box height */
+  font: 1.4rem "Lato";
   text-align: center;
   color: #18344e;
 }
@@ -285,17 +248,17 @@ mat-slider {
   span.title {
     color: $secondary;
     text-transform: uppercase;
-    font-size: 1.45rem;
+    font-size: 1rem;
     font-weight: bold;
   }
   .show-on-hover {
     @include radius(5px);
-    @include box-shadow(0, 5px, 10px, 0, 0, 0, 0.05);
+    @include box-shadow(0, 5px, 10px, 24, 52, 78, 0.1);
     @include tl(calc(100% + 15px), 0);
     width: 100%;
     padding: 30px;
     background: $disabled;
-    border: 1px solid ligthen($light-border, 10%);
+    border: 1px solid lighten($light-border, 10%);
     color: $secondary;
     display: grid;
     place-items: center;
@@ -336,9 +299,10 @@ mat-slider {
     @include basvg(down, 10px, 10px, 10px);
     @include tr(50%, 5px);
     margin-top: -5px;
+    pointer-events: none;
   }
   select {
-    font-size: 1.2rem;
+    font-size: 1rem;
     background: $t;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -359,10 +323,9 @@ mat-slider {
   margin: 20px auto 0;
 
   .start {
-    font-size: 24px;
+    font-size: 1rem;
     padding: 110px 60px 0;
     color: $secondary;
-    line-height: 24px;
     text-align: center;
     position: relative;
 
@@ -388,7 +351,25 @@ mat-slider {
   }
 }
 
-.children-popup {
+.get-started-content {
+  text-align: center;
+  margin: 30px auto 0;
+
+  p,
+  span {
+    color: $secondary;
+    font: 1rem "Source Sans Pro";
+    margin-bottom: 0;
+  }
+  p {
+    font-weight: bold;
+  }
+  span {
+    font-weight: 400;
+  }
+}
+
+.popup {
   position: fixed;
   z-index: 100;
   width: 100%;
@@ -410,7 +391,7 @@ mat-slider {
     justify-content: space-between;
 
     img {
-      width: 26%;
+      width: 24%;
     }
     .reason {
       width: 68%;
@@ -418,13 +399,13 @@ mat-slider {
       .title {
         color: darken(#3e566b, 18%);
         padding: 0 0 20px;
-        font: 700 1.5rem "Source Sans Pro";
+        font: 700 1.3rem "Source Sans Pro";
         border-bottom: 1px solid $light-border;
         margin-bottom: 30px;
         text-align: left;
       }
       p {
-        font-size: 16px;
+        font-size: 1rem;
         text-align: left;
         line-height: 28px;
         color: $secondary;
@@ -434,35 +415,193 @@ mat-slider {
         display: block;
         letter-spacing: 1px;
         color: $primary;
-        font-size: 1.35rem;
+        font-size: 1rem;
         font-weight: 500;
       }
     }
   }
 }
 
-@media only screen and (max-width: 768px) {
-  .children-popup {
-    .content {
-      flex-direction: column;
-      align-items: stretch;
+.date-container {
+  width: 45%;
+  margin: 0 auto 20px;
+  display: inline-grid;
+  align-items: stretch;
+  grid-template-columns: 40% auto auto auto;
+  grid-template-rows: 60px;
+  position: relative;
 
-      img {
-        width: 100px;
-        margin-bottom: 20px;
-      }
-      .reason {
-        width: 100%;
+  .inputDate {
+    font: 600 1.2rem "Source Sans Pro";
+    width: 100%;
+    height: 100%;
+    margin-top: 1px;
+    padding: 28px 20px;
+    border: 2px solid $secondary;
+    text-align: center;
+    color: darken($placeholder, 25%);
+
+    &::placeholder {
+      color: $placeholder;
+    }
+    &.input1 {
+      text-align: right;
+
+      &::placeholder {
+        color: #18344e;
       }
     }
+    &:not(.input1) {
+      border-left: none;
+    }
+    &:focus {
+      border-color: $secondary;
+      outline: none;
+    }
+  }
+  .calenderIcon {
+    @include tl(50%, 15px);
+    margin-top: -20px;
   }
 }
 
 .info {
   @include svg(info);
   display: inline-block;
-  margin-right: 20px;
-  width: 26px;
-  height: 26px;
-  background-size: 26px;
+  margin-left: 5px;
+  width: 20px;
+  height: 20px;
+  background-size: 20px;
+}
+
+@media only screen and (max-width: 1450px) {
+  .date-container {
+    width: 65%;
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .get-started {
+    width: 100%;
+
+    .start {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .preference {
+    .show-on-hover {
+      position: relative;
+      top: auto;
+      left: auto;
+      opacity: 1;
+      background: $t;
+      text-align: center;
+      box-shadow: none;
+      border: none;
+      padding-top: 10px;
+    }
+  }
+  .w-75,
+  .col-sm-7.mx-auto,
+  .inputFull,
+  .inputHalf,
+  .inline-container {
+    width: 100% !important;
+  }
+}
+
+@media only screen and (max-width: 786px) {
+  .date-container {
+    .calenderIcon {
+      top: 12px;
+      margin-top: 0;
+    }
+    .inputDate {
+      &:nth-of-type(2) {
+        border-left: 2px solid $secondary;
+      }
+      &.input1 {
+        grid-column: span 4;
+      }
+      &:not(.input1) {
+        border-top: none;
+        height: 60px;
+      }
+    }
+  }
+  .inline-container {
+    width: 100%;
+
+    &.inline {
+      flex-direction: column;
+      width: 100%;
+
+      input[type="text"] {
+        width: 100%;
+      }
+    }
+  }
+  .popup {
+    .content {
+      flex-direction: column;
+      align-items: stretch;
+      padding: 30px;
+      width: 90%;
+      max-height: calc(100vh - 40px);
+      overflow-y: auto;
+
+      img {
+        width: 70px;
+        margin-bottom: 20px;
+      }
+      .reason {
+        width: 100%;
+
+        p {
+          font-size: 14px;
+          line-height: 22px;
+        }
+      }
+    }
+  }
+  .get-started {
+    width: 100%;
+    flex-direction: column;
+
+    .start {
+      &:not(:last-child) {
+        margin-bottom: 20px;
+      }
+    }
+  }
+  .submitBtn,
+  .skipText {
+    width: 50%;
+  }
+  .titleText {
+    font-size: 1.5rem;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .submitBtn,
+  .skipText {
+    width: 100%;
+  }
+  .col-sm-7.mx-auto {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .date-container {
+    .inputDate {
+      &:not(.input1) {
+        padding-left: 5px;
+        padding-right: 5px;
+      }
+    }
+  }
 }

@@ -1,9 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { Router } from '@angular/router';
+import { ConstantService } from '@config/constant.service';
+import { Option, Question } from '@models/core.model';
+import { AuthService } from '@services/auth.service';
+import { QuestionnaireService } from '@services/questionnaire.service';
 import { Subject } from 'rxjs';
-import { Option, Question } from 'src/app/core/models/core.model';
-import { QuestionnaireService } from 'src/app/core/services/questionnaire.service';
+import { filter } from 'rxjs/operators';
 import { SubSink } from 'subsink';
 
 @Component({
@@ -15,6 +19,17 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
   questionPool: Question[] = [
     {
       id: 1,
+      name: 'gettoknowyou',
+      question: '',
+      type: '',
+      options: [],
+      validations: {},
+      title: 'Great, let\'s get to know you!',
+      subtitle:
+        'We\'ll recommend your coverage amount and policy length by assessing',
+    },
+    {
+      id: 2,
       name: 'ontario',
       question: 'Do you live in Ontario?',
       type: 'radio',
@@ -28,7 +43,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
       subtitle: '',
     },
     {
-      id: 2,
+      id: 3,
       name: 'email',
       question: 'What is your email?',
       type: 'text',
@@ -36,22 +51,11 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
       controls: ['email'],
       validations: {
         required: true,
-        pattern: '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$',
+        pattern: this.constantService.emailRegex,
       },
       title: 'Before we get started...',
       subtitle: '',
       skip: true,
-    },
-    {
-      id: 3,
-      name: 'gettoknowyou',
-      question: '',
-      type: '',
-      options: [],
-      validations: {},
-      title: "Great, let's get to know you!",
-      subtitle:
-        "We'll recommend your coverage amount and policy length by assessing",
     },
     {
       id: 4,
@@ -61,7 +65,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
       options: ['First Name', 'Last Name'],
       controls: ['firstName', 'lastName'],
       validations: { required: true },
-      title: 'Lets get to know you!',
+      title: 'Welcome to G2G, your recommendation is only minutes away!',
       subtitle: '',
       inline: true,
     },
@@ -71,9 +75,9 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
       question: '',
       type: 'products-radio',
       options: [
-        { text: 'life-insurance', active: false },
-        { text: 'critical-illness', active: false },
-        { text: 'long-term-care', active: false },
+        { text: 'life-insurance', active: false, htmlTitle: 'life insurance', hoverText: 'If I were to pass away, I would like to give money to a person(s) of my choice.' },
+        { text: 'critical-illness', active: false, htmlTitle: 'critical illness', hoverText: 'If I were to suffer a stroke, heart attack or  get cancer, I would like to personally receive a large amount of money.' },
+        { text: 'long-term-care', active: false, htmlTitle: 'long term care', hoverText: 'If I were unable to perform my daily tasks independently, I would like to receive money to hire assistance.' },
       ],
       controls: ['products'],
       validations: { required: true },
@@ -82,6 +86,18 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     },
     {
       id: 6,
+      name: 'dob',
+      question: '',
+      type: 'date',
+      options: [],
+      controls: ['dob'],
+      validations: { required: true },
+      title: 'When were you born?',
+      subtitle:
+        'Your recommendation is as unique as you are. Using real info here will help us give you the most accurate recommendation.',
+    },
+    {
+      id: 7,
       name: 'gender',
       question: '',
       type: 'radio',
@@ -96,7 +112,22 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
         'Your recommendation is as unique as you are. Using real info here will help us give you the most accurate recommendation.',
     },
     {
-      id: 7,
+      id: 8,
+      name: 'smoke',
+      question: '',
+      type: 'radio',
+      options: [
+        { text: 'yes', active: false },
+        { text: 'no', active: false },
+      ],
+      controls: ['smoke'],
+      validations: { required: true },
+      title: 'Have you smoked in the last 12 months?',
+      subtitle:
+        'Your recommendation is as unique as you are. Using real info here will help us give you the most accurate recommendation.',
+    },
+    {
+      id: 9,
       name: 'children',
       question: '',
       type: 'radio',
@@ -111,7 +142,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
         'Your recommendation is as unique as you are. Using real info here will help us give you the most accurate recommendation.',
     },
     {
-      id: 8,
+      id: 10,
       name: 'income',
       question: '',
       type: 'slider',
@@ -123,7 +154,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
         'Feel free to use close estimates when it comes to your finances.',
     },
     {
-      id: 9,
+      id: 11,
       name: 'mortgage',
       question: '',
       type: 'slider',
@@ -135,7 +166,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
         'Feel free to use close estimates when it comes to your finances.',
     },
     {
-      id: 10,
+      id: 12,
       name: 'expenses',
       question: '',
       type: 'slider',
@@ -147,36 +178,76 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
         'Feel free to use close estimates when it comes to your finances.',
     },
     {
-      id: 11,
-      name: 'dob',
-      question: '',
-      type: 'date',
-      options: [],
-      controls: ['dob'],
-      validations: { required: true },
-      title: 'When were you born?',
-      subtitle:
-        'Your recommendation is as unique as you are. Using real info here will help us give you the most accurate recommendation.',
-    },
-    {
-      id: 12,
-      name: 'smoke',
+      id: 13,
+      name: 'without-income',
       question: '',
       type: 'radio',
       options: [
         { text: 'yes', active: false },
         { text: 'no', active: false },
       ],
-      controls: ['smoke'],
+      controls: ['without-income'],
       validations: { required: true },
-      title: 'Have you smoked in the last 12 months?',
+      title: 'Can you, your spouse or your family survive without your income?',
+      subtitle: '',
+    },
+    {
+      id: 14,
+      name: 'income-replaced',
+      question: '',
+      type: 'slider',
+      options: [],
+      controls: ['income-replaced'],
+      validations: { required: true, min: 0, max: 500000 },
+      title: 'How many years of income would you like to replace?',
       subtitle:
-        'Your recommendation is as unique as you are. Using real info here will help us give you the most accurate recommendation.',
+        'Feel free to use close estimates when it comes to your finances.',
+    },
+    {
+      id: 15,
+      name: 'survive-without-income',
+      question: '',
+      type: 'radio',
+      options: [
+        { text: 'yes', active: false },
+        { text: 'no', active: false },
+      ],
+      controls: ['survive-without-income'],
+      validations: { required: true },
+      title: 'If you were not alive, can your spouse or family survive without your income?',
+      subtitle: '',
+    },
+    {
+      id: 16,
+      name: 'income-to-spouse',
+      question: '',
+      type: 'slider',
+      options: [],
+      controls: ['income-to-spouse'],
+      validations: { required: true, min: 0, max: 500000 },
+      title: 'How many years of income would you like to give your spouse or family?',
+      subtitle:
+        'Feel free to use close estimates when it comes to your finances.',
+    },
+    {
+      id: 17,
+      name: 'name-address',
+      question: '',
+      type: 'text',
+      options: ['Full Name', 'Email Address'],
+      controls: ['fullName', 'email'],
+      validations: {
+        required: true,
+        pattern: this.constantService.emailRegex,
+      },
+      title: 'Thanks, that\'s all we need!',
+      subtitle: 'We’ll use this email address to save your recommendation and keep in touch. Your email is always safe with us!',
+      inline: false,
+      last: true
     },
   ];
   questionSet: Question[];
-  submitBtn: any = true;
-  formSection: number;
+  questionId: number;
   currentQuestion: any;
   sliderValue: any = 0;
   events: any;
@@ -187,12 +258,17 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
   sliderValueChange$ = new Subject<number | null>();
   subsink = new SubSink();
   dateValue!: Date;
-  isPopupVisible = false;
+  isChildrenPopupVisible = false;
+  isOntarioPopupVisible = false;
+  maxDate = new Date();
 
   constructor(
-    private questionService: QuestionnaireService
+    private questionService: QuestionnaireService,
+    private constantService: ConstantService,
+    private authService: AuthService,
+    private router: Router,
   ) {
-    this.formSection = parseInt(localStorage.getItem('questionId') || '1');
+    this.questionId = Number(localStorage.getItem('questionId') || '1');
     const cachedQuestions: Question[] = JSON.parse(localStorage.getItem('questions') || '{}');
     this.questionSet = Array.isArray(cachedQuestions) && cachedQuestions.length
       ? cachedQuestions
@@ -211,6 +287,11 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
       this.sliderValue = value;
       this.formGroup.get(this.currentQuestion.name)?.setValue(value);
     });
+
+    // show ontario popup when no is selected
+    this.subsink.sink = this.formGroup.valueChanges.pipe(
+      filter(_ => this.currentQuestion.name === 'ontario')
+    ).subscribe(value => value.ontario === 'no' && (this.isOntarioPopupVisible = true));
   }
 
   ngOnDestroy(): void {
@@ -220,75 +301,144 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
   /**
    * Shows question based on question id in local storage
    */
-  assignQuestions() {
-    this.questionSet.forEach((question: any) => {
-      if (localStorage.getItem('questionId') == question.id) {
+  assignQuestions(): void {
+    this.questionSet.forEach((question: Question) => {
+      if (Number(localStorage.getItem('questionId')) === question.id) {
         this.currentQuestion = question;
         const cachedPayload = JSON.parse(localStorage.getItem('payload') || '{}');
-        const validations: any[] = [];
-        // creates validations array for a control
-        Object.keys(question.validations).forEach(validation => {
-          validation === 'required' && question.validations[validation]
-            && validations.push(Validators.required);
-          validation === 'pattern'
-            && validations.push(Validators.pattern(question.validations.pattern));
-          validation === 'min'
-            && validations.push(Validators.min(question.validations.min + 100));
-          validation === 'max'
-            && validations.push(Validators.max(question.validations.max));
-        });
+
         // enable submit button if there are no controls
         if (!question?.controls?.length) this.formGroup.setErrors(null);
         // creates form controls & updates with empty/cached value
         else {
           question.controls.forEach((controlName: string) => {
-            this.formGroup.addControl(controlName, new FormControl(cachedPayload[controlName] ?? '', validations));
+            this.formGroup.addControl(
+              controlName,
+              new FormControl(cachedPayload[controlName] ?? '', this.getValidations(question, controlName))
+            );
           });
         }
+
         // removes validations of all form controls except the current question's
-        Object.keys(this.formGroup.controls).forEach((key) => {
+        Object.keys(this.formGroup.controls).forEach(key => {
           !question?.controls?.includes(key) &&
             this.formGroup.get(key)!.setErrors(null);
         });
+
         // set default/cached value for slider control
         if (question.type === 'slider') {
           this.sliderValue = cachedPayload[question.name] || 0;
           this.formGroup.get(question.name)?.setValue(this.sliderValue);
         }
+
         // set default/cached value for date
-        question.type === 'date'
-          && (this.dateValue = cachedPayload[question.name]);
+        if (question.type === 'date') {
+          this.dateValue = new Date(cachedPayload[question.name]);
+          if (this.dateValue.getDate()) {
+            this.date = this.dateValue.getDate();
+            this.month = this.dateValue.getMonth() + 1;
+            this.year = this.dateValue.getFullYear();
+          }
+        }
+
+        // set default/cached value of children length
         question.name === 'children'
           && this.formGroup.get('children-length')?.setValue(cachedPayload['children-length'] || 1);
-        validations.length = 0;
+
+        // set full name from cached names if exists
+        if (
+          question.name === 'name-address' &&
+          cachedPayload?.firstName &&
+          cachedPayload?.lastName
+        ) {
+          this.formGroup.get('fullName')
+            ?.setValue(`${cachedPayload.firstName} ${cachedPayload.lastName}`);
+        }
       }
     });
   }
 
   /**
+   * Creates validations array for a control
+   */
+  getValidations(question: Question, controlName: string): any[] {
+    const allValidations: any[] = [];
+    Object.keys(question.validations).forEach(validation => {
+      switch (validation) {
+        case 'required':
+          question.validations[validation]
+            && allValidations.push(Validators.required);
+          break;
+        case 'pattern':
+          if (question.id === 17) {
+            controlName === 'email'
+              && allValidations.push(Validators.pattern(question.validations.pattern!));
+          } else {
+            allValidations.push(Validators.pattern(question.validations.pattern!));
+          }
+          break;
+        case 'min':
+          allValidations.push(Validators.min(question.validations.min! + 100));
+          break;
+        case 'max':
+          allValidations.push(Validators.max(question.validations.max!));
+          break;
+      }
+    });
+    return allValidations;
+  }
+
+  /**
    * Continue click event
    */
-  continue() {
+  continue(skipQuestion = false): void {
+    // persist state in local & conditionally in backend
+    this.saveState(skipQuestion);
+
     // reset slider value on continue
     this.currentQuestion.type === 'slider' && (this.sliderValue = 0);
-    this.formSection++;
-    this.loadQuestion();
-    const payload = { ...(JSON.parse(localStorage.getItem('payload') || '{}')), ...this.formGroup.value };
-    localStorage.setItem('payload', JSON.stringify(payload));
+    if (!this.currentQuestion?.last) {
+      this.questionId++;
+      this.loadQuestion();
+    }
+  }
+
+  /**
+   * Save questions & answers state in backend
+   */
+  saveState(skipped: boolean): void {
+    const answers = {
+      ...(JSON.parse(localStorage.getItem('payload') || '{}')),
+      ...this.formGroup.value
+    };
+    const payload = {
+      questions: localStorage.getItem('questions'),
+      answers,
+    };
+    localStorage.setItem('payload', JSON.stringify(answers));
+
+    // persist state in backend
+    if (
+      (this.authService.isUserLoggedIn() || this.currentQuestion?.last) &&
+      this.currentQuestion.id > 1 &&
+      !skipped
+    ) {
+      this.questionService.submitAnswers(payload).subscribe();
+    }
   }
 
   /**
    * Shows previous question
    */
-  previousQuestion() {
-    this.formSection--;
+  previousQuestion(): void {
+    this.questionId--;
     this.loadQuestion();
   }
 
   /**
    * Loads current question
    */
-  loadQuestion() {
+  loadQuestion(): void {
     this.saveQuestionId();
     this.assignQuestions();
     this.questionService.backButtonVisibility.next();
@@ -297,31 +447,28 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
   /**
    * Saves current question id in local storage
    */
-  saveQuestionId() {
-    localStorage.setItem('questionId', this.formSection.toString());
+  saveQuestionId(): void {
+    localStorage.setItem('questionId', this.questionId.toString());
   }
 
   /**
    * Sets selected date in related textboxes
-   * @param type
-   * @param event
+   * @param event Matdatepicker emitted value
    */
-  dateSelected(type: string, event: MatDatepickerInputEvent<Date>) {
-    this.events = `${type}: ${event.value}`;
-    this.date = new Date(this.events).getDate();
-    this.month = new Date(this.events).getMonth() + 1;
-    this.year = new Date(this.events).getFullYear();
-    this.formGroup.get(this.currentQuestion.name)?.setValue(event.value);
+  dateSelected(event: MatDatepickerInputEvent<Date>): void {
+    const newDate = new Date(event.value!);
+    this.date = newDate.getDate();
+    this.month = newDate.getMonth() + 1;
+    this.year = newDate.getFullYear();
+    this.formGroup.get(this.currentQuestion.name)?.setValue(newDate.toLocaleDateString('en-US'));
   }
 
   /**
-   * Check active status of form control
-   * @param index
-   * @param options Options of current question
-   * @param event Click event
+   * Options selections event
+   * @param index Index of selected radio
    */
-  radioSelection(index: number) {
-    this.questionSet.forEach(question => {
+  radioSelection(index: number): void {
+    this.questionSet.forEach((question: Question) => {
       if (question.id === this.currentQuestion.id) {
         question.options.forEach((option: Option) => {
           option.active = false;
@@ -331,5 +478,36 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
       }
     });
     localStorage.setItem('questions', JSON.stringify(this.questionSet));
+  }
+
+  /**
+   * Common checkbox selection event
+   * @param index Index of selected checkbox
+   */
+  checkboxSelection(index: number): void {
+    this.questionSet.forEach((question: Question) => {
+      if (question.id === this.currentQuestion.id) {
+        let checkedValues = '';
+        question.options.forEach((option: Option, ind: number) => {
+          index === ind
+            && (option.active = !option.active);
+          option.active
+            && (checkedValues += `${option.text},`);
+        });
+        this.formGroup.get(this.currentQuestion.name)!.setValue(checkedValues ? checkedValues.slice(0, -1) : '');
+      }
+    });
+    localStorage.setItem('questions', JSON.stringify(this.questionSet));
+  }
+
+  /**
+   * Route redirection to home page
+   */
+  redirectToHome(): void {
+    localStorage.removeItem('payload');
+    localStorage.removeItem('questions');
+    localStorage.removeItem('questionId');
+    this.isOntarioPopupVisible = false;
+    this.router.navigateByUrl('/home');
   }
 }

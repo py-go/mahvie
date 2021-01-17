@@ -3,16 +3,13 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
-import { InterceptorService } from '../app/core/services/interceptor.service';
-
-import { QuestionnaireModule } from './questionnaire/questionnaire.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { CookieService } from 'ngx-cookie-service';
-import { SharedModule } from './shared/shared.module';
-import { CoreModule } from './core/core.module';
-
+import { QuestionnaireModule } from '@questionnaire/questionnaire.module';
+import { CoreModule } from '@core/core.module';
+import { InterceptorService } from '@core/interceptor/interceptor.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,7 +20,6 @@ import { CoreModule } from './core/core.module';
     QuestionnaireModule,
     BrowserAnimationsModule,
     CoreModule,
-    SharedModule,
   ],
   exports: [],
   providers: [

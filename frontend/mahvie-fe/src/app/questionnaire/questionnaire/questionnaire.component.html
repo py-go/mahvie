@@ -4,7 +4,8 @@
             <section>
                 <h1 class="titleText">
                   {{currentQuestion.title}}
-                  <a *ngIf="currentQuestion.name === 'children'" (click)="isPopupVisible = true" class="info" href="javascript:void(0)"></a>
+                  <a *ngIf="currentQuestion.name === 'children'" 
+                    (click)="isChildrenPopupVisible = true" class="info" href="javascript:void(0)"></a>
                 </h1>
                 <div class="questionsStyle" *ngIf="currentQuestion.subtitle">
                     {{currentQuestion.subtitle}}
@@ -13,7 +14,7 @@
             <section class="mt-132">
                 <form [formGroup]="formGroup" (ngSubmit)="continue()">
                   <div class="row w-75 mx-auto">
-                    <div class="questionsStyle col-sm-7 text-left mx-auto" *ngIf="currentQuestion.question">
+                    <div class="questionsStyle col-sm-7 mx-auto" *ngIf="currentQuestion.question">
                         {{currentQuestion.question}}
                     </div>
                     <!-- radio buttons -->
@@ -22,7 +23,8 @@
                         [ngClass]="{ 'active': instance.active, 'show-pointer': currentQuestion.type === 'radio' }" 
                         (click)="radioSelection(i)">
                         <input [formControlName]="currentQuestion.name" [type]="currentQuestion.type"
-                          class="inpChecked form-control" [value]="instance.text" [name]="currentQuestion.name" [checked]="instance.active">
+                          class="inpChecked form-control" [value]="instance.text" [name]="currentQuestion.name" 
+                          [checked]="instance.active">
                         <label class="optStyle">
                           {{ instance.text | titlecase }} 
                           {{ currentQuestion.name === 'children' && instance.text === 'yes' ? ', I have' : '' }}
@@ -36,20 +38,16 @@
                         </ng-container>
                       </div>
                     </div>
-                    <!-- 2 textboxes -->
-                    <div *ngIf="currentQuestion.type === 'text' && currentQuestion.inline" class="mx-auto">
-                        <input formControlName="{{currentQuestion.controls[i]}}" type="text" class="inputText inputHalf col-sm-6" placeholder={{fields}} 
+                    <!-- textboxes -->
+                    <div *ngIf="currentQuestion.type === 'text'" class="inline-container" [class.inline]="currentQuestion.inline">
+                        <input [formControlName]="currentQuestion.controls[i]" type="text" 
+                          class="inputText inputHalf" [placeholder]="fields" 
                           *ngFor="let fields of currentQuestion.options; let i = index;">
-                    </div>
-                    <!-- single textbox -->
-                    <div *ngIf="currentQuestion.type === 'text' && !currentQuestion.inline" class="col-sm-7 mx-auto">
-                        <input formControlName="{{currentQuestion.controls[0]}}" type="text" class="inputText inputFull" placeholder={{fields}} 
-                          *ngFor="let fields of currentQuestion.options">
                     </div>
                     <!-- slider control -->
                     <div *ngIf="currentQuestion.type === 'slider'" class="col-sm-7 mx-auto">
                         <input readonly type="text" class="inputFull inputSlide mb-74" matInput 
-                          [value]="sliderValue | currency">
+                          [value]="sliderValue | currency" [class.hasValue]="sliderValue > 0">
                         <mat-slider [step]="1000"
                           [max]="currentQuestion.validations.max" [min]="currentQuestion.validations.min" 
                           (change)="sliderValueChange$.next($event.value)" [value]="sliderValue"></mat-slider>
@@ -59,57 +57,32 @@
                         </section>
                     </div>
                     <!-- dates -->
-                    <div *ngIf="currentQuestion.type === 'date'" class="col-sm-7 mx-auto">
-                        <input matInput [matDatepicker]="dp3" [value]="dateValue"
-                          (dateChange)="dateSelected('change', $event)" class="inputDate t1" 
-                          style="width:40%" placeholder="Date of Birth">
-                        <div class="calenderIcon">
+                    <div *ngIf="currentQuestion.type === 'date'" class="date-container">
+                          <input matInput readonly [matDatepicker]="dp3" 
+                          [value]="dateValue" [max]="maxDate"
+                          (dateChange)="dateSelected($event)" class="inputDate input1" 
+                          placeholder="Date of Birth">
+                          <div class="calenderIcon">
                             <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
                             <mat-datepicker #dp3 disabled="false"></mat-datepicker>
                         </div>
-                        <input type="text" class="inputDate t2" style="width:20%" placeholder="MM" readonly [(ngModel)]="date" [ngModelOptions]="{standalone: true}">
-                        <input type="text" class="inputDate t2" style="width:20%" placeholder="DD" readonly [(ngModel)]="month" [ngModelOptions]="{standalone: true}">
-                        <input type="text" class="inputDate t2" style="width:20%" placeholder="YYYY" readonly [(ngModel)]="year" [ngModelOptions]="{standalone: true}">
+                        <input type="text" class="inputDate input2" placeholder="MM" readonly [(ngModel)]="date" [ngModelOptions]="{standalone: true}">
+                        <input type="text" class="inputDate input3" placeholder="DD" readonly [(ngModel)]="month" [ngModelOptions]="{standalone: true}">
+                        <input type="text" class="inputDate input4" placeholder="YYYY" readonly [(ngModel)]="year" [ngModelOptions]="{standalone: true}">
                     </div>
                     <!-- preferences -->
                     <div *ngIf="currentQuestion.type === 'products-radio'" class="row mt-4 w-100 mt-3 mx-auto">
-                        <div class="col-md-4 mt-4 text-center">
-                            <a href="javascript:void(0)" class="preference life-insurance"
-                              [ngClass]="{ 'active': currentQuestion.options[0].active }" 
-                              (click)="radioSelection(0)">
-                              <span class="title">life insurance</span>
-                              <div class="show-on-hover">
-                                If I were to pass away, I would like to give money to a person(s) of my choice.
-                              </div>
-                              <input [formControlName]="currentQuestion.name" type="radio"
-                                class="inpChecked form-control" [value]="currentQuestion.options[0].text" [name]="currentQuestion.name" 
-                                [checked]="currentQuestion.options[0].active">
-                            </a>
-                        </div>
-                        <div class="col-md-4 mt-4 text-center">
-                            <a href="javascript:void(0)" class="preference critical-illness"
-                              [ngClass]="{ 'active': currentQuestion.options[1].active }" 
-                              (click)="radioSelection(1)">
-                              <span class="title">critical illness</span>
-                              <div class="show-on-hover">
-                                If I were to suffer a stroke, heart attack or  get cancer, I would like to personally receive a large amount of money.
-                              </div>
-                              <input [formControlName]="currentQuestion.name" type="radio"
-                                class="inpChecked form-control" [value]="currentQuestion.options[1].text" [name]="currentQuestion.name" 
-                                [checked]="currentQuestion.options[1].active">
-                            </a>
-                        </div>
-                        <div class="col-md-4 mt-4 text-center">
-                            <a href="javascript:void(0)" class="preference long-term-care"
-                              [ngClass]="{ 'active': currentQuestion.options[2].active }" 
-                              (click)="radioSelection(2)">
-                              <span class="title">long term care</span>
-                              <div class="show-on-hover">
-                                If I were unable to perform my daily tasks independently, I would like to receive money to hire assistance.
-                              </div>
-                              <input [formControlName]="currentQuestion.name" type="radio"
-                                class="inpChecked form-control" [value]="currentQuestion.options[2].text" [name]="currentQuestion.name" 
-                                [checked]="currentQuestion.options[2].active">
+                        <div *ngFor="let checkboxItem of currentQuestion.options; let i = index;" class="col-md-4 mt-4 text-center">
+                            <a href="javascript:void(0)" class="preference"
+                              [ngClass]="{ 
+                                'active': checkboxItem.active, 
+                                'life-insurance': checkboxItem.text === 'life-insurance', 
+                                'critical-illness': checkboxItem.text === 'critical-illness', 
+                                'long-term-care': checkboxItem.text === 'long-term-care'
+                              }" 
+                              (click)="checkboxSelection(i)">
+                              <span class="title">{{ checkboxItem.htmlTitle }}</span>
+                              <div class="show-on-hover">{{ checkboxItem.hoverText }}</div>
                             </a>
                         </div>
                     </div>
@@ -125,13 +98,21 @@
                         Your family’s benefits, savings, and income
                       </div>
                     </div>
+                    <section *ngIf="currentQuestion.name === 'gettoknowyou'" class="get-started-content">
+                      <p>4 minutes</p>
+                      <span>Estimate time to recommendation</span>
+                    </section>
                   </div>
                   <!-- submit/skip -->
-                  <div class="text-center">
-                    <button [disabled]="formGroup.invalid" type="submit" class="submitBtn" >Continue</button>
-                    <div>
-                      <button *ngIf="formSection === 2" class="skipText" (click)="continue()">Skip for now</button>
-                    </div>
+                  <div class="text-center button-container">
+                    <button [disabled]="formGroup.invalid" type="submit" class="submitBtn" >
+                      {{ 
+                        currentQuestion.last 
+                          ? 'See Recommendation' 
+                          : (currentQuestion.id === 1 ? 'Let\'s get started' : 'Continue') 
+                      }}
+                    </button>
+                    <button *ngIf="currentQuestion.skip" class="skipText" (click)="continue(true)">Skip for now</button>
                   </div>
                 </form>
             </section>
@@ -140,7 +121,7 @@
 </div>
 
 <!-- children popup -->
-<section class="children-popup" *ngIf="isPopupVisible">
+<section class="popup" *ngIf="isChildrenPopupVisible">
   <div class="content">
     <img src="assets/images/life-insurance-hover.svg" alt="">
     <div class="reason">
@@ -152,7 +133,24 @@
          your income is no longer there.
       </p>
       <div class="text-right">
-        <a (click)="isPopupVisible = false" href="javascript:void(0)">Return to question</a>
+        <a (click)="isChildrenPopupVisible = false" href="javascript:void(0)">Return to question</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ontartio popup -->
+<section class="popup" *ngIf="isOntarioPopupVisible">
+  <div class="content">
+    <img src="assets/images/ontario.svg" alt="">
+    <div class="reason">
+      <div class="title">We are working hard to expand our reach!</div>
+      <p>
+        Thank you for expressing so much interest however, for the time being we are only servicing people who live in Ontario.
+        We are working hard to expand our reach to other provinces, please stay tuned!
+      </p>
+      <div class="text-right">
+        <a (click)="redirectToHome()" href="javascript:void(0)">Return to homepage</a>
       </div>
     </div>
   </div>

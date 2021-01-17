@@ -1,0 +1,15 @@
+<div class="alert alert-success" *ngIf="alertInfo.type == 'success'">
+  <strong>Success!</strong> {{ alertInfo.text }}
+</div>
+
+<div class="alert alert-info" *ngIf="alertInfo.type == 'info'">
+  <strong>Info!</strong> {{ alertInfo.text }}
+</div>
+
+<div class="alert alert-warning" *ngIf="alertInfo.type == 'warning'">
+  <strong>Warning!</strong> {{ alertInfo.text }}
+</div>
+
+<div class="alert alert-danger" *ngIf="alertInfo.type == 'error'">
+  <strong>Error!</strong> {{ alertInfo.text }}
+</div>
