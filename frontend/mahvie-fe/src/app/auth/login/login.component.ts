@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
   onSubmit(): void {
     this.authService.loginUser(this.loginForm.value).subscribe((response: UserTokens) => {
       this.alertboxService.showAlert('success', 'Login successful');
-      this.cookieService.set('user-tokens', JSON.stringify(response));
+      this.authService.setUserTokens(response);
       this.router.navigate(['/dashboard']);
     });
   }

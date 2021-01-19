@@ -20,6 +20,6 @@ export class HomeComponent implements OnInit {
   }
 
   logout(): void {
-    this.authService.logoutUser(this);
+    this.authService.logoutUser();
   }
 }

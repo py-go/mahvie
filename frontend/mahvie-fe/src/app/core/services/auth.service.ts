@@ -4,8 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '@environments/environment';
 import { UserTokens, ConfirmPassword, Login, Register, ResetPassword, Token } from '@models/core.model';
 import { CookieService } from 'ngx-cookie-service';
-import { ClientDashboardComponent } from '@core/components/clientdashboard/clientdashboard.component';
-import { HomeComponent } from '@core/components/home/home.component';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +15,7 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private cookieService: CookieService,
+    private router: Router,
   ) {
     this.baseUrl = environment.baseUrl;
   }
@@ -48,8 +48,25 @@ export class AuthService {
     return JSON.parse(this.cookieService.get('user-tokens'));
   }
 
-  logoutUser(componentRef: ClientDashboardComponent | HomeComponent): void {
-    componentRef.cookieService.deleteAll();
-    componentRef.router.navigateByUrl('');
+  logoutUser(): void {
+    this.cookieService.deleteAll();
+    this.router.navigateByUrl('');
+  }
+
+  setUserTokens(response: UserTokens): void {
+    this.cookieService.set('user-tokens', JSON.stringify(response));
+  }
+
+  setAccessToken(tokenValue: string): void {
+    const newTokens = {
+      ...JSON.parse(this.cookieService.get('user-tokens')),
+      access: tokenValue
+    };
+    this.cookieService.delete('user-tokens');
+    this.cookieService.set('user-tokens', JSON.stringify(newTokens));
+  }
+
+  refreshAccessToken(): Observable<any> {
+    return this.http.post(`${this.baseUrl}auth/token/refresh/`, { refresh: this.getUserCredentails().refresh });
   }
 }

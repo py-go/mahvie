@@ -261,6 +261,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
   isChildrenPopupVisible = false;
   isOntarioPopupVisible = false;
   maxDate = new Date();
+  showRecommendation = false;
 
   constructor(
     private questionService: QuestionnaireService,
@@ -401,6 +402,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
       this.questionId++;
       this.loadQuestion();
     }
+    else this.showRecommendation = true;
   }
 
   /**

@@ -48,7 +48,8 @@ $preference-list: "life-insurance", "critical-illness", "long-term-care";
   padding-left: 20px;
 }
 
-.inputText, .inputSlide { 
+.inputText,
+.inputSlide {
   &::placeholder {
     color: $placeholder;
   }
@@ -474,6 +475,177 @@ mat-slider {
   background-size: 20px;
 }
 
+.progress {
+  overflow: visible;
+  margin-bottom: 60px;
+  height: 24px;
+  border-radius: 40px;
+
+  .progress-bar {
+    background: linear-gradient(
+      90deg,
+      rgba(2, 0, 36, 1) 0%,
+      rgba(252, 168, 117, 1) 0%,
+      rgba(244, 93, 1, 1) 100%
+    );
+    position: relative;
+    overflow: initial;
+    border-radius: 40px;
+
+    span {
+      background-color: #18344e;
+      position: absolute;
+      bottom: -51px;
+      line-height: 10px;
+      right: -99px;
+      font-size: 16px;
+      padding: 15px 20px;
+      border-radius: 40px;
+      font-weight: 600;
+
+      &:after {
+        bottom: 100%;
+        left: 50%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+        border-color: rgba(255, 255, 255, 0);
+        border-bottom-color: #18344e;
+        border-width: 9px;
+        margin-left: -5px;
+      }
+    }
+  }
+}
+
+#faq {
+  .card {
+    .card-header {
+      border: 0;
+      -webkit-box-shadow: 0 0 20px 0 rgba(213, 213, 213, 0.5);
+      box-shadow: 0 0 20px 0 rgba(213, 213, 213, 0.5);
+      border-radius: 2px;
+      padding: 0;
+
+      .btn-header-link {
+        display: block;
+        text-align: left;
+        color: #18344e;
+        padding: 20px;
+        font-size: 24px;
+        font-weight: 700;
+        background: #fff;
+
+        img {
+          width: 40px;
+          margin-right: 10px;
+        }
+        &:after {
+          content: "\f107";
+          font-family: "Font Awesome 5 Free";
+          font-weight: 900;
+          float: right;
+        }
+        &.collapsed:after {
+          content: "\f106";
+        }
+      }
+    }
+    .collapsing {
+      line-height: 30px;
+    }
+    .collapse {
+      border: 0;
+    }
+  }
+}
+
+.common-h4 {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 1.75rem;
+  line-height: 140%;
+  align-items: center;
+  text-align: center;
+  color: #18344e;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+
+.accodian-wrap {
+  border: 3px solid #fe8134;
+  border-radius: 6px;
+}
+
+.rec-tag {
+  display: inline-block;
+  margin-left: 20px;
+  font-size: 16px;
+  background: #fe81343b;
+  padding: 3px 22px;
+  border-radius: 30px;
+  border: 2px solid #fe8134;
+}
+.rec-tag img {
+  width: 18px !important;
+}
+.pay-length {
+  border-left: 1px solid #2b5d8c;
+  padding: 15px;
+  margin: auto;
+  flex: auto;
+}
+.pay-length h3 {
+  font-size: 26px;
+  font-weight: 800;
+  color: #fe8134;
+  margin-bottom: 15px;
+}
+.pay-length h5 {
+  font-size: 18px;
+  font-weight: 500;
+  color: #2b5d8c;
+}
+
+.h5-h {
+  text-align: left;
+  font-size: 18px;
+  margin-top: 15px;
+  color: #2b5d8c;
+}
+
+.c-ffoter {
+  margin-top: 30px;
+}
+
+.c-ffoter a {
+  color: #18344e !important;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.c-ffoter a.select {
+  background: #f45d01;
+  color: #fff !important;
+  font-size: 18px;
+  width: 140px;
+  display: inline-block;
+  height: 40px;
+  border-radius: 4px;
+  text-align: center;
+  line-height: 36px;
+  margin-left: 15px;
+  font-weight: 600;
+}
+
+.recommendation {
+  width: 60%;
+  margin: auto;
+}
+
 @media only screen and (max-width: 1450px) {
   .date-container {
     width: 65%;
@@ -488,6 +660,9 @@ mat-slider {
       padding-left: 30px;
       padding-right: 30px;
     }
+  }
+  .recommendation {
+    width: 100%;
   }
 }
 
