@@ -14,16 +14,16 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.questionService.backButtonVisibility.subscribe(_ => {
-      this.isButtonVisible =
-        parseInt(localStorage.getItem('questionId') || '1') > 1;
-    });
+    // this.questionService.backButtonVisibility.subscribe(_ => {
+    //   this.isButtonVisible =
+    //     parseInt(localStorage.getItem('questionId') || '1') > 1;
+    // });
   }
 
   /**
    * Emits event to show previous question
    */
-  previous() {
-    this.questionService.backButtonClick.next();
-  }
+  // previous() {
+  //   this.questionService.backButtonClick.next();
+  // }
 }

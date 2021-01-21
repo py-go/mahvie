@@ -1,5 +1,22 @@
-<header>
-  <button *ngIf="isButtonVisible" (click)="previous()">Back</button>
-  <span *ngIf="!isButtonVisible" class="offscreen"></span>
-  <img src="assets/images/mahvie-logo.png" alt="">
-</header>
+<!-- <header> -->
+<nav class="navbar navbar-expand-sm navbar-dark fixed-top">
+    <!-- Brand -->
+    <img src="assets/images/mahvie-logo.png" alt="" class="p-0 ml-4 mr-auto float-left">
+
+
+    <!-- Links -->
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link">ABOUT US</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link">LOG IN</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link">get in touch</a>
+        </li>
+    </ul>
+</nav>
+<!-- <button *ngIf="isButtonVisible" (click)="previous()">Back</button> -->
+<!-- <span *ngIf="!isButtonVisible" class="offscreen"></span> -->
+<!-- </header> -->

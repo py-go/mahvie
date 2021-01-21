@@ -173,6 +173,7 @@ export class QuestionnaireComponent implements OnInit {
   month: any;
   year: any;
   questionForm = new FormGroup({});
+  isButtonVisible = parseInt(localStorage.getItem('questionId') || '1') > 1;
 
   constructor(
     private el: ElementRef,
@@ -191,7 +192,12 @@ export class QuestionnaireComponent implements OnInit {
     });
 
     // subscribe to back button clicks
-    this.questionService.backButtonClick.subscribe(_ => this.previousQuestion());
+    // this.questionService.backButtonClick.subscribe(_ => this.previousQuestion());
+  }
+
+  previousClick(){
+    this.previousQuestion();
+    this.isButtonVisible =  parseInt(localStorage.getItem('questionId') || '1') > 1;
   }
 
   /**
@@ -212,7 +218,8 @@ export class QuestionnaireComponent implements OnInit {
     this.formSection++;
     this.saveQuestionId();
     this.assignQuestions();
-    this.questionService.backButtonVisibility.next();
+    // this.questionService.backButtonVisibility.next();
+    this.isButtonVisible =  parseInt(localStorage.getItem('questionId') || '1') > 1;
   }
 
   /**
@@ -222,7 +229,7 @@ export class QuestionnaireComponent implements OnInit {
     this.formSection--;
     this.saveQuestionId();
     this.assignQuestions();
-    this.questionService.backButtonVisibility.next();
+    // this.questionService.backButtonVisibility.next();
   }
 
   /**
