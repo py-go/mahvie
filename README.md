@@ -15,7 +15,7 @@ Mahvie is maintained and funded by Mahvie Inc. The names and logos for Mahvie ar
 #### Linux
 Most UNIX systems come with a python3 interpreter pre-installed.
 #### Windows
-[Python Setup on Windows] https://docs.python.org/3/using/windows.html
+[Python Setup on Windows](https://docs.python.org/3/using/windows.html)
 
 ### Install Pip
 ```console
@@ -50,7 +50,7 @@ mysql> GRANT ALL ON mahvie.* TO 'mahvie_user'@'%';
 mysql> FLUSH PRIVILEGES;
 ```
 ### Connecting to the database
-[Connect to database from django]https://docs.djangoproject.com/en/3.1/ref/databases#connecting-to-the-database
+[Connect to database from django](https://docs.djangoproject.com/en/3.1/ref/databases#connecting-to-the-database)
 >Note: Create .env file in root dir same as .env_example file add the necessary details
 
 ### Run the development server

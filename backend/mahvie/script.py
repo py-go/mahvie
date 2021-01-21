@@ -3,6 +3,7 @@ from selenium import webdriver
 # from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import Select
+import time
 
 
 def noble_wealth_scraper(**input_data):
@@ -38,7 +39,7 @@ def noble_wealth_scraper(**input_data):
     # Settings random values
     gender.select_by_visible_text(input_data.get('gender'))
     country.select_by_visible_text(input_data.get('country'))
-    smoker.select_by_visible_text(input_data.get('smoker'))
+    smoker.select_by_visible_text(input_data.get('smoke'))
     purpose.select_by_visible_text(input_data.get('purpose'))
     insurance_benefit_amount_select.select_by_visible_text(
         input_data.get('amount_needed'))
@@ -115,9 +116,12 @@ def noble_wealth_scraper(**input_data):
     # time.sleep(5)
     a = driver.find_element_by_partial_link_text('VIEW')
     driver.execute_script("arguments[0].click();", a)
-    # time.sleep(5)
-    driver.get(
-        "https://lifedesignanalysis.com/my-case/6a4562ef882d363727f660edc53b31a5636465d2")
+
+    driver.switch_to.window(driver.window_handles[1])
+    driver.find_element_by_xpath('//button[text()="Generate PDF"]').click()
+
+    # driver.get(
+    #     "https://lifedesignanalysis.com/my-case/6a4562ef882d363727f660edc53b31a5636465d2")
 
     insurance_company = None
     insurance_term = None

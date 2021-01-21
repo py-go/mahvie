@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 
 class TimeStampedModel(models.Model):
@@ -45,10 +46,15 @@ class PremiumRange(TimeStampedModel):
     def __str__(self):
         return str(self.coverage_range) + " | " + str(self.age_range) + " | " + str(self.gender) + " | " + str(self.premium_range)
 
-    # class UserResponse(TimeStampedModel):
-    #     user = models.ForeignKey(settings.AUTH_USER_MODEL,
-    #                              on_delete=models.CASCADE)
-    #     response_text = models.JSONField()
+
+class UserResponse(TimeStampedModel):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE)
+    questionnaire_questions = models.JSONField()
+    response_json = models.JSONField()
+
+    def __str__(self):
+        return str(self.user.email)
 
     # class Questionnaire(TimeStampedModel):
     #     name = models.CharField(max_length=255)
