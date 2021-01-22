@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from .views import QuestionnaireResponse, GetQuestionnaireResponse
 
 urlpatterns = [
@@ -7,4 +7,5 @@ urlpatterns = [
 
     path('get-questionnaire-response/', GetQuestionnaireResponse.as_view(),
          name='questionnaire_response'),
+    path('activity/', include('actstream.urls')),
 ]

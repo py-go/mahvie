@@ -1,5 +1,12 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
+from django.utils.http import urlsafe_base64_encode
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.conf import settings
+from django.utils.encoding import force_bytes
+from django.core.mail import send_mail
+from django.contrib.auth.tokens import default_token_generator
 
 UserModel = get_user_model()
 
@@ -25,5 +32,34 @@ class UserSerializer(serializers.ModelSerializer):
             phone_number=validated_data['phone_number']
         )
         user.set_password(validated_data['password'])
+        user.is_active = False
         user.save()
+
+        uid = urlsafe_base64_encode(force_bytes(user.email))
+        token = default_token_generator.make_token(user)
+        activation_link = "{0}api/auth/confirm-email/?uid={1}&token={2}".format(
+            settings.FE_URL, uid, token)
+
+        current_user = user.first_name if user.first_name else user.email
+        context = {
+            "user": current_user,
+            "account_activate_url": activation_link
+
+        }
+        to_email = user.email
+
+        mail_subject = 'Hi {}, please verify your Mahvie account'.format(
+            user.first_name)
+
+        html_message = render_to_string(
+            'email/email_confirmation.html', context)
+        plain_message = strip_tags(html_message)
+        from_email = 'developer@techversantinfo.com'
+        send_mail(
+            mail_subject,
+            plain_message,
+            from_email,
+            [to_email],
+            html_message=html_message
+        )
         return user

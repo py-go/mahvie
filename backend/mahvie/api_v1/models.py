@@ -1,5 +1,7 @@
 from django.db import models
 from django.conf import settings
+from django.db.models.signals import post_save
+from actstream import action
 
 
 class TimeStampedModel(models.Model):
@@ -55,6 +57,15 @@ class UserResponse(TimeStampedModel):
 
     def __str__(self):
         return str(self.user.email)
+
+    def my_handler(sender, instance, created, **kwargs):
+        action.send(instance, verb='was saved')
+
+
+class UserActivityLog(TimeStampedModel):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE)
+    activity = models.TextField(blank=True, null=True)
 
     # class Questionnaire(TimeStampedModel):
     #     name = models.CharField(max_length=255)

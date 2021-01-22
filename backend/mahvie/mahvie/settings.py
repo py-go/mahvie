@@ -44,7 +44,10 @@ AUTHENTICATION_BACKENDS = [
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+
+PASSWORD_RESET_TIMEOUT_DAYS = 1  # Applicable for all one time tokens
 
 # djangorestframework-simplejwt
 REST_FRAMEWORK = {
@@ -73,10 +76,14 @@ INSTALLED_APPS = [
     'corsheaders',
     'allauth',
     'allauth.account',
+    'actstream',
+    'anymail',
     'api_v1',
     'api_authentication',
-
 ]
+
+if config('ENV') == 'prod':
+    INSTALLED_APPS.append('django_hosts')
 
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -89,6 +96,14 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+if config('ENV') == 'prod':
+    MIDDLEWARE.insert(0, 'django_hosts.middleware.HostsRequestMiddleware')
+    MIDDLEWARE.append('django_hosts.middleware.HostsResponseMiddleware')
+    ROOT_HOSTCONF = 'mahvie.hosts'
+    ROOT_URLCONF = 'mahvie.admin_urls'
+    DEFAULT_HOST = 'www'
+
 # Custom user model
 AUTH_USER_MODEL = 'api_authentication.CustomUser'
 
@@ -174,13 +189,31 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # email_settings
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = config('EMAIL_USER')
-EMAIL_HOST_PASSWORD = config('EMAIL_USER_PASSWORD')
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = config('EMAIL_USER')
+if config('ENV') == 'heroku':
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = 'smtp.gmail.com'
+    EMAIL_HOST_USER = config('EMAIL_USER')
+    EMAIL_HOST_PASSWORD = config('EMAIL_USER_PASSWORD')
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
+    DEFAULT_FROM_EMAIL = config('EMAIL_USER')
+
+else:
+
+    ANYMAIL = {
+        "MAILGUN_API_KEY": config('MAILGUN_API_KEY'),
+        "MAILGUN_SENDER_DOMAIN": config('MAILGUN_SANDBOX'),
+    }
+    EMAIL_BACKEND = "anymail.backends.mailgun.EmailBackend"
+    DEFAULT_FROM_EMAIL = "pratiman.shahi@mahvie.com"
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.mailgun.org'
+# EMAIL_HOST_USER = "postmaster@sandboxe8f2620f610a46548d4ca984628d61ef.mailgun.org"
+# EMAIL_HOST_PASSWORD = "4623ba27d8e6523ea6c5fb1db4de5771-e438c741-c13dc897"
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# DEFAULT_FROM_EMAIL = "postmaster@sandboxe8f2620f610a46548d4ca984628d61ef.mailgun.org"
 
 
 # Internationalization
@@ -218,47 +251,39 @@ if config('ENV') != 'heroku':
     LOGGING = {
         'version': 1,
         'disable_existing_loggers': False,
-
         'formatters': {
             'verbose': {
-                'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
-                'style': '{',
-            },
-            'simple': {
-                'format': '{levelname} {message}',
-                'style': '{',
+                'format': '%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
             },
         },
 
         'handlers': {
-            'file': {
+            'fileInfo': {
+                'level': 'INFO',
                 'class': 'logging.FileHandler',
-                'filename': os.path.join(LOGGING_ROOT, "info.log")
+                'filename': os.path.join(LOGGING_ROOT, "info.log"),
+                'formatter': 'verbose'
             },
-
-            'mail_admins': {
-                'level': 'ERROR',
-                'class': 'django.utils.log.AdminEmailHandler',
-                'include_html': True,
-            }
+            'fileDebug': {
+                'level': 'DEBUG',
+                'class': 'logging.FileHandler',
+                'filename': os.path.join(LOGGING_ROOT, "debug.log"),
+                'formatter': 'verbose'
+            },
+            # 'console': {
+            #     'class': 'logging.StreamHandler',
+            # },
         },
-
-        'root': {
-            'handlers': ['file'],
-            'level': 'WARNING',
-        },
-
         'loggers': {
             'django': {
-                'handlers': ['file'],
-                'level': 'ERROR',
-                'propagate': True,
-            },
-
-            'django.request': {
-                'handlers': ['mail_admins'],
-                'level': 'ERROR',
+                'handlers': ['fileInfo', 'fileDebug'],
+                'level': 'DEBUG',
                 'propagate': False,
             },
         },
+        'root': {
+            'level': 'DEBUG',
+            'handlers': ['fileInfo', 'fileDebug'],
+            'propagate': False,
+        }
     }

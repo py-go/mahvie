@@ -7,6 +7,8 @@ from rest_framework.response import Response
 from rest_framework import generics
 from rest_framework.exceptions import NotFound
 
+from actstream import action
+
 from script import noble_wealth_scraper
 from api_v1.models import UserResponse
 
@@ -39,6 +41,9 @@ class QuestionnaireResponse(APIView):
             user_response.response_json = questionnaire_response
             user_response.questionnaire_questions = questionnaire_questions
             user_response.save()
+
+            # User audit log - adding entry to actiona table
+            action.send(request.user, verb="submited questionnaire")
 
         email = questionnaire_response.get('email')
         smoke = questionnaire_response.get('smoke')

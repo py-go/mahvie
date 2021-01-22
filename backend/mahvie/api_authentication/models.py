@@ -35,6 +35,7 @@ class CustomUser(AbstractUser):
     assigned_clients = models.ManyToManyField(
         'self', blank=True,
         limit_choices_to={'groups__name': "agents"})
+    is_email_verified = models.BooleanField(default=False)
 
     def __str__(self):
         return self.first_name + " | " + self.email
