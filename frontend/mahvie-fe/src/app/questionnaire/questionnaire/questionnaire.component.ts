@@ -262,6 +262,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
   isOntarioPopupVisible = false;
   maxDate = new Date();
   showRecommendation = false;
+  isButtonVisible = parseInt(localStorage.getItem('questionId') || '1') > 1;
 
   constructor(
     private questionService: QuestionnaireService,
@@ -297,6 +298,11 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subsink.unsubscribe();
+  }
+
+  previousClick(){
+    this.previousQuestion();
+    this.isButtonVisible =  parseInt(localStorage.getItem('questionId') || '1') > 1;
   }
 
   /**
@@ -403,6 +409,8 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
       this.loadQuestion();
     }
     else this.showRecommendation = true;
+    this.isButtonVisible =  parseInt(localStorage.getItem('questionId') || '1') > 1;
+
   }
 
   /**
@@ -427,6 +435,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     ) {
       this.questionService.submitAnswers(payload).subscribe();
     }
+
   }
 
   /**

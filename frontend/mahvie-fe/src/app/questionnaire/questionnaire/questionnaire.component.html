@@ -1,200 +1,177 @@
-<div class="contain centered-wrapper">
-  <div class="centered-content contianer">
-    <div class="mt-132">
-      <section *ngIf="!showRecommendation">
-        <h1 class="titleText">
-          {{currentQuestion.title}}
-          <a *ngIf="currentQuestion.name === 'children'" (click)="isChildrenPopupVisible = true" class="info"
-            href="javascript:void(0)"></a>
-        </h1>
-        <div class="questionsStyle" *ngIf="currentQuestion.subtitle">
-          {{currentQuestion.subtitle}}
-        </div>
-      </section>
-      <section *ngIf="!showRecommendation" class="mt-132">
-        <form [formGroup]="formGroup" (ngSubmit)="continue()">
-          <div class="row w-75 mx-auto">
-            <div class="questionsStyle col-sm-7 mx-auto" *ngIf="currentQuestion.question">
-              {{currentQuestion.question}}
-            </div>
-            <!-- radio buttons -->
-            <div *ngIf="currentQuestion.type === 'radio'" class="col-sm-7 mx-auto">
-              <div class="inputFull" *ngFor="let instance of currentQuestion.options; let i = index;"
-                [ngClass]="{ 'active': instance.active, 'show-pointer': currentQuestion.type === 'radio' }"
-                (click)="radioSelection(i)">
-                <input [formControlName]="currentQuestion.name" [type]="currentQuestion.type"
-                  class="inpChecked form-control" [value]="instance.text" [name]="currentQuestion.name"
-                  [checked]="instance.active">
-                <label class="optStyle">
+<div class="contain centered-wrapper container">
+    <div class="centered-content contianer">
+        <div class="mt-132" *ngIf="currentQuestion">
+            <section *ngIf="!showRecommendation">
+                <button class="buttonBack" (click)="previousClick()" *ngIf="isButtonVisible">Back</button>
+                <h1 class="titleText">
+                    {{currentQuestion.title}}
+                    <a *ngIf="currentQuestion.name === 'children'" (click)="isChildrenPopupVisible = true" class="info" href="javascript:void(0)"></a>
+                </h1>
+                <div class="questionsStyle" *ngIf="currentQuestion.subtitle">
+                    {{currentQuestion.subtitle}}
+                </div>
+            </section>
+            <section *ngIf="!showRecommendation" class="mt-132">
+                <form [formGroup]="formGroup" (ngSubmit)="continue()">
+                    <div class="row w-75 mx-auto">
+                        <div class="questionsStyle col-sm-7 mx-auto" *ngIf="currentQuestion.question">
+                            {{currentQuestion.question}}
+                        </div>
+                        <!-- radio buttons -->
+                        <div *ngIf="currentQuestion.type === 'radio'" class="col-sm-7 mx-auto">
+                            <div class="inputFull" *ngFor="let instance of currentQuestion.options; let i = index;" [ngClass]="{ 'active': instance.active, 'show-pointer': currentQuestion.type === 'radio' }" (click)="radioSelection(i)">
+                                <input [formControlName]="currentQuestion.name" [type]="currentQuestion.type" class="inpChecked form-control" [value]="instance.text" [name]="currentQuestion.name" [checked]="instance.active">
+                                <label class="optStyle">
                   {{ instance.text | titlecase }}
                   {{ currentQuestion.name === 'children' && instance.text === 'yes' ? ', I have' : '' }}
                 </label>
-                <ng-container *ngIf="currentQuestion.name === 'children' && instance.text === 'yes'">
-                  <div class="children-length">
-                    <select formControlName="children-length">
+                                <ng-container *ngIf="currentQuestion.name === 'children' && instance.text === 'yes'">
+                                    <div class="children-length">
+                                        <select formControlName="children-length">
                       <option *ngFor="let opt of [1,2,3,4,5,6,7,8]" [value]="opt">{{ opt }}</option>
                     </select>
-                  </div>
-                </ng-container>
-              </div>
-            </div>
-            <!-- textboxes -->
-            <div *ngIf="currentQuestion.type === 'text'" class="inline-container"
-              [class.inline]="currentQuestion.inline">
-              <input [formControlName]="currentQuestion.controls[i]" type="text" class="inputText inputHalf"
-                [placeholder]="fields" *ngFor="let fields of currentQuestion.options; let i = index;">
-            </div>
-            <!-- slider control -->
-            <div *ngIf="currentQuestion.type === 'slider'" class="col-sm-7 mx-auto">
-              <input readonly type="text" class="inputFull inputSlide mb-74" matInput [value]="sliderValue | currency"
-                [class.hasValue]="sliderValue > 0">
-              <mat-slider [step]="1000" [max]="currentQuestion.validations.max" [min]="currentQuestion.validations.min"
-                (change)="sliderValueChange$.next($event.value)" [value]="sliderValue"></mat-slider>
-              <section class="slider-amounts">
-                <label class="sliderLabel">{{currentQuestion.validations.min | currency}}</label>
-                <label class="sliderLabel">{{currentQuestion.validations.max | currency}}</label>
-              </section>
-            </div>
-            <!-- dates -->
-            <div *ngIf="currentQuestion.type === 'date'" class="date-container">
-              <input matInput readonly [matDatepicker]="dp3" [value]="dateValue" [max]="maxDate"
-                (dateChange)="dateSelected($event)" class="inputDate input1" placeholder="Date of Birth">
-              <div class="calenderIcon">
-                <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
-                <mat-datepicker #dp3 disabled="false"></mat-datepicker>
-              </div>
-              <input type="text" class="inputDate input2" placeholder="MM" readonly [(ngModel)]="date"
-                [ngModelOptions]="{standalone: true}">
-              <input type="text" class="inputDate input3" placeholder="DD" readonly [(ngModel)]="month"
-                [ngModelOptions]="{standalone: true}">
-              <input type="text" class="inputDate input4" placeholder="YYYY" readonly [(ngModel)]="year"
-                [ngModelOptions]="{standalone: true}">
-            </div>
-            <!-- preferences -->
-            <div *ngIf="currentQuestion.type === 'products-radio'" class="row mt-4 w-100 mt-3 mx-auto">
-              <div *ngFor="let checkboxItem of currentQuestion.options; let i = index;"
-                class="col-md-4 mt-4 text-center">
-                <a href="javascript:void(0)" class="preference" [ngClass]="{ 
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <!-- textboxes -->
+                        <div *ngIf="currentQuestion.type === 'text'" class="inline-container" [class.inline]="currentQuestion.inline">
+                            <input [formControlName]="currentQuestion.controls[i]" type="text" class="inputText inputHalf" [placeholder]="fields" *ngFor="let fields of currentQuestion.options; let i = index;">
+                        </div>
+                        <!-- slider control -->
+                        <div *ngIf="currentQuestion.type === 'slider'" class="col-sm-7 mx-auto">
+                            <input readonly type="text" class="inputFull inputSlide mb-74" matInput [value]="sliderValue | currency" [class.hasValue]="sliderValue > 0">
+                            <mat-slider [step]="1000" [max]="currentQuestion.validations.max" [min]="currentQuestion.validations.min" (change)="sliderValueChange$.next($event.value)" [value]="sliderValue"></mat-slider>
+                            <section class="slider-amounts">
+                                <label class="sliderLabel">{{currentQuestion.validations.min | currency}}</label>
+                                <label class="sliderLabel">{{currentQuestion.validations.max | currency}}</label>
+                            </section>
+                        </div>
+                        <!-- dates -->
+                        <div *ngIf="currentQuestion.type === 'date'" class="date-container">
+                            <input matInput readonly [matDatepicker]="dp3" [value]="dateValue" [max]="maxDate" (dateChange)="dateSelected($event)" class="inputDate input1" placeholder="Date of Birth">
+                            <div class="calenderIcon">
+                                <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+                                <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+                            </div>
+                            <input type="text" class="inputDate input2" placeholder="MM" readonly [(ngModel)]="date" [ngModelOptions]="{standalone: true}">
+                            <input type="text" class="inputDate input3" placeholder="DD" readonly [(ngModel)]="month" [ngModelOptions]="{standalone: true}">
+                            <input type="text" class="inputDate input4" placeholder="YYYY" readonly [(ngModel)]="year" [ngModelOptions]="{standalone: true}">
+                        </div>
+                        <!-- preferences -->
+                        <div *ngIf="currentQuestion.type === 'products-radio'" class="row mt-4 w-100 mt-3 mx-auto">
+                            <div *ngFor="let checkboxItem of currentQuestion.options; let i = index;" class="col-md-4 mt-4 text-center">
+                                <a href="javascript:void(0)" class="preference" [ngClass]="{ 
                                 'active': checkboxItem.active, 
                                 'life-insurance': checkboxItem.text === 'life-insurance', 
                                 'critical-illness': checkboxItem.text === 'critical-illness', 
                                 'long-term-care': checkboxItem.text === 'long-term-care'
                               }" (click)="checkboxSelection(i)">
-                  <span class="title">{{ checkboxItem.htmlTitle }}</span>
-                  <div class="show-on-hover">{{ checkboxItem.hoverText }}</div>
-                </a>
-              </div>
-            </div>
-            <!-- let's get to know you -->
-            <div *ngIf="currentQuestion.name === 'gettoknowyou'" class="get-started">
-              <div class="start start1">
-                Your insurance needs and preferences
-              </div>
-              <div class="start start2">
-                Your family & lifestyle factors
-              </div>
-              <div class="start start3">
-                Your family’s benefits, savings, and income
-              </div>
-            </div>
-            <section *ngIf="currentQuestion.name === 'gettoknowyou'" class="get-started-content">
-              <p>4 minutes</p>
-              <span>Estimate time to recommendation</span>
+                                    <span class="title">{{ checkboxItem.htmlTitle }}</span>
+                                    <div class="show-on-hover">{{ checkboxItem.hoverText }}</div>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- let's get to know you -->
+                        <div *ngIf="currentQuestion.name === 'gettoknowyou'" class="get-started">
+                            <div class="start start1">
+                                Your insurance needs and preferences
+                            </div>
+                            <div class="start start2">
+                                Your family & lifestyle factors
+                            </div>
+                            <div class="start start3">
+                                Your family’s benefits, savings, and income
+                            </div>
+                        </div>
+                        <section *ngIf="currentQuestion.name === 'gettoknowyou'" class="get-started-content">
+                            <p>4 minutes</p>
+                            <span>Estimate time to recommendation</span>
+                        </section>
+                    </div>
+                    <!-- submit/skip -->
+                    <div class="text-center mt-50" [ngClass]="{'button-container':currentQuestion.name!='mortgage'}">
+                        <button [disabled]="formGroup.invalid" type="submit" class="submitBtn">
+                         {{ currentQuestion.last ? 'See Recommendation' : (currentQuestion.id === 1 ? 'Let\'s
+                        get started' : 'Continue') }}
+                        </button>
+                        <button *ngIf="currentQuestion.name=='mortgage'" class="skipText" (click)="continue(true)">I don't have a mortage</button>
+                        <button *ngIf="currentQuestion.skip" class="skipText" (click)="continue(true)">Skip for now</button>
+                    </div>
+                </form>
             </section>
-          </div>
-          <!-- submit/skip -->
-          <div class="text-center button-container">
-            <button [disabled]="formGroup.invalid" type="submit" class="submitBtn">
-              {{
-              currentQuestion.last
-              ? 'See Recommendation'
-              : (currentQuestion.id === 1 ? 'Let\'s get started' : 'Continue')
-              }}
-            </button>
-            <button *ngIf="currentQuestion.skip" class="skipText" (click)="continue(true)">Skip for now</button>
-          </div>
-        </form>
-      </section>
-      <!-- see recommendations -->
-      <section *ngIf="showRecommendation" class="recommendation">
-        <h4 class="common-h4">Our recommendation</h4>
-        <div class="accordion accodian-wrap" id="faq">
-          <div class="card">
-            <div class="card-header" id="faqhead1">
-              <a href="javascript:void(0)" class="btn btn-header-link" data-toggle="collapse" data-target="#faq1"
-                aria-expanded="true" aria-controls="faq1"><img src="assets/images/lifeinsurance-unselected1.svg"
-                  class="img-fluid"> Life Insurance - Tier 1 Label <div class="rec-tag">
-                  <img src="assets/images/registerAsset6@2x2.svg" width="18px">
-                  Recommended
+            <!-- see recommendations -->
+            <section *ngIf="showRecommendation" class="recommendation">
+                <h4 class="common-h4">Our recommendation</h4>
+                <div class="accordion accodian-wrap" id="faq">
+                    <div class="card">
+                        <div class="card-header" id="faqhead1">
+                            <a href="javascript:void(0)" class="btn btn-header-link" data-toggle="collapse" data-target="#faq1" aria-expanded="true" aria-controls="faq1"><img src="assets/images/lifeinsurance-unselected1.svg" class="img-fluid"> Life Insurance - Tier 1 Label
+                                <div class="rec-tag">
+                                    <img src="assets/images/registerAsset6@2x2.svg" width="18px"> Recommended
+                                </div>
+                            </a>
+                        </div>
+                        <div id="faq1" class="collapse show" aria-labelledby="faqhead1" data-parent="#faq">
+                            <div class="card-body" style="background: #fff;">
+                                <div class="row" style="justify-content: space-between;align-items: center;text-align: center;">
+                                    <div style="margin-right: 20px;margin-left: 20px;"> <img src="assets/images/lowtierAsset4@2x2.svg">
+                                    </div>
+                                    <div class="pay-length">
+                                        <h3>$Z</h3>
+                                        <h5>Monthly payment</h5>
+                                    </div>
+                                    <div class="pay-length">
+                                        <h3>$Y</h3>
+                                        <h5>Coverage Amount</h5>
+                                    </div>
+                                    <div class="pay-length">
+                                        <h3>10 years</h3>
+                                        <h5>Policy length</h5>
+                                    </div>
+                                </div>
+                                <h5 class="h5-h">If you die in the next 10 years, a person of your choice will receive $Y for just $Z/month!</h5>
+                                <div class="text-right c-ffoter">
+                                    <a href="#">Learn more</a>
+                                    <a href="#" class="select">Select</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </a>
-            </div>
-            <div id="faq1" class="collapse show" aria-labelledby="faqhead1" data-parent="#faq">
-              <div class="card-body" style="background: #fff;">
-                <div class="row" style="justify-content: space-between;align-items: center;text-align: center;">
-                  <div style="margin-right: 20px;margin-left: 20px;"> <img src="assets/images/lowtierAsset4@2x2.svg">
-                  </div>
-                  <div class="pay-length">
-                    <h3>$Z</h3>
-                    <h5>Monthly payment</h5>
-                  </div>
-                  <div class="pay-length">
-                    <h3>$Y</h3>
-                    <h5>Coverage Amount</h5>
-                  </div>
-                  <div class="pay-length">
-                    <h3>10 years</h3>
-                    <h5>Policy length</h5>
-                  </div>
-                </div>
-                <h5 class="h5-h">If you die in the next 10 years, a person of your choice will receive $Y for
-                  just $Z/month!</h5>
-                <div class="text-right c-ffoter">
-                  <a href="#">Learn more</a>
-                  <a href="#" class="select">Select</a>
-                </div>
-              </div>
-            </div>
-          </div>
+            </section>
         </div>
-      </section>
     </div>
-  </div>
 </div>
 
 <!-- children popup -->
 <section class="popup" *ngIf="isChildrenPopupVisible">
-  <div class="content">
-    <img src="assets/images/life-insurance-hover.svg" alt="">
-    <div class="reason">
-      <div class="title">Why do we ask about your children?</div>
-      <p>
-        Life insurance is all about protecting the people you love.
-        If there are people who rely on your financial support, a life insurance policy
-        will make sure they have enough money if something unexpected happens to you and
-        your income is no longer there.
-      </p>
-      <div class="text-right">
-        <a (click)="isChildrenPopupVisible = false" href="javascript:void(0)">Return to question</a>
-      </div>
+    <div class="content">
+        <img src="assets/images/life-insurance-hover.svg" alt="">
+        <div class="reason">
+            <div class="title">Why do we ask about your children?</div>
+            <p>
+                Life insurance is all about protecting the people you love. If there are people who rely on your financial support, a life insurance policy will make sure they have enough money if something unexpected happens to you and your income is no longer there.
+            </p>
+            <div class="text-right">
+                <a (click)="isChildrenPopupVisible = false" href="javascript:void(0)">Return to question</a>
+            </div>
+        </div>
     </div>
-  </div>
 </section>
 
 <!-- ontartio popup -->
 <section class="popup" *ngIf="isOntarioPopupVisible">
-  <div class="content">
-    <img src="assets/images/ontario.svg" alt="">
-    <div class="reason">
-      <div class="title">We are working hard to expand our reach!</div>
-      <p>
-        Thank you for expressing so much interest however, for the time being we are only servicing people who live in
-        Ontario.
-        We are working hard to expand our reach to other provinces, please stay tuned!
-      </p>
-      <div class="text-right">
-        <a (click)="redirectToHome()" href="javascript:void(0)">Return to homepage</a>
-      </div>
+    <div class="content">
+        <img src="assets/images/ontario.svg" alt="">
+        <div class="reason">
+            <div class="title">We are working hard to expand our reach!</div>
+            <p>
+                Thank you for expressing so much interest however, for the time being we are only servicing people who live in Ontario. We are working hard to expand our reach to other provinces, please stay tuned!
+            </p>
+            <div class="text-right">
+                <a (click)="redirectToHome()" href="javascript:void(0)">Return to homepage</a>
+            </div>
+        </div>
     </div>
-  </div>
 </section>

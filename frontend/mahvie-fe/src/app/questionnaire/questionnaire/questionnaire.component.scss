@@ -1,782 +1,780 @@
 @import "base";
-
-$preference-list: "life-insurance", "critical-illness", "long-term-care";
-
+$preference-list: "life-insurance",
+"critical-illness",
+"long-term-care";
 .mt-132 {
-  margin-top: 30px;
+    margin-top: 30px;
 }
 
 .mt-46 {
-  margin-top: 64px;
+    margin-top: 64px;
 }
 
 .titleText {
-  font: 500 1.75rem "Playfair Display";
-  color: #18344e;
-  margin: 0 auto 20px;
+    font: 500 1.75rem "Playfair Display";
+    color: #18344e;
+    margin: 0 auto 20px;
 }
 
 .inline-container {
-  margin: auto;
-  width: 42%;
-  display: flex;
-  align-content: center;
-  flex-direction: column;
-  justify-content: space-between;
-
-  &.inline {
-    flex-direction: row;
-    width: 65%;
-
-    input[type="text"] {
-      width: 49%;
+    margin: auto;
+    width: 42%;
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+    justify-content: space-between;
+    &.inline {
+        flex-direction: row;
+        width: 65%;
+        input[type="text"] {
+            width: 49%;
+        }
     }
-  }
 }
 
 .inputHalf {
-  padding: 0 15px;
-  height: 50px;
-  background: $w;
-  border: 2px solid #2b5d8c;
-  margin: 8px 0;
+    padding: 0 15px;
+    height: 50px;
+    background: $w;
+    border: 2px solid #2b5d8c;
+    margin: 8px 0;
 }
 
 .inputText {
-  font: 600 1.2rem "Source Sans Pro";
-  color: darken($placeholder, 25%);
-  padding-left: 20px;
+    font: 600 1.2rem "Source Sans Pro";
+    color: darken($placeholder, 25%);
+    padding-left: 20px;
 }
 
 .inputText,
 .inputSlide {
-  &::placeholder {
-    color: $placeholder;
-  }
-  &:focus,
-  &.ng-valid,
-  &.hasValue {
-    @include radius(0);
-    outline: 2px solid lighten($primary, 35%);
-    border: 2px solid $primary;
-    border-color: $primary;
-  }
+    &::placeholder {
+        color: $placeholder;
+    }
+    &:focus,
+    &.ng-valid,
+    &.hasValue {
+        @include radius(0);
+        outline: 2px solid lighten($primary, 35%);
+        border: 2px solid $primary;
+        border-color: $primary;
+    }
 }
 
 .button-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-top: 50px;
-
-  .skipText {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     margin-top: 50px;
-  }
+    .skipText {
+        margin-top: 50px;
+    }
 }
 
 .submitBtn,
 .skipText {
-  font-size: 1.25rem;
-  height: 50px;
-  width: 350px;
-  background: #f45d01;
-  border: 1px solid $disabled;
-  border-radius: 6px;
-  text-align: center;
-  letter-spacing: 0.04em;
-  color: $w;
-
-  &[disabled] {
-    background: $disabled;
-  }
+    font-size: 1.25rem;
+    height: 50px;
+    width: 350px;
+    background: #f45d01;
+    border: 1px solid $disabled;
+    border-radius: 6px;
+    text-align: center;
+    letter-spacing: 0.04em;
+    color: $w;
+    &[disabled] {
+        background: $disabled;
+    }
 }
 
 .skipText {
-  background: $w;
-  font-weight: 600;
-  color: $primary;
-  border: none;
+    background: $w;
+    font-weight: 600;
+    color: $primary;
+    border: none;
 }
 
 .inputFull {
-  height: 50px;
-  width: 70%;
-  border-radius: 0;
-  padding: 20px 15px;
-  margin: 15px auto 0;
-  background: $w;
-  border: 2px solid $secondary;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-
-  &.mat-input-element {
-    margin-top: 0;
-  }
-  &.active {
-    background-color: #f5c0a0;
-    border: 2px solid #f45d01;
-    z-index: 999 !important;
-  }
-  input[type="radio"] {
-    height: 20px;
-    width: 20px;
+    height: 50px;
+    width: 70%;
     border-radius: 0;
+    padding: 20px 15px;
+    margin: 15px auto 0;
     background: $w;
-    border: none;
-    margin-right: 15px;
-    cursor: pointer;
-    position: relative;
-
-    &:focus {
-      box-shadow: none;
+    border: 2px solid $secondary;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    &.mat-input-element {
+        margin-top: 0;
     }
-    &:checked:after {
-      @include radius(50%);
-      @include tl(50%, 50%);
-      display: inline-block;
-      background: #333;
-      content: "";
-      height: 12px;
-      width: 12px;
-      margin: -6px 0 0 -6px;
+    &.active {
+        background-color: #f5c0a0;
+        border: 2px solid #f45d01;
+        z-index: 999 !important;
     }
-  }
+    input[type="radio"] {
+        height: 20px;
+        width: 20px;
+        border-radius: 0;
+        background: $w;
+        border: none;
+        margin-right: 15px;
+        cursor: pointer;
+        position: relative;
+        &:focus {
+            box-shadow: none;
+        }
+        &:checked:after {
+            @include radius(50%);
+            @include tl(50%, 50%);
+            display: inline-block;
+            background: #333;
+            content: "";
+            height: 12px;
+            width: 12px;
+            margin: -6px 0 0 -6px;
+        }
+    }
 }
 
 .show-pointer {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .centered-content {
-  display: inline-block;
-  vertical-align: middle;
-  /* width: 800px; */
-  width: 100%;
+    display: inline-block;
+    vertical-align: middle;
+    /* width: 800px; */
+    width: 100%;
 }
 
 .questionsStyle {
-  font: 1.2rem "Source Sans Pro";
-  color: $secondary;
-  text-align: center;
-  width: 75%;
-  margin: auto auto 20px;
+    font: 1.2rem "Source Sans Pro";
+    color: $secondary;
+    text-align: center;
+    width: 75%;
+    margin: auto auto 20px;
 }
 
 .optStyle {
-  font: 1rem "Lato";
-  font-weight: bold;
-  color: #18344e;
-  margin-bottom: 0;
-  pointer-events: none;
+    font: 1rem "Lato";
+    font-weight: bold;
+    color: #18344e;
+    margin-bottom: 0;
+    pointer-events: none;
 }
 
 .slideInpText {
-  font-family: Lato;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 40px;
-  line-height: 48px;
-  /* identical to box height */
-  text-align: center;
-  color: #a0a0a0;
-  left: 415px;
-  top: 518px;
-  position: absolute;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 40px;
+    line-height: 48px;
+    /* identical to box height */
+    text-align: center;
+    color: #a0a0a0;
+    left: 415px;
+    top: 518px;
+    position: absolute;
 }
 
 .inputSlide {
-  text-align: right;
-  font: 1.4rem "Lato";
-  color: #a0a0a0;
+    text-align: right;
+    font: 1.4rem "Lato";
+    color: #a0a0a0;
 }
 
 mat-slider {
-  width: 100%;
+    width: 100%;
 }
 
 .mb-74 {
-  margin-bottom: 40px;
+    margin-bottom: 40px;
 }
 
 .sliderLabel {
-  margin-top: 16px;
-  font: 1.4rem "Lato";
-  text-align: center;
-  color: #18344e;
+    margin-top: 16px;
+    font: 1.4rem "Lato";
+    text-align: center;
+    color: #18344e;
 }
 
 .product-des {
-  font-weight: 800;
-  font-size: 16px;
-  letter-spacing: 0.02em;
-  color: #18344e;
+    font-weight: 800;
+    font-size: 16px;
+    letter-spacing: 0.02em;
+    color: #18344e;
 }
 
 .product-h {
-  height: 72px;
+    height: 72px;
 }
 
 .img-fluid {
-  width: 75px !important;
+    width: 75px !important;
 }
 
-/* preferences */
-.preference {
-  display: block;
-  position: relative;
-  padding-top: 95px;
 
-  * {
-    @include transit(0.4s);
-  }
-  input[type="radio"] {
-    display: none;
-  }
-  &:before {
-    @include tl(0, 0);
-    content: "";
-    width: 100%;
-    height: 72px;
-  }
-  @each $item in $preference-list {
-    &.#{$item}:before {
-      @include svg($item);
-      background-position: center;
+/* preferences */
+
+.preference {
+    display: block;
+    position: relative;
+    padding-top: 95px;
+    * {
+        @include transit(0.4s);
     }
-  }
-  span.title {
-    color: $secondary;
-    text-transform: uppercase;
-    font-size: 1rem;
-    font-weight: bold;
-  }
-  .show-on-hover {
-    @include radius(5px);
-    @include box-shadow(0, 5px, 10px, 24, 52, 78, 0.1);
-    @include tl(calc(100% + 15px), 0);
-    width: 100%;
-    padding: 30px;
-    background: $disabled;
-    border: 1px solid lighten($light-border, 10%);
-    color: $secondary;
-    display: grid;
-    place-items: center;
-    text-align: left;
-    opacity: 0;
-    pointer-events: none;
-  }
-  &:hover,
-  &.active {
+    input[type="radio"] {
+        display: none;
+    }
+    &:before {
+        @include tl(0, 0);
+        content: "";
+        width: 100%;
+        height: 72px;
+    }
     @each $item in $preference-list {
-      &.#{$item}:before {
-        $item: $item + "-hover";
-        @include svg($item);
-        background-position: center;
-      }
+        &.#{$item}:before {
+            @include svg($item);
+            background-position: center;
+        }
     }
     span.title {
-      color: $primary;
+        color: $secondary;
+        text-transform: uppercase;
+        font-size: 1rem;
+        font-weight: bold;
     }
-  }
-  &:hover {
     .show-on-hover {
-      opacity: 1;
+        @include radius(5px);
+        @include box-shadow(0, 5px, 10px, 24, 52, 78, 0.1);
+        @include tl(calc(100% + 15px), 0);
+        width: 100%;
+        padding: 30px;
+        background: $disabled;
+        border: 1px solid lighten($light-border, 10%);
+        color: $secondary;
+        display: grid;
+        place-items: center;
+        text-align: left;
+        opacity: 0;
+        pointer-events: none;
     }
-  }
+    &:hover,
+    &.active {
+        @each $item in $preference-list {
+            &.#{$item}:before {
+                $item: $item + "-hover";
+                @include svg($item);
+                background-position: center;
+            }
+        }
+        span.title {
+            color: $primary;
+        }
+    }
+    &:hover {
+        .show-on-hover {
+            opacity: 1;
+        }
+    }
 }
 
 .slider-amounts {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .children-length {
-  position: relative;
-
-  &:after {
-    @include basvg(down, 10px, 10px, 10px);
-    @include tr(50%, 5px);
-    margin-top: -5px;
-    pointer-events: none;
-  }
-  select {
-    font-size: 1rem;
-    background: $t;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    width: 70px;
-    margin-left: 20px;
-    border: none;
-    padding: 6px;
-    border-bottom: 2px solid $placeholder;
-  }
+    position: relative;
+    &:after {
+        @include basvg(down, 10px, 10px, 10px);
+        @include tr(50%, 5px);
+        margin-top: -5px;
+        pointer-events: none;
+    }
+    select {
+        font-size: 1rem;
+        background: $t;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        width: 70px;
+        margin-left: 20px;
+        border: none;
+        padding: 6px;
+        border-bottom: 2px solid $placeholder;
+    }
 }
 
 .get-started {
-  display: flex;
-  width: 80%;
-  justify-content: space-between;
-  align-items: center;
-  margin: 20px auto 0;
-
-  .start {
-    font-size: 1rem;
-    padding: 110px 60px 0;
-    color: $secondary;
-    text-align: center;
-    position: relative;
-
-    &:before,
-    &:after {
-      @include tl(0, 0);
-      width: 100%;
-      height: 90px;
-      content: "";
+    display: flex;
+    width: 80%;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px auto 0;
+    .start {
+        font-size: 1rem;
+        padding: 110px 60px 0;
+        color: $secondary;
+        text-align: center;
+        position: relative;
+        &:before,
+        &:after {
+            @include tl(0, 0);
+            width: 100%;
+            height: 90px;
+            content: "";
+        }
+        @for $i from 1 through 3 {
+            &.start#{$i}:before {
+                @include svg(start#{$i}-bg);
+                background-size: 74px;
+                background-position: center;
+            }
+            &.start#{$i}:after {
+                @include svg(start#{$i});
+                background-size: 74px;
+                background-position: center;
+            }
+        }
     }
-    @for $i from 1 through 3 {
-      &.start#{$i}:before {
-        @include svg(start#{$i}-bg);
-        background-size: 74px;
-        background-position: center;
-      }
-      &.start#{$i}:after {
-        @include svg(start#{$i});
-        background-size: 74px;
-        background-position: center;
-      }
-    }
-  }
 }
 
 .get-started-content {
-  text-align: center;
-  margin: 30px auto 0;
-
-  p,
-  span {
-    color: $secondary;
-    font: 1rem "Source Sans Pro";
-    margin-bottom: 0;
-  }
-  p {
-    font-weight: bold;
-  }
-  span {
-    font-weight: 400;
-  }
+    text-align: center;
+    margin: 30px auto 0;
+    p,
+    span {
+        color: $secondary;
+        font: 1rem "Source Sans Pro";
+        margin-bottom: 0;
+    }
+    p {
+        font-weight: bold;
+    }
+    span {
+        font-weight: 400;
+    }
 }
 
 .popup {
-  position: fixed;
-  z-index: 100;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background: rgba(248, 217, 198, 0.85);
-  display: grid;
-  place-items: center;
-
-  .content {
-    @include box-shadow(0, 0, 4px, 0, 0, 0, 0.15);
-    @include radius(6px);
-    width: 60%;
-    background: $w;
-    padding: 45px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    img {
-      width: 24%;
+    position: fixed;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(248, 217, 198, 0.85);
+    display: grid;
+    place-items: center;
+    .content {
+        @include box-shadow(0, 0, 4px, 0, 0, 0, 0.15);
+        @include radius(6px);
+        width: 60%;
+        background: $w;
+        padding: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        img {
+            width: 24%;
+        }
+        .reason {
+            width: 68%;
+            .title {
+                color: darken(#3e566b, 18%);
+                padding: 0 0 20px;
+                font: 700 1.3rem "Source Sans Pro";
+                border-bottom: 1px solid $light-border;
+                margin-bottom: 30px;
+                text-align: left;
+            }
+            p {
+                font-size: 1rem;
+                text-align: left;
+                line-height: 28px;
+                color: $secondary;
+            }
+            a {
+                margin-top: 40px;
+                display: block;
+                letter-spacing: 1px;
+                color: $primary;
+                font-size: 1rem;
+                font-weight: 500;
+            }
+        }
     }
-    .reason {
-      width: 68%;
-
-      .title {
-        color: darken(#3e566b, 18%);
-        padding: 0 0 20px;
-        font: 700 1.3rem "Source Sans Pro";
-        border-bottom: 1px solid $light-border;
-        margin-bottom: 30px;
-        text-align: left;
-      }
-      p {
-        font-size: 1rem;
-        text-align: left;
-        line-height: 28px;
-        color: $secondary;
-      }
-      a {
-        margin-top: 40px;
-        display: block;
-        letter-spacing: 1px;
-        color: $primary;
-        font-size: 1rem;
-        font-weight: 500;
-      }
-    }
-  }
 }
 
 .date-container {
-  width: 45%;
-  margin: 0 auto 20px;
-  display: inline-grid;
-  align-items: stretch;
-  grid-template-columns: 40% auto auto auto;
-  grid-template-rows: 60px;
-  position: relative;
-
-  .inputDate {
-    font: 600 1.2rem "Source Sans Pro";
-    width: 100%;
-    height: 100%;
-    margin-top: 1px;
-    padding: 28px 20px;
-    border: 2px solid $secondary;
-    text-align: center;
-    color: darken($placeholder, 25%);
-
-    &::placeholder {
-      color: $placeholder;
+    width: 45%;
+    margin: 0 auto 20px;
+    display: inline-grid;
+    align-items: stretch;
+    grid-template-columns: 40% auto auto auto;
+    grid-template-rows: 60px;
+    position: relative;
+    .inputDate {
+        font: 600 1.2rem "Source Sans Pro";
+        width: 100%;
+        height: 100%;
+        margin-top: 1px;
+        padding: 28px 20px;
+        border: 2px solid $secondary;
+        text-align: center;
+        color: darken($placeholder, 25%);
+        &::placeholder {
+            color: $placeholder;
+        }
+        &.input1 {
+            text-align: right;
+            &::placeholder {
+                color: #18344e;
+            }
+        }
+        &:not(.input1) {
+            border-left: none;
+        }
+        &:focus {
+            border-color: $secondary;
+            outline: none;
+        }
     }
-    &.input1 {
-      text-align: right;
-
-      &::placeholder {
-        color: #18344e;
-      }
+    .calenderIcon {
+        @include tl(50%, 15px);
+        margin-top: -20px;
     }
-    &:not(.input1) {
-      border-left: none;
-    }
-    &:focus {
-      border-color: $secondary;
-      outline: none;
-    }
-  }
-  .calenderIcon {
-    @include tl(50%, 15px);
-    margin-top: -20px;
-  }
 }
 
 .info {
-  @include svg(info);
-  display: inline-block;
-  margin-left: 5px;
-  width: 20px;
-  height: 20px;
-  background-size: 20px;
+    @include svg(info);
+    display: inline-block;
+    margin-left: 5px;
+    width: 20px;
+    height: 20px;
+    background-size: 20px;
 }
 
 .progress {
-  overflow: visible;
-  margin-bottom: 60px;
-  height: 24px;
-  border-radius: 40px;
-
-  .progress-bar {
-    background: linear-gradient(
-      90deg,
-      rgba(2, 0, 36, 1) 0%,
-      rgba(252, 168, 117, 1) 0%,
-      rgba(244, 93, 1, 1) 100%
-    );
-    position: relative;
-    overflow: initial;
+    overflow: visible;
+    margin-bottom: 60px;
+    height: 24px;
     border-radius: 40px;
-
-    span {
-      background-color: #18344e;
-      position: absolute;
-      bottom: -51px;
-      line-height: 10px;
-      right: -99px;
-      font-size: 16px;
-      padding: 15px 20px;
-      border-radius: 40px;
-      font-weight: 600;
-
-      &:after {
-        bottom: 100%;
-        left: 50%;
-        border: solid transparent;
-        content: " ";
-        height: 0;
-        width: 0;
-        position: absolute;
-        pointer-events: none;
-        border-color: rgba(255, 255, 255, 0);
-        border-bottom-color: #18344e;
-        border-width: 9px;
-        margin-left: -5px;
-      }
+    .progress-bar {
+        background: linear-gradient( 90deg, rgba(2, 0, 36, 1) 0%, rgba(252, 168, 117, 1) 0%, rgba(244, 93, 1, 1) 100%);
+        position: relative;
+        overflow: initial;
+        border-radius: 40px;
+        span {
+            background-color: #18344e;
+            position: absolute;
+            bottom: -51px;
+            line-height: 10px;
+            right: -99px;
+            font-size: 16px;
+            padding: 15px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            &:after {
+                bottom: 100%;
+                left: 50%;
+                border: solid transparent;
+                content: " ";
+                height: 0;
+                width: 0;
+                position: absolute;
+                pointer-events: none;
+                border-color: rgba(255, 255, 255, 0);
+                border-bottom-color: #18344e;
+                border-width: 9px;
+                margin-left: -5px;
+            }
+        }
     }
-  }
 }
 
 #faq {
-  .card {
-    .card-header {
-      border: 0;
-      -webkit-box-shadow: 0 0 20px 0 rgba(213, 213, 213, 0.5);
-      box-shadow: 0 0 20px 0 rgba(213, 213, 213, 0.5);
-      border-radius: 2px;
-      padding: 0;
-
-      .btn-header-link {
-        display: block;
-        text-align: left;
-        color: #18344e;
-        padding: 20px;
-        font-size: 24px;
-        font-weight: 700;
-        background: #fff;
-
-        img {
-          width: 40px;
-          margin-right: 10px;
+    .card {
+        .card-header {
+            border: 0;
+            -webkit-box-shadow: 0 0 20px 0 rgba(213, 213, 213, 0.5);
+            box-shadow: 0 0 20px 0 rgba(213, 213, 213, 0.5);
+            border-radius: 2px;
+            padding: 0;
+            .btn-header-link {
+                display: block;
+                text-align: left;
+                color: #18344e;
+                padding: 20px;
+                font-size: 24px;
+                font-weight: 700;
+                background: #fff;
+                img {
+                    width: 40px;
+                    margin-right: 10px;
+                }
+                &:after {
+                    content: "\f107";
+                    font-family: "Font Awesome 5 Free";
+                    font-weight: 900;
+                    float: right;
+                }
+                &.collapsed:after {
+                    content: "\f106";
+                }
+            }
         }
-        &:after {
-          content: "\f107";
-          font-family: "Font Awesome 5 Free";
-          font-weight: 900;
-          float: right;
+        .collapsing {
+            line-height: 30px;
         }
-        &.collapsed:after {
-          content: "\f106";
+        .collapse {
+            border: 0;
         }
-      }
     }
-    .collapsing {
-      line-height: 30px;
-    }
-    .collapse {
-      border: 0;
-    }
-  }
 }
 
 .common-h4 {
-  font-style: normal;
-  font-weight: bold;
-  font-size: 1.75rem;
-  line-height: 140%;
-  align-items: center;
-  text-align: center;
-  color: #18344e;
-  margin-top: 1em;
-  margin-bottom: 0.5em;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1.75rem;
+    line-height: 140%;
+    align-items: center;
+    text-align: center;
+    color: #18344e;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
 }
 
 .accodian-wrap {
-  border: 3px solid #fe8134;
-  border-radius: 6px;
+    border: 3px solid #fe8134;
+    border-radius: 6px;
 }
 
 .rec-tag {
-  display: inline-block;
-  margin-left: 20px;
-  font-size: 16px;
-  background: #fe81343b;
-  padding: 3px 22px;
-  border-radius: 30px;
-  border: 2px solid #fe8134;
+    display: inline-block;
+    margin-left: 20px;
+    font-size: 16px;
+    background: #fe81343b;
+    padding: 3px 22px;
+    border-radius: 30px;
+    border: 2px solid #fe8134;
 }
+
 .rec-tag img {
-  width: 18px !important;
+    width: 18px !important;
 }
+
 .pay-length {
-  border-left: 1px solid #2b5d8c;
-  padding: 15px;
-  margin: auto;
-  flex: auto;
+    border-left: 1px solid #2b5d8c;
+    padding: 15px;
+    margin: auto;
+    flex: auto;
 }
+
 .pay-length h3 {
-  font-size: 26px;
-  font-weight: 800;
-  color: #fe8134;
-  margin-bottom: 15px;
+    font-size: 26px;
+    font-weight: 800;
+    color: #fe8134;
+    margin-bottom: 15px;
 }
+
 .pay-length h5 {
-  font-size: 18px;
-  font-weight: 500;
-  color: #2b5d8c;
+    font-size: 18px;
+    font-weight: 500;
+    color: #2b5d8c;
 }
 
 .h5-h {
-  text-align: left;
-  font-size: 18px;
-  margin-top: 15px;
-  color: #2b5d8c;
+    text-align: left;
+    font-size: 18px;
+    margin-top: 15px;
+    color: #2b5d8c;
 }
 
 .c-ffoter {
-  margin-top: 30px;
+    margin-top: 30px;
 }
 
 .c-ffoter a {
-  color: #18344e !important;
-  text-decoration: none;
-  font-weight: 600;
+    color: #18344e !important;
+    text-decoration: none;
+    font-weight: 600;
 }
 
 .c-ffoter a.select {
-  background: #f45d01;
-  color: #fff !important;
-  font-size: 18px;
-  width: 140px;
-  display: inline-block;
-  height: 40px;
-  border-radius: 4px;
-  text-align: center;
-  line-height: 36px;
-  margin-left: 15px;
-  font-weight: 600;
+    background: #f45d01;
+    color: #fff !important;
+    font-size: 18px;
+    width: 140px;
+    display: inline-block;
+    height: 40px;
+    border-radius: 4px;
+    text-align: center;
+    line-height: 36px;
+    margin-left: 15px;
+    font-weight: 600;
 }
 
 .recommendation {
-  width: 60%;
-  margin: auto;
+    width: 60%;
+    margin: auto;
 }
 
 @media only screen and (max-width: 1450px) {
-  .date-container {
-    width: 65%;
-  }
+    .date-container {
+        width: 65%;
+    }
 }
 
 @media only screen and (max-width: 1200px) {
-  .get-started {
-    width: 100%;
-
-    .start {
-      padding-left: 30px;
-      padding-right: 30px;
+    .get-started {
+        width: 100%;
+        .start {
+            padding-left: 30px;
+            padding-right: 30px;
+        }
     }
-  }
-  .recommendation {
-    width: 100%;
-  }
+    .recommendation {
+        width: 100%;
+    }
 }
 
 @media only screen and (max-width: 1000px) {
-  .preference {
-    .show-on-hover {
-      position: relative;
-      top: auto;
-      left: auto;
-      opacity: 1;
-      background: $t;
-      text-align: center;
-      box-shadow: none;
-      border: none;
-      padding-top: 10px;
+    .preference {
+        .show-on-hover {
+            position: relative;
+            top: auto;
+            left: auto;
+            opacity: 1;
+            background: $t;
+            text-align: center;
+            box-shadow: none;
+            border: none;
+            padding-top: 10px;
+        }
     }
-  }
-  .w-75,
-  .col-sm-7.mx-auto,
-  .inputFull,
-  .inputHalf,
-  .inline-container {
-    width: 100% !important;
-  }
+    .w-75,
+    .col-sm-7.mx-auto,
+    .inputFull,
+    .inputHalf,
+    .inline-container {
+        width: 100% !important;
+    }
 }
 
 @media only screen and (max-width: 786px) {
-  .date-container {
-    .calenderIcon {
-      top: 12px;
-      margin-top: 0;
-    }
-    .inputDate {
-      &:nth-of-type(2) {
-        border-left: 2px solid $secondary;
-      }
-      &.input1 {
-        grid-column: span 4;
-      }
-      &:not(.input1) {
-        border-top: none;
-        height: 60px;
-      }
-    }
-  }
-  .inline-container {
-    width: 100%;
-
-    &.inline {
-      flex-direction: column;
-      width: 100%;
-
-      input[type="text"] {
-        width: 100%;
-      }
-    }
-  }
-  .popup {
-    .content {
-      flex-direction: column;
-      align-items: stretch;
-      padding: 30px;
-      width: 90%;
-      max-height: calc(100vh - 40px);
-      overflow-y: auto;
-
-      img {
-        width: 70px;
-        margin-bottom: 20px;
-      }
-      .reason {
-        width: 100%;
-
-        p {
-          font-size: 14px;
-          line-height: 22px;
+    .date-container {
+        .calenderIcon {
+            top: 12px;
+            margin-top: 0;
         }
-      }
+        .inputDate {
+            &:nth-of-type(2) {
+                border-left: 2px solid $secondary;
+            }
+            &.input1 {
+                grid-column: span 4;
+            }
+            &:not(.input1) {
+                border-top: none;
+                height: 60px;
+            }
+        }
     }
-  }
-  .get-started {
-    width: 100%;
-    flex-direction: column;
-
-    .start {
-      &:not(:last-child) {
-        margin-bottom: 20px;
-      }
+    .inline-container {
+        width: 100%;
+        &.inline {
+            flex-direction: column;
+            width: 100%;
+            input[type="text"] {
+                width: 100%;
+            }
+        }
     }
-  }
-  .submitBtn,
-  .skipText {
-    width: 50%;
-  }
-  .titleText {
-    font-size: 1.5rem;
-  }
+    .popup {
+        .content {
+            flex-direction: column;
+            align-items: stretch;
+            padding: 30px;
+            width: 90%;
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
+            img {
+                width: 70px;
+                margin-bottom: 20px;
+            }
+            .reason {
+                width: 100%;
+                p {
+                    font-size: 14px;
+                    line-height: 22px;
+                }
+            }
+        }
+    }
+    .get-started {
+        width: 100%;
+        flex-direction: column;
+        .start {
+            &:not(:last-child) {
+                margin-bottom: 20px;
+            }
+        }
+    }
+    .submitBtn,
+    .skipText {
+        width: 50%;
+    }
+    .titleText {
+        font-size: 1.5rem;
+    }
 }
 
 @media only screen and (max-width: 480px) {
-  .submitBtn,
-  .skipText {
-    width: 100%;
-  }
-  .col-sm-7.mx-auto {
-    padding-left: 0;
-    padding-right: 0;
-  }
-  .date-container {
-    .inputDate {
-      &:not(.input1) {
-        padding-left: 5px;
-        padding-right: 5px;
-      }
+    .submitBtn,
+    .skipText {
+        width: 100%;
     }
-  }
+    .col-sm-7.mx-auto {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .date-container {
+        .inputDate {
+            &:not(.input1) {
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+    }
+}
+
+.buttonBack {
+    position: relative;
+    float: left;
+    padding: 10px 10px 10px 30px;
+    border: none;
+    background: $t;
+    color: $b;
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-right: auto;
+    &:before {
+        @include basvg(back, 20px, 20px, 20px);
+        @include tl(50%, 0);
+        margin-top: -10px;
+    }
+}
+
+.centered-wrapper {
+    padding-top: 100px;
+}
+
+.mt-50 {
+    margin-top: 50px;
 }
