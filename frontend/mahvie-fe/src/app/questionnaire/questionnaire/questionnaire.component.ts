@@ -59,6 +59,20 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     },
     {
       id: 4,
+      name: 'help',
+      question: '',
+      type: 'div',
+      options: [
+        { text: 'I know my desired coverage amount, show me some recommendations', active: false, htmlTitle: 'I know what I want', hoverText: 'If I were to pass away, I would like to give money to a person(s) of my choice.' },
+        { text: "I'll answer some questions to recieve a tailored recommendations", active: false, htmlTitle: 'I need a recommendation', hoverText: 'If I were to suffer a stroke, heart attack or  get cancer, I would like to personally receive a large amount of money.' },
+      ],
+      controls: ['help'],
+      validations: { required: true },
+      title: 'How can we help?',
+      subtitle: 'Please select the option that best describes the kind of help you need.'
+    },
+    {
+      id: 5,
       name: 'names',
       question: '',
       type: 'text',
@@ -70,7 +84,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
       inline: true,
     },
     {
-      id: 5,
+      id: 6,
       name: 'products',
       question: '',
       type: 'products-radio',
@@ -85,7 +99,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
       subtitle: 'Please select all products that match your needs.',
     },
     {
-      id: 6,
+      id: 7,
       name: 'dob',
       question: '',
       type: 'date',
@@ -97,7 +111,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
         'Your recommendation is as unique as you are. Using real info here will help us give you the most accurate recommendation.',
     },
     {
-      id: 7,
+      id: 8,
       name: 'gender',
       question: '',
       type: 'radio',
@@ -112,7 +126,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
         'Your recommendation is as unique as you are. Using real info here will help us give you the most accurate recommendation.',
     },
     {
-      id: 8,
+      id: 9,
       name: 'smoke',
       question: '',
       type: 'radio',
@@ -127,7 +141,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
         'Your recommendation is as unique as you are. Using real info here will help us give you the most accurate recommendation.',
     },
     {
-      id: 9,
+      id: 10,
       name: 'children',
       question: '',
       type: 'radio',
@@ -142,7 +156,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
         'Your recommendation is as unique as you are. Using real info here will help us give you the most accurate recommendation.',
     },
     {
-      id: 10,
+      id: 11,
       name: 'income',
       question: '',
       type: 'slider',
@@ -154,7 +168,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
         'Feel free to use close estimates when it comes to your finances.',
     },
     {
-      id: 11,
+      id: 12,
       name: 'mortgage',
       question: '',
       type: 'slider',
@@ -166,7 +180,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
         'Feel free to use close estimates when it comes to your finances.',
     },
     {
-      id: 12,
+      id: 13,
       name: 'expenses',
       question: '',
       type: 'slider',
@@ -178,7 +192,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
         'Feel free to use close estimates when it comes to your finances.',
     },
     {
-      id: 13,
+      id: 14,
       name: 'without-income',
       question: '',
       type: 'radio',
@@ -192,19 +206,19 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
       subtitle: '',
     },
     {
-      id: 14,
+      id: 15,
       name: 'income-replaced',
       question: '',
-      type: 'slider',
+      type: 'date-slider',
       options: [],
       controls: ['income-replaced'],
-      validations: { required: true, min: 0, max: 500000 },
+      validations: { required: true, min: 0, max: 50 },
       title: 'How many years of income would you like to replace?',
       subtitle:
         'Feel free to use close estimates when it comes to your finances.',
     },
     {
-      id: 15,
+      id: 16,
       name: 'survive-without-income',
       question: '',
       type: 'radio',
@@ -218,24 +232,24 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
       subtitle: '',
     },
     {
-      id: 16,
+      id: 17,
       name: 'income-to-spouse',
       question: '',
-      type: 'slider',
+      type: 'date-slider',
       options: [],
       controls: ['income-to-spouse'],
-      validations: { required: true, min: 0, max: 500000 },
+      validations: { required: true, min: 0, max: 50 },
       title: 'How many years of income would you like to give your spouse or family?',
       subtitle:
         'Feel free to use close estimates when it comes to your finances.',
     },
     {
-      id: 17,
+      id: 18,
       name: 'name-address',
       question: '',
       type: 'text',
-      options: ['Full Name', 'Email Address'],
-      controls: ['fullName', 'email'],
+      options: ['Email Address'],
+      controls: ['email'],
       validations: {
         required: true,
         pattern: this.constantService.emailRegex,
@@ -385,7 +399,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
           }
           break;
         case 'min':
-          allValidations.push(Validators.min(question.validations.min! + 100));
+          allValidations.push(Validators.min(question.validations.min! + 1));
           break;
         case 'max':
           allValidations.push(Validators.max(question.validations.max!));
@@ -520,5 +534,9 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     localStorage.removeItem('questionId');
     this.isOntarioPopupVisible = false;
     this.router.navigateByUrl('/home');
+  }
+
+  setCardValue(value:any,name:any){
+    this.formGroup.get(name)?.setValue(value);
   }
 }

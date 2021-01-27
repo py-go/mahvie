@@ -93,6 +93,7 @@ $preference-list: "life-insurance",
     font-weight: 600;
     color: $primary;
     border: none;
+    background-color: transparent !important;
 }
 
 .inputFull {
@@ -777,4 +778,42 @@ mat-slider {
 
 .mt-50 {
     margin-top: 50px;
+}
+
+.card-mat {
+    background: rgba(244, 93, 1, 0.2);
+    border: 1px solid #FE8134;
+    box-sizing: border-box;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.card-mat:hover {
+    border: 3px solid #FE8134;
+}
+
+.card-mat mat-card-title {
+    font-family: Source Sans Pro;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    /* identical to box height, or 34px */
+    align-items: center;
+    text-align: center;
+    color: #18344E;
+    display: block;
+    padding-top: 30px;
+}
+
+.card-mat mat-card-content {
+    font-family: Source Sans Pro;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    /* or 25px */
+    align-items: center;
+    text-align: center;
+    color: #2B5D8C;
+    display: block;
+    padding: 20px;
 }

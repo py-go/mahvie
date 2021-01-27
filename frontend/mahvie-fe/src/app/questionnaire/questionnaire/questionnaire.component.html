@@ -47,6 +47,14 @@
                                 <label class="sliderLabel">{{currentQuestion.validations.max | currency}}</label>
                             </section>
                         </div>
+                        <!-- slider control -->
+                        <div *ngIf="currentQuestion.type === 'date-slider'" class="col-sm-7 mx-auto">
+                            <mat-slider [max]="currentQuestion.validations.max" [min]="currentQuestion.validations.min" (change)="sliderValueChange$.next($event.value)" [value]="sliderValue"></mat-slider>
+                            <section class="slider-amounts">
+                                <label class="sliderLabel">{{currentQuestion.validations.min}} years</label>
+                                <label class="sliderLabel">{{currentQuestion.validations.max}} years</label>
+                            </section>
+                        </div>
                         <!-- dates -->
                         <div *ngIf="currentQuestion.type === 'date'" class="date-container">
                             <input matInput readonly [matDatepicker]="dp3" [value]="dateValue" [max]="maxDate" (dateChange)="dateSelected($event)" class="inputDate input1" placeholder="Date of Birth">
@@ -70,6 +78,25 @@
                                     <span class="title">{{ checkboxItem.htmlTitle }}</span>
                                     <div class="show-on-hover">{{ checkboxItem.hoverText }}</div>
                                 </a>
+                            </div>
+                        </div>
+                        <!-- div -->
+                        <div *ngIf="currentQuestion.type === 'div'" class="row mt-4 w-100 mt-3 mx-auto">
+                            <div *ngFor="let checkboxItem of currentQuestion.options; let i = index;" class="col-md-6 p-2 text-center " (click)="setCardValue(checkboxItem.htmlTitle,currentQuestion.name)">
+                                <div class="card-mat">
+                                    <mat-card class="example-card">
+                                        <mat-card-header>
+                                            <div mat-card-avatar class="example-header-image"></div>
+                                            <mat-card-title>{{checkboxItem.htmlTitle}}</mat-card-title>
+                                        </mat-card-header>
+                                        <mat-card-content>
+                                            <p>
+                                                {{checkboxItem.text}}
+                                            </p>
+                                        </mat-card-content>
+                                    </mat-card>
+                                </div>
+
                             </div>
                         </div>
                         <!-- let's get to know you -->
