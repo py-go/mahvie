@@ -40,6 +40,7 @@ export type Question = {
   skip?: boolean;
   inline?: boolean;
   last?: boolean;
+  subDiv?:any;
 };
 
 /**

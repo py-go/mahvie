@@ -780,19 +780,19 @@ mat-slider {
     margin-top: 50px;
 }
 
-.card-mat {
-    background: rgba(244, 93, 1, 0.2);
+mat-card {
+    background-color: rgba(244, 93, 1, 0.2) !important;
     border: 1px solid #FE8134;
     box-sizing: border-box;
     border-radius: 6px;
     cursor: pointer;
 }
 
-.card-mat:hover {
+.example-card:hover {
     border: 3px solid #FE8134;
 }
 
-.card-mat mat-card-title {
+.example-card mat-card-title {
     font-family: Source Sans Pro;
     font-style: normal;
     font-weight: bold;
@@ -801,11 +801,15 @@ mat-slider {
     align-items: center;
     text-align: center;
     color: #18344E;
-    display: block;
     padding-top: 30px;
 }
 
-.card-mat mat-card-content {
+.example-card mat-card-header {
+    display: block;
+    margin: auto;
+}
+
+.example-card mat-card-content {
     font-family: Source Sans Pro;
     font-style: normal;
     font-weight: normal;
@@ -816,4 +820,18 @@ mat-slider {
     color: #2B5D8C;
     display: block;
     padding: 20px;
+}
+
+.subDivH2 {
+    font-family: Source Sans Pro;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 140%;
+    /* identical to box height, or 34px */
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #18344E !important;
+    padding-top: 50px;
 }

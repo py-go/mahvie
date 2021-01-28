@@ -7,9 +7,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NumberOnlyDirective } from './directives/number-only/number-only.directive';
 
 @NgModule({
-  declarations: [],
+  declarations: [NumberOnlyDirective],
   imports: [
     CommonModule,
     FormsModule,
@@ -24,6 +25,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatFormFieldModule,
     MatInputModule,
     MatNativeDateModule,
+    NumberOnlyDirective
   ]
 })
 export class SharedModule { }
