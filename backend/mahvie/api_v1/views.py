@@ -97,7 +97,7 @@ class QuestionnaireResponse(APIView):
 
         data['investments'] = ''
 
-        # result = noble_wealth_scraper(**data)
+        result = noble_wealth_scraper(**data)
         result = {"status": "OK"}
         return Response(result, status=status.HTTP_200_OK)
 

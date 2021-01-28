@@ -1,6 +1,7 @@
-<header>
-  <a routerLink="/user/login" href="javascript:void(0)">Login</a>
+<header class="temp">
+  <a *ngIf="!authService.isUserLoggedIn()" routerLink="/user/login" href="javascript:void(0)">Login</a>
   <a routerLink="/user/register" href="javascript:void(0)">Register</a>
   <a routerLink="/questionnaire" href="javascript:void(0)">Questionnaire</a>
   <a routerLink="/about" href="javascript:void(0)">About us</a>
+  <a *ngIf="authService.isUserLoggedIn()" (click)="logout()" href="javascript:void(0)">Logout</a>
 </header>

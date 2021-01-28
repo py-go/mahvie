@@ -1,55 +1,39 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder,Validators } from '@angular/forms';
-import { ApiServicesService } from '../../core/services/api-services.service';
-import { AlertboxService } from '../../shared/services/alertbox.service';
-import { LoaderService} from "../../shared/services/loader.service";
-import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
+import { AuthService } from '@services/auth.service';
+import { AlertboxService } from '@services/alertbox.service';
+import { UserTokens } from '@models/core.model';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-
-  loginForm:any;
-  submitClicked:boolean=false;
+  loginForm!: FormGroup;
 
   constructor(
-    private fb: FormBuilder,
-    private apiServicesService: ApiServicesService,
-    private alertboxService : AlertboxService,
-    private router:Router,
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private alertboxService: AlertboxService,
+    private router: Router,
     private cookieService: CookieService,
-    private loaderService:LoaderService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    this.cookieService.delete('token');
-    this.loginForm = this.fb.group({
-      username: ['',Validators.required],
-      password: ['',Validators.required]
+    this.loginForm = this.formBuilder.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required],
     });
   }
 
-  onSubmit(){
-    this.submitClicked=true;
-    if(this.loginForm.status=="VALID"){
-      this.loaderService.showLoader();
-      this.apiServicesService.postData('auth/token/',this.loginForm.value).subscribe(
-        (data)=>{
-          this.loaderService.hideLoader();
-          this.alertboxService.showAlert('success','login successfull');
-          this.cookieService.set('token',JSON.stringify(data))
-          this.router.navigate(['/questionnaire']);
-        },
-        (err)=>{
-          this.loaderService.hideLoader();
-          this.alertboxService.showAlert('error','login failed');
-        }
-      )
-    }
+  onSubmit(): void {
+    this.authService.loginUser(this.loginForm.value).subscribe((response: UserTokens) => {
+      this.alertboxService.showAlert('success', 'Login successful');
+      this.authService.setUserTokens(response);
+      this.router.navigate(['/dashboard']);
+    });
   }
-
 }

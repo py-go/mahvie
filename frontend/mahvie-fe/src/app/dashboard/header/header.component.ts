@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { QuestionnaireService } from 'src/app/core/services/questionnaire.service';
+import { QuestionnaireService } from '@services/questionnaire.service';
 
 @Component({
   selector: 'app-header',
@@ -7,23 +7,22 @@ import { QuestionnaireService } from 'src/app/core/services/questionnaire.servic
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  isButtonVisible = parseInt(localStorage.getItem('questionId') || '1') > 1;
+  // isButtonVisible = Number(localStorage.getItem('questionId')) > 1;
 
   constructor(
-    private questionService: QuestionnaireService
+    private questionService: QuestionnaireService,
   ) { }
 
   ngOnInit(): void {
     // this.questionService.backButtonVisibility.subscribe(_ => {
-    //   this.isButtonVisible =
-    //     parseInt(localStorage.getItem('questionId') || '1') > 1;
+    //   this.isButtonVisible = Number(localStorage.getItem('questionId')) > 1;
     // });
   }
 
   /**
    * Emits event to show previous question
    */
-  // previous() {
-  //   this.questionService.backButtonClick.next();
-  // }
+  previous(): void {
+    this.questionService.backButtonClick.next();
+  }
 }
