@@ -128,29 +128,43 @@ def noble_wealth_scraper(**input_data):
     insurance_premium = None
     insurance_coverage = None
     insurance = None
-    outer_list = []
+    outer_dict = {}
 
     # Fetch all tables
     tables = driver.find_elements_by_tag_name('table')
 
+    policy_length = ["10 years", "20 years", "30 years"]
+
     # Fetch PREMIUM SCHEDULE details
+
     if len(tables) >= 1:
         insurance = tables[1].find_elements_by_class_name("plan-details")
         if len(insurance) > 1:
-            for each_tr in insurance:
+            for i, each_tr in enumerate(insurance):
                 inner_dict = {}
-                insurance_company = each_tr.text.split('-')[0].rstrip()
+                # insurance_company = each_tr.text.split('-')[0].rstrip()
                 start = each_tr.text.find('Term')
                 end = start + 7
                 insurance_term = each_tr.text[start:end].lstrip()
                 insurance_premium = each_tr.find_elements_by_xpath(".//following-sibling::td")[
                     1].text
-                insurance_coverage = each_tr.text.split(
-                    '\n')[1].split(':')[1].lstrip()
-                inner_dict['company'] = insurance_company
-                inner_dict['term'] = insurance_term
-                inner_dict['premium'] = insurance_premium
-                inner_dict['coverage'] = insurance_coverage
-                outer_list.append(inner_dict)
 
-    return outer_list
+                try:
+                    insurance_coverage = each_tr.text.split(
+                        '\n')[2].split(':')[1].lstrip()
+                except:
+                    pass
+
+                tier = "Tier" + str(i)
+                # inner_dict['company'] = insurance_company
+                insurance_premium = insurance_premium.replace(',', '')
+                insurance_premium = insurance_premium.replace('$', '')
+                inner_dict['Term'] = insurance_term
+                inner_dict['Policy length'] = policy_length[i]
+                inner_dict['Coverage Amount'] = insurance_coverage
+                inner_dict['Monthly payment'] = float(insurance_premium)/12
+                inner_dict['Monthly payment'] = "$" + \
+                    str(inner_dict['Monthly payment'])
+                outer_dict.update({tier: inner_dict})
+
+    return outer_dict

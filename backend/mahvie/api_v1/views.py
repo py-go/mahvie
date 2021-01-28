@@ -1,16 +1,21 @@
 import logging
+import datetime
+
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import status
 from rest_framework import permissions
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import generics
-from rest_framework.exceptions import NotFound
+from rest_framework.exceptions import NotFound, APIException
 
 from actstream import action
 
 from script import noble_wealth_scraper
-from api_v1.models import UserResponse
+from .utils import calculate_age, get_range_value, critical_illness_data,\
+    long_term_care
+
+from api_v1.models import UserResponse, PremiumRange
 
 
 # Get an instance of a logger
@@ -66,39 +71,88 @@ class QuestionnaireResponse(APIView):
         income_to_spouse = questionnaire_response.get('income-to-spouse')
         full_name = questionnaire_response.get('fullName')
 
-        data = {}
-        # https://github.com/Mahvie-Inc/mahvie/issues/11
-        data['country'] = 'Ontario'
-        data['purpose'] = 'Buying a House'
-        data['amount_needed'] = "I'm not sure how much I need"
-        data['phone'] = '123-456-7890'
-        data['child_eduction_fund'] = ''
-        data['total_household_debt'] = ''
-        data['additional_coverage'] = ''
-        data['inflation_percentage'] = '1.5'
-        data['current_lic'] = ''
+        age = calculate_age(datetime.datetime.strptime(dob, '%Y-%m-%d').date())
 
-        data['gender'] = gender
-        data['smoke'] = smoke
-        data['dob'] = dob
-        data['first_name'] = first_name
-        data['last_name'] = last_name
-        data['email'] = email
-        data['mortage_debt'] = mortgage
-        data['income_replacement_value_after_tax'] = income_replaced
-        data['income_replacement_value_years'] = '5'
+        # https://github.com/Mahvie-Inc/mahvie/issues/53
+        if products == 'critical-illness':
+            tier_one_cov_range = 2 * income
+            tier_two_cov_range = 5 * income
+            tier_three_cov_range = 10 * income
 
-        data['year_of_schooling'] = '2'
-        data['no_of_childern'] = no_of_childern
+            if age >= 25:
+                start, end = get_range_value(age)
+                premium_range_tier_one = PremiumRange.objects.filter(
+                    coverage_range__coverage__lte=tier_one_cov_range,
+                    gender=gender[0],
+                    age_range__age__gte=start,
+                    age_range__age__lte=end)
 
-        data['final_expense'] = expenses
+                premium_range_tier_two = PremiumRange.objects.filter(
+                    coverage_range__coverage__lte=tier_two_cov_range,
+                    gender=gender[0],
+                    age_range__age__gte=start,
+                    age_range__age__lte=end)
 
-        data['year_of_inflation'] = '1'
+                premium_range_tier_three = PremiumRange.objects.filter(
+                    coverage_range__coverage__lte=tier_three_cov_range,
+                    gender=gender[0],
+                    age_range__age__gte=start,
+                    age_range__age__lte=end)
+            else:
+                raise APIException("Age should be greater than or equal to 25")
 
-        data['investments'] = ''
+            premium_range_tier_one = str(
+                premium_range_tier_one[0].premium_range) + "-" + str(premium_range_tier_one[1].premium_range)
 
-        result = noble_wealth_scraper(**data)
-        result = {"status": "OK"}
+            premium_range_tier_two = str(
+                premium_range_tier_two[0].premium_range) + "-" + str(premium_range_tier_two[1].premium_range)
+
+            premium_range_tier_three = str(
+                premium_range_tier_three[0].premium_range) + "-" + str(premium_range_tier_three[1].premium_range)
+
+            result = critical_illness_data(premium_range_tier_one,
+                                           premium_range_tier_two,
+                                           premium_range_tier_three)
+
+        elif products == 'long-term-care':
+            result = long_term_care(age)
+
+        else:
+
+            data = {}
+            # https://github.com/Mahvie-Inc/mahvie/issues/11
+            data['country'] = 'Ontario'
+            data['purpose'] = 'Buying a House'
+            data['amount_needed'] = "I'm not sure how much I need"
+            data['phone'] = '123-456-7890'
+            data['child_eduction_fund'] = ''
+            data['total_household_debt'] = ''
+            data['additional_coverage'] = ''
+            data['inflation_percentage'] = '1.5'
+            data['current_lic'] = ''
+
+            data['gender'] = gender
+            data['smoke'] = smoke
+            data['dob'] = dob
+            data['first_name'] = first_name
+            data['last_name'] = last_name
+            data['email'] = email
+            data['mortage_debt'] = mortgage
+            data['income_replacement_value_after_tax'] = income_replaced
+            data['income_replacement_value_years'] = '5'
+
+            data['year_of_schooling'] = '2'
+            data['no_of_childern'] = no_of_childern
+
+            data['final_expense'] = expenses
+
+            data['year_of_inflation'] = '1'
+
+            data['investments'] = ''
+
+            result = noble_wealth_scraper(**data)
+
+        # result = {"status": "OK"}
         return Response(result, status=status.HTTP_200_OK)
 
 
