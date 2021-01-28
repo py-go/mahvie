@@ -1,8 +1,9 @@
 <div class="contain centered-wrapper container">
     <div class="centered-content contianer">
+        <button class="buttonBack" (click)="previousClick()" *ngIf="isButtonVisible">Back</button>
+
         <div class="mt-132" *ngIf="currentQuestion">
             <section *ngIf="!showRecommendation">
-                <button class="buttonBack" (click)="previousClick()" *ngIf="isButtonVisible">Back</button>
                 <h1 class="titleText">
                     {{currentQuestion.title}}
                     <a *ngIf="currentQuestion.name === 'children'" (click)="isChildrenPopupVisible = true" class="info" href="javascript:void(0)"></a>

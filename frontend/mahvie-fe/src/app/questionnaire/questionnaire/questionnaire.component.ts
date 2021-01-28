@@ -261,6 +261,459 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
       last: true
     },
   ];
+  questionPool3: Question[] = [
+    {
+      id: 1,
+      name: 'gettoknowyou',
+      question: '',
+      type: '',
+      options: [],
+      validations: {},
+      title: 'Great, let\'s get to know you!',
+      subtitle:
+        'We\'ll recommend your coverage amount and policy length by assessing',
+    },
+    {
+      id: 2,
+      name: 'ontario',
+      question: 'Do you live in Ontario?',
+      type: 'radio',
+      options: [
+        { text: 'yes', active: false },
+        { text: 'no', active: false },
+      ],
+      controls: ['ontario'],
+      validations: { required: true },
+      title: 'Before we get started...',
+      subtitle: '',
+    },
+    {
+      id: 3,
+      name: 'email',
+      question: 'What is your email?',
+      type: 'text',
+      options: ['Email Address'],
+      controls: ['email'],
+      validations: {
+        required: true,
+        pattern: this.constantService.emailRegex,
+      },
+      title: 'Before we get started...',
+      subtitle: '',
+      skip: true,
+    },
+    {
+      id: 4,
+      name: 'help',
+      question: '',
+      type: 'div',
+      options: [
+        { text: 'I know my desired coverage amount, show me some recommendations', active: false, htmlTitle: 'I know what I want', hoverText: 'If I were to pass away, I would like to give money to a person(s) of my choice.' },
+        { text: "I'll answer some questions to recieve a tailored recommendations", active: false, htmlTitle: 'I need a recommendation', hoverText: 'If I were to suffer a stroke, heart attack or  get cancer, I would like to personally receive a large amount of money.' },
+      ],
+      controls: ['help'],
+      validations: { required: true },
+      title: 'How can we help?',
+      subDiv:{control:'desiredAmount',min:'0',max:'50000'},
+      subtitle: 'Please select the option that best describes the kind of help you need.'
+    },
+    {
+      id: 5,
+      name: 'names',
+      question: '',
+      type: 'text',
+      options: ['First Name', 'Last Name'],
+      controls: ['firstName', 'lastName'],
+      validations: { required: true },
+      title: 'Welcome to G2G, your recommendation is only minutes away!',
+      subtitle: '',
+      inline: true,
+    },
+    {
+      id: 6,
+      name: 'products',
+      question: '',
+      type: 'products-radio',
+      options: [
+        { text: 'life-insurance', active: false, htmlTitle: 'life insurance', hoverText: 'If I were to pass away, I would like to give money to a person(s) of my choice.' },
+        { text: 'critical-illness', active: false, htmlTitle: 'critical illness', hoverText: 'If I were to suffer a stroke, heart attack or  get cancer, I would like to personally receive a large amount of money.' },
+        { text: 'long-term-care', active: false, htmlTitle: 'long term care', hoverText: 'If I were unable to perform my daily tasks independently, I would like to receive money to hire assistance.' },
+      ],
+      controls: ['products'],
+      validations: { required: true },
+      title: 'Which product(s) match your preferences?',
+      subtitle: 'Please select all products that match your needs.',
+    },
+    {
+      id: 7,
+      name: 'dob',
+      question: '',
+      type: 'date',
+      options: [],
+      controls: ['dob'],
+      validations: { required: true },
+      title: 'When were you born?',
+      subtitle:
+        'Your recommendation is as unique as you are. Using real info here will help us give you the most accurate recommendation.',
+    },
+    {
+      id: 8,
+      name: 'gender',
+      question: '',
+      type: 'radio',
+      options: [
+        { text: 'male', active: false },
+        { text: 'female', active: false },
+      ],
+      controls: ['gender'],
+      validations: { required: true },
+      title: 'What is your gender?',
+      subtitle:
+        'Your recommendation is as unique as you are. Using real info here will help us give you the most accurate recommendation.',
+    },
+    {
+      id: 9,
+      name: 'smoke',
+      question: '',
+      type: 'radio',
+      options: [
+        { text: 'yes', active: false },
+        { text: 'no', active: false },
+      ],
+      controls: ['smoke'],
+      validations: { required: true },
+      title: 'Have you smoked in the last 12 months?',
+      subtitle:
+        'Your recommendation is as unique as you are. Using real info here will help us give you the most accurate recommendation.',
+    },
+    {
+      id: 10,
+      name: 'children',
+      question: '',
+      type: 'radio',
+      options: [
+        { text: 'yes', active: false },
+        { text: 'no', active: false },
+      ],
+      controls: ['children', 'children-length'],
+      validations: { required: true },
+      title: 'Do you have any children?',
+      subtitle:
+        'Your recommendation is as unique as you are. Using real info here will help us give you the most accurate recommendation.',
+    },
+    {
+      id: 11,
+      name: 'income',
+      question: '',
+      type: 'slider',
+      options: [],
+      controls: ['income'],
+      validations: { required: true, min: 0, max: 500000 },
+      title: 'What is your annual income?',
+      subtitle:
+        'Feel free to use close estimates when it comes to your finances.',
+    },
+    {
+      id: 12,
+      name: 'mortgage',
+      question: '',
+      type: 'slider',
+      options: [],
+      controls: ['mortgage'],
+      validations: { required: true, min: 0, max: 500000 },
+      title: 'What is your total mortgage outstanding?',
+      subtitle:
+        'Feel free to use close estimates when it comes to your finances.',
+    },
+    {
+      id: 13,
+      name: 'expenses',
+      question: '',
+      type: 'slider',
+      options: [],
+      controls: ['expenses'],
+      validations: { required: true, min: 0, max: 500000 },
+      title: 'What is your monthly expenses excluding your mortgage?',
+      subtitle:
+        'Feel free to use close estimates when it comes to your finances.',
+    },
+    {
+      id: 14,
+      name: 'without-income',
+      question: '',
+      type: 'radio',
+      options: [
+        { text: 'yes', active: false },
+        { text: 'no', active: false },
+      ],
+      controls: ['without-income'],
+      validations: { required: true },
+      title: 'Can you, your spouse or your family survive without your income?',
+      subtitle: '',
+    },
+    {
+      id: 15,
+      name: 'income-replaced',
+      question: '',
+      type: 'date-slider',
+      options: [],
+      controls: ['income-replaced'],
+      validations: { required: true, min: 0, max: 50 },
+      title: 'How many years of income would you like to replace?',
+      subtitle:
+        'Feel free to use close estimates when it comes to your finances.',
+    },
+    {
+      id: 16,
+      name: 'name-address',
+      question: '',
+      type: 'text',
+      options: ['Email Address'],
+      controls: ['email'],
+      validations: {
+        required: true,
+        pattern: this.constantService.emailRegex,
+      },
+      title: 'Thanks, that\'s all we need!',
+      subtitle: 'We’ll use this email address to save your recommendation and keep in touch. Your email is always safe with us!',
+      inline: false,
+      last: true
+    },
+  ];
+
+  questionPool4: Question[] = [
+    {
+      id: 1,
+      name: 'gettoknowyou',
+      question: '',
+      type: '',
+      options: [],
+      validations: {},
+      title: 'Great, let\'s get to know you!',
+      subtitle:
+        'We\'ll recommend your coverage amount and policy length by assessing',
+    },
+    {
+      id: 2,
+      name: 'ontario',
+      question: 'Do you live in Ontario?',
+      type: 'radio',
+      options: [
+        { text: 'yes', active: false },
+        { text: 'no', active: false },
+      ],
+      controls: ['ontario'],
+      validations: { required: true },
+      title: 'Before we get started...',
+      subtitle: '',
+    },
+    {
+      id: 3,
+      name: 'email',
+      question: 'What is your email?',
+      type: 'text',
+      options: ['Email Address'],
+      controls: ['email'],
+      validations: {
+        required: true,
+        pattern: this.constantService.emailRegex,
+      },
+      title: 'Before we get started...',
+      subtitle: '',
+      skip: true,
+    },
+    {
+      id: 4,
+      name: 'help',
+      question: '',
+      type: 'div',
+      options: [
+        { text: 'I know my desired coverage amount, show me some recommendations', active: false, htmlTitle: 'I know what I want', hoverText: 'If I were to pass away, I would like to give money to a person(s) of my choice.' },
+        { text: "I'll answer some questions to recieve a tailored recommendations", active: false, htmlTitle: 'I need a recommendation', hoverText: 'If I were to suffer a stroke, heart attack or  get cancer, I would like to personally receive a large amount of money.' },
+      ],
+      controls: ['help'],
+      validations: { required: true },
+      title: 'How can we help?',
+      subDiv:{control:'desiredAmount',min:'0',max:'50000'},
+      subtitle: 'Please select the option that best describes the kind of help you need.'
+    },
+    {
+      id: 5,
+      name: 'names',
+      question: '',
+      type: 'text',
+      options: ['First Name', 'Last Name'],
+      controls: ['firstName', 'lastName'],
+      validations: { required: true },
+      title: 'Welcome to G2G, your recommendation is only minutes away!',
+      subtitle: '',
+      inline: true,
+    },
+    {
+      id: 6,
+      name: 'products',
+      question: '',
+      type: 'products-radio',
+      options: [
+        { text: 'life-insurance', active: false, htmlTitle: 'life insurance', hoverText: 'If I were to pass away, I would like to give money to a person(s) of my choice.' },
+        { text: 'critical-illness', active: false, htmlTitle: 'critical illness', hoverText: 'If I were to suffer a stroke, heart attack or  get cancer, I would like to personally receive a large amount of money.' },
+        { text: 'long-term-care', active: false, htmlTitle: 'long term care', hoverText: 'If I were unable to perform my daily tasks independently, I would like to receive money to hire assistance.' },
+      ],
+      controls: ['products'],
+      validations: { required: true },
+      title: 'Which product(s) match your preferences?',
+      subtitle: 'Please select all products that match your needs.',
+    },
+    {
+      id: 7,
+      name: 'dob',
+      question: '',
+      type: 'date',
+      options: [],
+      controls: ['dob'],
+      validations: { required: true },
+      title: 'When were you born?',
+      subtitle:
+        'Your recommendation is as unique as you are. Using real info here will help us give you the most accurate recommendation.',
+    },
+    {
+      id: 8,
+      name: 'gender',
+      question: '',
+      type: 'radio',
+      options: [
+        { text: 'male', active: false },
+        { text: 'female', active: false },
+      ],
+      controls: ['gender'],
+      validations: { required: true },
+      title: 'What is your gender?',
+      subtitle:
+        'Your recommendation is as unique as you are. Using real info here will help us give you the most accurate recommendation.',
+    },
+    {
+      id: 9,
+      name: 'smoke',
+      question: '',
+      type: 'radio',
+      options: [
+        { text: 'yes', active: false },
+        { text: 'no', active: false },
+      ],
+      controls: ['smoke'],
+      validations: { required: true },
+      title: 'Have you smoked in the last 12 months?',
+      subtitle:
+        'Your recommendation is as unique as you are. Using real info here will help us give you the most accurate recommendation.',
+    },
+    {
+      id: 10,
+      name: 'children',
+      question: '',
+      type: 'radio',
+      options: [
+        { text: 'yes', active: false },
+        { text: 'no', active: false },
+      ],
+      controls: ['children', 'children-length'],
+      validations: { required: true },
+      title: 'Do you have any children?',
+      subtitle:
+        'Your recommendation is as unique as you are. Using real info here will help us give you the most accurate recommendation.',
+    },
+    {
+      id: 11,
+      name: 'income',
+      question: '',
+      type: 'slider',
+      options: [],
+      controls: ['income'],
+      validations: { required: true, min: 0, max: 500000 },
+      title: 'What is your annual income?',
+      subtitle:
+        'Feel free to use close estimates when it comes to your finances.',
+    },
+    {
+      id: 12,
+      name: 'mortgage',
+      question: '',
+      type: 'slider',
+      options: [],
+      controls: ['mortgage'],
+      validations: { required: true, min: 0, max: 500000 },
+      title: 'What is your total mortgage outstanding?',
+      subtitle:
+        'Feel free to use close estimates when it comes to your finances.',
+    },
+    {
+      id: 13,
+      name: 'expenses',
+      question: '',
+      type: 'slider',
+      options: [],
+      controls: ['expenses'],
+      validations: { required: true, min: 0, max: 500000 },
+      title: 'What is your monthly expenses excluding your mortgage?',
+      subtitle:
+        'Feel free to use close estimates when it comes to your finances.',
+    },
+    {
+      id: 14,
+      name: 'without-income',
+      question: '',
+      type: 'radio',
+      options: [
+        { text: 'yes', active: false },
+        { text: 'no', active: false },
+      ],
+      controls: ['without-income'],
+      validations: { required: true },
+      title: 'Can you, your spouse or your family survive without your income?',
+      subtitle: '',
+    },
+    {
+      id: 15,
+      name: 'income-replaced',
+      question: '',
+      type: 'date-slider',
+      options: [],
+      controls: ['income-replaced'],
+      validations: { required: true, min: 0, max: 50 },
+      title: 'How many years of income would you like to replace?',
+      subtitle:
+        'Feel free to use close estimates when it comes to your finances.',
+    },
+    {
+      id: 16,
+      name: 'survive-without-income',
+      question: '',
+      type: 'radio',
+      options: [
+        { text: 'yes', active: false },
+        { text: 'no', active: false },
+      ],
+      controls: ['survive-without-income'],
+      validations: { required: true },
+      title: 'If you were not alive, can your spouse or family survive without your income?',
+      subtitle: '',
+    },
+    {
+      id: 17,
+      name: 'name-address',
+      question: '',
+      type: 'text',
+      options: ['Email Address'],
+      controls: ['email'],
+      validations: {
+        required: true,
+        pattern: this.constantService.emailRegex,
+      },
+      title: 'Thanks, that\'s all we need!',
+      subtitle: 'We’ll use this email address to save your recommendation and keep in touch. Your email is always safe with us!',
+      inline: false,
+      last: true
+    },
+  ];
   questionPool2: Question[] = [
     {
       id: 1,
@@ -434,6 +887,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
   showRecommendation = false;
   subDiv:boolean=false;
   subDivvalue:any;
+  cachedQuestions:Question[];
   isButtonVisible = parseInt(localStorage.getItem('questionId') || '1') > 1;
 
   constructor(
@@ -443,9 +897,9 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     private router: Router,
   ) {
     this.questionId = Number(localStorage.getItem('questionId') || '1');
-    let cachedQuestions: Question[] = JSON.parse(localStorage.getItem('questions') || '{}');
-    this.questionSet = Array.isArray(cachedQuestions) && cachedQuestions.length
-      ? cachedQuestions
+    this.cachedQuestions = JSON.parse(localStorage.getItem('questions') || '{}');
+    this.questionSet = Array.isArray(this.cachedQuestions) && this.cachedQuestions.length
+      ? this.cachedQuestions
       : (localStorage.setItem('questions', JSON.stringify(this.questionPool)), this.questionPool);
     this.saveQuestionId();
   }
@@ -466,6 +920,10 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     this.subsink.sink = this.formGroup.valueChanges.pipe(
       filter(_ => this.currentQuestion.name === 'ontario')
     ).subscribe(value => value.ontario === 'no' && (this.isOntarioPopupVisible = true));
+
+    this.formGroup.valueChanges.subscribe(data=>{
+      
+    })
   }
 
   ngOnDestroy(): void {
@@ -574,6 +1032,29 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
    * Continue click event
    */
   continue(skipQuestion = false): void {
+
+    if(this.formGroup.get('without-income')){
+      let data:any = this.formGroup.get('without-income');
+      if(data.value=='yes'){
+        localStorage.setItem('questions', JSON.stringify(this.questionPool3));
+        this.questionSet = JSON.parse(localStorage.getItem('questions') || '{}');
+      }
+      else{
+        localStorage.setItem('questions', JSON.stringify(this.questionPool));
+        this.questionSet = JSON.parse(localStorage.getItem('questions') || '{}');
+      }
+    }
+    if(this.formGroup.get('survive-without-income')){
+      let data:any = this.formGroup.get('survive-without-income');
+      if(data.value=='yes'){
+        localStorage.setItem('questions', JSON.stringify(this.questionPool4));
+        this.questionSet = JSON.parse(localStorage.getItem('questions') || '{}');
+      }
+      else{
+        localStorage.setItem('questions', JSON.stringify(this.questionPool));
+        this.questionSet = JSON.parse(localStorage.getItem('questions') || '{}');
+      }
+    }
     // persist state in local & conditionally in backend
     this.saveState(skipQuestion);
 
