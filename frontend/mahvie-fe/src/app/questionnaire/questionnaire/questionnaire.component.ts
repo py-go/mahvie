@@ -355,7 +355,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     {
       id: 6,
       name: 'products',
-      category:'',
+      category:'about-you',
       question: '',
       type: 'products-radio',
       options: [
@@ -371,7 +371,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     {
       id: 7,
       name: 'dob',
-      category:'',
+      category:'about-you',
       question: '',
       type: 'date',
       options: [],
@@ -384,7 +384,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     {
       id: 8,
       name: 'gender',
-      category:'',
+      category:'about-you',
       question: '',
       type: 'radio',
       options: [
@@ -400,7 +400,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     {
       id: 9,
       name: 'smoke',
-      category:'',
+      category:'about-you',
       question: '',
       type: 'radio',
       options: [
@@ -416,7 +416,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     {
       id: 10,
       name: 'children',
-      category:'',
+      category:'about-you',
       question: '',
       type: 'radio',
       options: [
@@ -432,7 +432,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     {
       id: 11,
       name: 'income',
-      category:'',
+      category:'finances',
       question: '',
       type: 'slider',
       options: [],
@@ -445,7 +445,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     {
       id: 12,
       name: 'mortgage',
-      category:'',
+      category:'finances',
       question: '',
       type: 'slider',
       options: [],
@@ -458,7 +458,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     {
       id: 13,
       name: 'expenses',
-      category:'',
+      category:'finances',
       question: '',
       type: 'slider',
       options: [],
@@ -471,7 +471,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     {
       id: 14,
       name: 'without-income',
-      category:'',
+      category:'finances',
       question: '',
       type: 'radio',
       options: [
@@ -486,7 +486,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     {
       id: 15,
       name: 'income-replaced',
-      category:'',
+      category:'finances',
       question: '',
       type: 'date-slider',
       options: [],
@@ -499,7 +499,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     {
       id: 16,
       name: 'name-address',
-      category:'',
+      category:'recommendation',
       question: '',
       type: 'text',
       options: ['Email Address'],
@@ -591,7 +591,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     {
       id: 6,
       name: 'products',
-      category:'',
+      category:'about-you',
       question: '',
       type: 'products-radio',
       options: [
@@ -607,7 +607,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     {
       id: 7,
       name: 'dob',
-      category:'',
+      category:'about-you',
       question: '',
       type: 'date',
       options: [],
@@ -620,7 +620,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     {
       id: 8,
       name: 'gender',
-      category:'',
+      category:'about-you',
       question: '',
       type: 'radio',
       options: [
@@ -636,7 +636,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     {
       id: 9,
       name: 'smoke',
-      category:'',
+      category:'about-you',
       question: '',
       type: 'radio',
       options: [
@@ -652,7 +652,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     {
       id: 10,
       name: 'children',
-      category:'',
+      category:'about-you',
       question: '',
       type: 'radio',
       options: [
@@ -668,7 +668,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     {
       id: 11,
       name: 'income',
-      category:'',
+      category:'finances',
       question: '',
       type: 'slider',
       options: [],
@@ -681,7 +681,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     {
       id: 12,
       name: 'mortgage',
-      category:'',
+      category:'finances',
       question: '',
       type: 'slider',
       options: [],
@@ -694,7 +694,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     {
       id: 13,
       name: 'expenses',
-      category:'',
+      category:'finances',
       question: '',
       type: 'slider',
       options: [],
@@ -707,7 +707,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     {
       id: 14,
       name: 'without-income',
-      category:'',
+      category:'finances',
       question: '',
       type: 'radio',
       options: [
@@ -722,7 +722,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     {
       id: 15,
       name: 'income-replaced',
-      category:'',
+      category:'finances',
       question: '',
       type: 'date-slider',
       options: [],
@@ -735,7 +735,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     {
       id: 16,
       name: 'survive-without-income',
-      category:'',
+      category:'finances',
       question: '',
       type: 'radio',
       options: [
@@ -750,7 +750,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     {
       id: 17,
       name: 'name-address',
-      category:'',
+      category:'recommendation',
       question: '',
       type: 'text',
       options: ['Email Address'],
@@ -841,7 +841,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     {
       id: 6,
       name: 'dob',
-      category:'',
+      category:'about-you',
       question: '',
       type: 'date',
       options: [],
@@ -854,7 +854,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     {
       id: 7,
       name: 'gender',
-      category:'',
+      category:'about-you',
       question: '',
       type: 'radio',
       options: [
@@ -870,7 +870,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     {
       id: 8,
       name: 'smoke',
-      category:'',
+      category:'about-you',
       question: '',
       type: 'radio',
       options: [
@@ -886,7 +886,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     {
       id: 9,
       name: 'children',
-      category:'',
+      category:'about-you',
       question: '',
       type: 'radio',
       options: [
@@ -902,7 +902,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     {
       id: 10,
       name: 'income',
-      category:'',
+      category:'finances',
       question: '',
       type: 'slider',
       options: [],
@@ -915,7 +915,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     {
       id: 11,
       name: 'name-address',
-      category:'',
+      category:'finances',
       question: '',
       type: 'text',
       options: ['Email Address'],
@@ -1184,6 +1184,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
         if(data){
           this.recommendedArray = Object.entries(data).map((e) => (  e[1]  ));
         }
+        if(this.recommendedArray.length>1)
         this.recommendedArray.forEach((element:any) => {
           element.show=false;
         });
@@ -1237,10 +1238,10 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
    * @param event Matdatepicker emitted value
    */
   dateSelected(event: MatDatepickerInputEvent<Date>): void {
-    // const newDate = new Date(event.value!);
-    // this.date = newDate.getDate();
-    // this.month = newDate.getMonth() + 1;
-    // this.year = newDate.getFullYear();
+    const newDates = new Date(event.value!);
+    this.date = newDates.getDate();
+    this.month = newDates.getMonth() + 1;
+    this.year = newDates.getFullYear();
     const newDate = this.formatDate(event.value!)
     this.formGroup.get(this.currentQuestion.name)?.setValue(newDate);
   }

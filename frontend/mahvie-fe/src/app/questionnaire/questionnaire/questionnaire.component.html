@@ -41,7 +41,7 @@
 </div>
 
 
-<div class="contain centered-wrapper container">
+<div class="contain centered-wrapper container" [ngClass]="{'p-100':!currentQuestion.category}">
     <div class="centered-content contianer">
         <button class="buttonBack" (click)="previousClick()" *ngIf="isButtonVisible">Back</button>
 
@@ -169,7 +169,7 @@
                         </section>
                     </div>
                     <!-- submit/skip -->
-                    <div class="text-center mt-50" [ngClass]="{'button-container':currentQuestion.name!='mortgage'}">
+                    <div class="text-center mt-50 mb-80" [ngClass]="{'button-container':currentQuestion.name!='mortgage'}">
                         <button [disabled]="formGroup.invalid" type="submit" class="submitBtn">
                          {{ currentQuestion.last ? 'See Recommendation' : (currentQuestion.id === 1 ? 'Let\'s
                         get started' : 'Continue') }}
@@ -222,7 +222,7 @@
                     </div>
                 </div>
 
-                <h4 class="common-h4">More options</h4>
+                <h4 class="common-h4" *ngIf="recommendedArray.length>0">More options</h4>
                 <div class="accordion accodian-wrap m-4" id="faq" *ngFor="let x of recommendedArray;let i=index">
                     <div class="card">
                         <div class="card-header" id="faqhead1">
