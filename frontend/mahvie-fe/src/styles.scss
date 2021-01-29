@@ -1,244 +1,249 @@
 @import "base";
-
 body,
 html {
-  height: 100%;
-  background-color: #fafafa;
+    height: 100%;
+    background-color: #fafafa;
 }
 
 html {
-  scroll-behavior: smooth;
+    scroll-behavior: smooth;
 }
 
 html,
 body {
-  height: 100%;
+    height: 100%;
 }
 
 body {
-  margin: 0;
-  background: $body-bg;
-  font-family: 'Roboto', 'Helvetica Neue', sans-serif;
+    margin: 0;
+    background: $body-bg;
+    font-family: 'Roboto', 'Helvetica Neue', sans-serif;
 }
 
 a {
-  @include transit(0.5s);
-
-  &:hover {
-    text-decoration: none;
-  }
+    @include transit(0.5s);
+    &:hover {
+        text-decoration: none;
+    }
 }
 
 ::-webkit-scrollbar {
-  width: 12px;
-  background: #dddddd;
+    width: 12px;
+    background: #dddddd;
 }
+
 ::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
+    background: #c1c1c1;
 }
 
 button {
-  outline: none !important;
-  border: none;
-  
-  &:not([disabled]) {
-    cursor: pointer;
-  }
-  &[disabled] {
-    background: $disabled;
-  }
-  &:focus {
-    box-shadow: none !important;
-  }
+    outline: none !important;
+    border: none;
+    &:not([disabled]) {
+        cursor: pointer;
+    }
+    &[disabled] {
+        background: $disabled;
+    }
+    &:focus {
+        box-shadow: none !important;
+    }
 }
 
 .form-control {
-  &:focus {
-    box-shadow: none !important;
-  }
+    &:focus {
+        box-shadow: none !important;
+    }
 }
 
 select {
-  &:focus {
-    border: none;
-    outline: none;
-  }
+    &:focus {
+        border: none;
+        outline: none;
+    }
 }
 
 .mat-slider.mat-slider-horizontal .mat-slider-wrapper {
-  top: 18px;
+    top: 18px;
 }
 
 .mat-slider.mat-slider-horizontal .mat-slider-track-wrapper {
-  height: 12px;
-  border-radius: 10px;
+    height: 12px;
+    border-radius: 10px;
 }
 
 .mat-slider.mat-slider-horizontal .mat-slider-track-background,
 .mat-slider.mat-slider-horizontal .mat-slider-track-fill {
-  height: 100%;
+    height: 100%;
 }
 
 .mat-slider.mat-slider-horizontal .mat-slider-track-fill {
-  background-color: $primary;
+    background-color: $primary;
 }
 
 .mat-accent .mat-slider-thumb {
-  height: 50px;
-  width: 50px;
-  background-color: white;
-  border: 2px solid $primary;
-  bottom: -30px;
-  right: -20px;
+    height: 50px;
+    width: 50px;
+    background-color: white;
+    border: 2px solid $primary;
+    bottom: -30px;
+    right: -20px;
 }
 
 .mat-slider-min-value:not(.mat-slider-thumb-label-showing) .mat-slider-thumb {
-  background-color: white;
+    background-color: white;
 }
 
 .mat-slider-thumb {
-  height: 50px !important;
-  width: 50px !important;
+    height: 50px !important;
+    width: 50px !important;
 }
 
 .mat-form-field-wrapper {
-  padding: 0 !important;
-  padding-right: 20px !important;
-  border-right: 2px solid #18344e;
+    padding: 0 !important;
+    padding-right: 20px !important;
+    border-right: 2px solid #18344e;
 }
 
 .mat-form-field-flex {
-  height: 100%;
-  padding: 0 !important;
+    height: 100%;
+    padding: 0 !important;
 }
 
 .mat-form-field-infix {
-  align-self: center;
-  padding: 0 !important;
-  margin: 0 !important;
-  font-family: Source Sans Pro;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 20px;
-  line-height: 140%;
-  /* identical to box height, or 34px */
-  text-align: center;
-  color: #18344e;
+    align-self: center;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-family: Source Sans Pro;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 140%;
+    /* identical to box height, or 34px */
+    text-align: center;
+    color: #18344e;
 }
 
 .mat-form-field-suffix {
-  align-self: center;
+    align-self: center;
 }
 
 .mat-datepicker-toggle-default-icon {
-  width: 2.5rem !important;
-  height: 2.5rem !important;
+    width: 2.5rem !important;
+    height: 2.5rem !important;
 }
 
-.mat-progress-spinner circle, .mat-spinner circle {
-  stroke: $secondary;
+.mat-progress-spinner circle,
+.mat-spinner circle {
+    stroke: $secondary;
 }
 
 header.temp {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 30px;
-
-  &.flex-start {
-    justify-content: flex-start;
-
-    a:not(:first-child) {
-      margin-left: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px;
+    &.flex-start {
+        justify-content: flex-start;
+        a:not(:first-child) {
+            margin-left: 15px;
+        }
     }
-  }
-  a {
-    @include radius(5px);
-    flex: 0 0 22%;
-    text-align: center;
-    display: block;
-    background: #ebebeb;
-    color: $primary;
-    text-transform: uppercase;
-    padding: 30px 0;
-
-    &:hover {
-      @include box-shadow(0, 0, 8px, 0, 0, 0, 0.1);
-      background: darken(#ebebeb, 8%);
-      color: $primary;
+    a {
+        @include radius(5px);
+        flex: 0 0 22%;
+        text-align: center;
+        display: block;
+        background: #ebebeb;
+        color: $primary;
+        text-transform: uppercase;
+        padding: 30px 0;
+        &:hover {
+            @include box-shadow(0, 0, 8px, 0, 0, 0, 0.1);
+            background: darken(#ebebeb, 8%);
+            color: $primary;
+        }
     }
-  }
 }
 
 .text-danger {
-  font-size: 0.72rem;
-  margin-top: 2px;
-  display: block;
-
-  &::first-letter {
-    text-transform: uppercase;
-  }
+    font-size: 0.72rem;
+    margin-top: 2px;
+    display: block;
+    &::first-letter {
+        text-transform: uppercase;
+    }
 }
 
 .btn-lg {
-  font-size: 1rem;
+    font-size: 1rem;
 }
 
 .full-page {
-  width: 100%;
-  height: 100vh;
-  display: grid;
-  place-items: center;
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    place-items: center;
 }
-.auth-container {
-  @include radius(4px);
-  @include material-shadow;
-  width: 380px;
-  padding: 50px 30px;
-  text-align: center;
-  background: $w;
 
-  &.register {
-    padding-top: 30px;
-    padding-bottom: 20px;
-  }
-  a {
-    color: $primary;
-    font-weight: 500;
-  }
-  .btnForget {
-    background: $primary;
-    border: none;
-  }
-  img {
-    max-width: 100px;
-    margin-bottom: 20px;
-  }
-  h2 {
-    margin-bottom: 5px;
-  }
+.auth-container {
+    @include radius(4px);
+    @include material-shadow;
+    width: 380px;
+    padding: 50px 30px;
+    text-align: center;
+    background: $w;
+    &.register {
+        padding-top: 30px;
+        padding-bottom: 20px;
+    }
+    a {
+        color: $primary;
+        font-weight: 500;
+    }
+    .btnForget {
+        background: $primary;
+        border: none;
+    }
+    img {
+        max-width: 100px;
+        margin-bottom: 20px;
+    }
+    h2 {
+        margin-bottom: 5px;
+    }
 }
 
 .mat-progress-spinner {
-  position: absolute !important;
-  top: 14px;
-  right: 30px;
+    position: absolute !important;
+    top: 14px;
+    right: 30px;
 }
 
-.mat-progress-spinner circle, .mat-spinner circle {
-  stroke: $primary;
+.mat-progress-spinner circle,
+.mat-spinner circle {
+    stroke: $primary;
 }
 
 @media only screen and (max-width: 768px) {
-  .auth-container {
-    padding: 30px;
-    background: $t;
-    width: 100%;
-    box-shadow: none;
-  } 
-  .mat-progress-spinner {
-    left: 50%;
-    top: 18px;
-    margin-left: -25px;
-  }
+    .auth-container {
+        padding: 30px;
+        background: $t;
+        width: 100%;
+        box-shadow: none;
+    }
+    .mat-progress-spinner {
+        left: 50%;
+        top: 18px;
+        margin-left: -25px;
+    }
+}
+
+.mat-ripple {
+    border: 1px solid black;
+    border-radius: 50px;
+}
+
+.card-body {
+    padding: 0 !important;
 }

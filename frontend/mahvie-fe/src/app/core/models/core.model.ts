@@ -30,6 +30,7 @@ export type Validation = {
 export type Question = {
   id: number;
   name: string;
+  category:string;
   question: string;
   type: string;
   controls?: string[];
