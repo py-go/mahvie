@@ -1,0 +1,18 @@
+.border-2 {
+    border-width: 2px !important;
+    border-color: lightgrey !important;
+}
+
+.backIcon {
+    font-size: 23px;
+    font-weight: bold;
+    margin-left: 120px;
+}
+
+.fa-chevron-left {
+    color: rgb(253, 125, 5);
+}
+
+.headerStyle {
+    min-height: 100px;
+}

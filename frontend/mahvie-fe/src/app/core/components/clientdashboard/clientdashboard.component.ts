@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '@services/auth.service';
 import { CookieService } from 'ngx-cookie-service';
 
 @Component({
@@ -7,18 +8,18 @@ import { CookieService } from 'ngx-cookie-service';
   templateUrl: './clientdashboard.component.html',
   styleUrls: ['./clientdashboard.component.css']
 })
-export class ClientdashboardComponent implements OnInit {
+export class ClientDashboardComponent implements OnInit {
 
   constructor(
-    private cookieService: CookieService,
-    private router: Router,
+    public cookieService: CookieService,
+    public router: Router,
+    private authService: AuthService,
   ) { }
 
   ngOnInit(): void {
   }
 
-  logoutUser(): void {
-    this.cookieService.deleteAll();
-    this.router.navigateByUrl('');
+  logout(): void {
+    this.authService.logoutUser();
   }
 }

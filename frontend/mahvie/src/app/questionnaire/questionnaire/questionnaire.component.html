@@ -1,0 +1,28 @@
+<div class="contain centered-wrapper">
+    <div class="centered-content">
+        <h1>Before We Get Started....</h1>
+        <form>
+            <div *ngIf="formSection==1">
+                <div class="center mt-4">
+                    Do you live in Ontario?
+                </div>
+                <p class="mt-4">
+                    <input type="radio" value="yes" name="location" (click)="submitBtn=null">
+                    <label style="color: rgb(28, 106, 179);" for="yes">Yes</label><br>
+                </p>
+                <p class="mt-4">
+                    <input type="radio" value="no" name="location" (click)="submitBtn=null">
+                    <label style="color:  rgb(28, 106, 179);" for="no">No</label><br>
+                </p>
+            </div>
+
+            <div class="mt-4" *ngIf="formSection==2">
+                <label style="color:  rgb(28, 106, 179);" for="no" class="emailText">What is your email?</label><br>
+                <input type="text" class="email" placeholder="Enter the email">
+            </div>
+            <div>
+                <button class="continue w-50" [attr.disabled]="submitBtn" type="button" name="name" (click)="submit()">Continue</button>
+            </div>
+        </form>
+    </div>
+</div>

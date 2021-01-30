@@ -30,6 +30,7 @@ export type Validation = {
 export type Question = {
   id: number;
   name: string;
+  category:string;
   question: string;
   type: string;
   controls?: string[];
@@ -40,6 +41,7 @@ export type Question = {
   skip?: boolean;
   inline?: boolean;
   last?: boolean;
+  subDiv?:any;
 };
 
 /**

@@ -7,16 +7,16 @@ import { QuestionnaireService } from '@services/questionnaire.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  isButtonVisible = Number(localStorage.getItem('questionId')) > 1;
+  // isButtonVisible = Number(localStorage.getItem('questionId')) > 1;
 
   constructor(
     private questionService: QuestionnaireService,
   ) { }
 
   ngOnInit(): void {
-    this.questionService.backButtonVisibility.subscribe(_ => {
-      this.isButtonVisible = Number(localStorage.getItem('questionId')) > 1;
-    });
+    // this.questionService.backButtonVisibility.subscribe(_ => {
+    //   this.isButtonVisible = Number(localStorage.getItem('questionId')) > 1;
+    // });
   }
 
   /**
@@ -24,5 +24,14 @@ export class HeaderComponent implements OnInit {
    */
   previous(): void {
     this.questionService.backButtonClick.next();
+  }
+
+  menuFunction(){
+    let x:any = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+      x.className += " responsive";
+    } else {
+      x.className = "topnav";
+    }
   }
 }

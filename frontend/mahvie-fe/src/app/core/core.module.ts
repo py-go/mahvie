@@ -6,7 +6,7 @@ import { HomeComponent } from './components/home/home.component';
 import { AboutUsComponent } from './components/about-us/about-us.component';
 import { AlertboxComponent } from './components/alertbox/alertbox.component';
 import { LoaderComponent } from './components/loader/loader.component';
-import { ClientdashboardComponent } from './components/clientdashboard/clientdashboard.component';
+import { ClientDashboardComponent } from './components/clientdashboard/clientdashboard.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +14,7 @@ import { ClientdashboardComponent } from './components/clientdashboard/clientdas
     AboutUsComponent,
     AlertboxComponent,
     LoaderComponent,
-    ClientdashboardComponent,
+    ClientDashboardComponent,
   ],
   imports: [
     CommonModule,

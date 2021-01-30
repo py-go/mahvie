@@ -15,10 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from decouple import config
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/', include('allauth.urls')),
     path('api-auth/', include('rest_framework.urls')),
     path('api/auth/', include('api_authentication.urls')),
     path('api/v1/', include('api_v1.urls'))
 ]
+
+if config('ENV') == 'prod':
+    urlpatterns.remove(path('admin/', admin.site.urls))
