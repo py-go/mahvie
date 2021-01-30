@@ -25,4 +25,13 @@ export class HeaderComponent implements OnInit {
   previous(): void {
     this.questionService.backButtonClick.next();
   }
+
+  menuFunction(){
+    let x:any = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+      x.className += " responsive";
+    } else {
+      x.className = "topnav";
+    }
+  }
 }

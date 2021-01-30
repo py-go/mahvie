@@ -1,8 +1,52 @@
-<div class="contain centered-wrapper container">
+<div class="mt-46" id="grad1" *ngIf="currentQuestion.category">
+    <hr class="b-dash">
+    <div class="container">
+        <div>
+
+            <div class="">
+                <div class="">
+                    <div class="">
+                        <form id="msform">
+
+                            <!-- progressbar -->
+                            <ul id="progressbar">
+                                <li [ngClass]="{'active':currentQuestion.category=='about-you','finish':currentQuestion.category=='finances'||currentQuestion.category=='recommendation'}" id="account"> <img src="assets/images/about-youAsset-4@2x-1.png" class="imhg-fluid"><strong>About you</strong></li>
+                                <li [ngClass]="{'active':currentQuestion.category=='finances','finish':currentQuestion.category=='recommendation'}" id="personal"><img src="assets/images/financesAsset-2@2x-1.png" class="imhg-fluid"><strong>Finances</strong></li>
+                                <li [ngClass]="{'active':currentQuestion.category=='recommendation'}" id="payment"><img src="assets/images/registerAsset-6@2x-1.png" class="imhg-fluid"><strong>Recommendation</strong></li>
+                                <li [ngClass]="{'active':currentQuestion.category=='recommendation1'}" id="confirm"> <img src="assets/images/recommendationAsset-4@2x-1.png" class="imhg-fluid"><strong>Review</strong></li>
+                                <li [ngClass]="{'active':currentQuestion.category=='about-you1'}" id="confirm"> <img src="assets/images/registerAsset-5@2x-1.png" class="imhg-fluid"><strong>Register</strong></li>
+                            </ul>
+                            <!-- fieldsets -->
+
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" [style.width.%]="fieldSet">
+                                    <sup style="right: -40px;
+                                        top: 12px;
+                                        color: #18344e;
+                                        font-weight: 700;
+                                        position: absolute;
+                                        font-size: 16px;"> {{fieldSet}}%
+                                    </sup>
+                                    <span *ngIf="currentQuestion.category=='about-you'">You are on step 1</span>
+                                    <span *ngIf="currentQuestion.category=='finances'">You are on step 2</span>
+                                    <span *ngIf="currentQuestion.category=='recommendation'">You are on step 3</span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="contain centered-wrapper container" [ngClass]="{'p-100':!currentQuestion.category}">
     <div class="centered-content contianer">
+        <button class="buttonBack" (click)="previousClick()" *ngIf="isButtonVisible">Back</button>
+
         <div class="mt-132" *ngIf="currentQuestion">
             <section *ngIf="!showRecommendation">
-                <button class="buttonBack" (click)="previousClick()" *ngIf="isButtonVisible">Back</button>
                 <h1 class="titleText">
                     {{currentQuestion.title}}
                     <a *ngIf="currentQuestion.name === 'children'" (click)="isChildrenPopupVisible = true" class="info" href="javascript:void(0)"></a>
@@ -86,7 +130,6 @@
                                 <div class="card-mat">
                                     <mat-card class="example-card">
                                         <mat-card-header>
-                                            <div mat-card-avatar class="example-header-image"></div>
                                             <mat-card-title>{{checkboxItem.htmlTitle}}</mat-card-title>
                                         </mat-card-header>
                                         <mat-card-content>
@@ -96,9 +139,18 @@
                                         </mat-card-content>
                                     </mat-card>
                                 </div>
-
+                            </div>
+                            <div *ngIf="subDiv && currentQuestion.subDiv" class="inline-container w-50" [class.inline]="currentQuestion.inline">
+                                <h2 class="subDivH2">What is your desired coverage amount?</h2>
+                                <input type="text" placeholder="0" class="inputFull inputSlide mb-74 w-100" matInput (keyup)="sliderValueChangeSub()" [(ngModel)]="subDivvalue" [ngModelOptions]="{standalone:true}" [class.hasValue]="sliderValue > 0" appNumberOnly>
+                                <!-- <mat-slider [step]="1000" [max]="currentQuestion.subDiv.max" [min]="currentQuestion.subDiv.min" (change)="sliderValueChangeSub($event.value)" [value]="sliderValue"></mat-slider>
+                                <section class="slider-amounts">
+                                    <label class="sliderLabel">{{currentQuestion.subDiv.min | currency}}</label>
+                                    <label class="sliderLabel">{{currentQuestion.subDiv.max | currency}}</label>
+                                </section> -->
                             </div>
                         </div>
+
                         <!-- let's get to know you -->
                         <div *ngIf="currentQuestion.name === 'gettoknowyou'" class="get-started">
                             <div class="start start1">
@@ -117,7 +169,7 @@
                         </section>
                     </div>
                     <!-- submit/skip -->
-                    <div class="text-center mt-50" [ngClass]="{'button-container':currentQuestion.name!='mortgage'}">
+                    <div class="text-center mt-50 mb-80" [ngClass]="{'button-container':currentQuestion.name!='mortgage'}">
                         <button [disabled]="formGroup.invalid" type="submit" class="submitBtn">
                          {{ currentQuestion.last ? 'See Recommendation' : (currentQuestion.id === 1 ? 'Let\'s
                         get started' : 'Continue') }}
@@ -129,35 +181,76 @@
             </section>
             <!-- see recommendations -->
             <section *ngIf="showRecommendation" class="recommendation">
+
                 <h4 class="common-h4">Our recommendation</h4>
-                <div class="accordion accodian-wrap" id="faq">
+                <div class="accordion accodian-wrap m-4" id="faq">
                     <div class="card">
                         <div class="card-header" id="faqhead1">
                             <a href="javascript:void(0)" class="btn btn-header-link" data-toggle="collapse" data-target="#faq1" aria-expanded="true" aria-controls="faq1"><img src="assets/images/lifeinsurance-unselected1.svg" class="img-fluid"> Life Insurance - Tier 1 Label
                                 <div class="rec-tag">
                                     <img src="assets/images/registerAsset6@2x2.svg" width="18px"> Recommended
                                 </div>
+                                <!-- <i class="fa ml-auto" [ngClass]="{'fa-chevron-up':x.show,'fa-chevron-down':!x.show}" aria-hidden="true" (click)="x.show=!x.show"></i> -->
+
                             </a>
                         </div>
                         <div id="faq1" class="collapse show" aria-labelledby="faqhead1" data-parent="#faq">
-                            <div class="card-body" style="background: #fff;">
+                            <div class="card-body recommend-card" style="background: #fff;">
                                 <div class="row" style="justify-content: space-between;align-items: center;text-align: center;">
                                     <div style="margin-right: 20px;margin-left: 20px;"> <img src="assets/images/lowtierAsset4@2x2.svg">
                                     </div>
                                     <div class="pay-length">
-                                        <h3>$Z</h3>
+                                        <h3>$27.36</h3>
                                         <h5>Monthly payment</h5>
                                     </div>
                                     <div class="pay-length">
-                                        <h3>$Y</h3>
+                                        <h3>$10000</h3>
                                         <h5>Coverage Amount</h5>
                                     </div>
                                     <div class="pay-length">
-                                        <h3>10 years</h3>
+                                        <h3>20 Years</h3>
                                         <h5>Policy length</h5>
                                     </div>
                                 </div>
-                                <h5 class="h5-h">If you die in the next 10 years, a person of your choice will receive $Y for just $Z/month!</h5>
+                                <h5 class="h5-h">If you die in the next 10 years, a person of your choice will receive $10000 for just $27.36/month!</h5>
+                                <div class="text-right c-ffoter">
+                                    <a href="#">Learn more</a>
+                                    <a href="#" class="select">Select</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h4 class="common-h4" *ngIf="recommendedArray.length>0">More options</h4>
+                <div class="accordion accodian-wrap m-4" id="faq" *ngFor="let x of recommendedArray;let i=index">
+                    <div class="card">
+                        <div class="card-header" id="faqhead1">
+                            <a href="javascript:void(0)" class="btn btn-header-link" data-toggle="collapse" data-target="#faq1" aria-expanded="true" aria-controls="faq1"><img src="assets/images/lifeinsurance-unselected1.svg" class="img-fluid"> Life Insurance - Tier {{i+2}} Label
+
+                                <i class="fa ml-auto" [ngClass]="{'fa-chevron-up':x.show,'fa-chevron-down':!x.show}" aria-hidden="true" (click)="x.show=!x.show"></i>
+
+                            </a>
+                        </div>
+                        <div id="faq1" class="collapse show" aria-labelledby="faqhead1" data-parent="#faq" *ngIf="x.show">
+                            <div class="card-body recommend-card" style="background: #fff;">
+                                <div class="row" style="justify-content: space-between;align-items: center;text-align: center;">
+                                    <div style="margin-right: 20px;margin-left: 20px;"> <img src="assets/images/lowtierAsset4@2x2.svg">
+                                    </div>
+                                    <div class="pay-length">
+                                        <h3>$27.36</h3>
+                                        <h5>Monthly payment</h5>
+                                    </div>
+                                    <div class="pay-length">
+                                        <h3>$10000</h3>
+                                        <h5>Coverage Amount</h5>
+                                    </div>
+                                    <div class="pay-length">
+                                        <h3>20 Years</h3>
+                                        <h5>Policy length</h5>
+                                    </div>
+                                </div>
+                                <h5 class="h5-h">If you die in the next 10 years, a person of your choice will receive $10000 for just $27.36/month!</h5>
                                 <div class="text-right c-ffoter">
                                     <a href="#">Learn more</a>
                                     <a href="#" class="select">Select</a>
