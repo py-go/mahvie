@@ -126,8 +126,8 @@
                         </div>
                         <!-- div -->
                         <div *ngIf="currentQuestion.type === 'div'" class="row mt-4 w-100 mt-3 mx-auto">
-                            <div *ngFor="let checkboxItem of currentQuestion.options; let i = index;" class="col-md-6 p-2 text-center " (click)="setCardValue(checkboxItem.htmlTitle,currentQuestion.name)">
-                                <div class="card-mat">
+                            <div *ngFor="let checkboxItem of currentQuestion.options; let i = index;" class="col-md-6 p-2 text-center" (click)="setCardValue(checkboxItem.htmlTitle,currentQuestion.name,i)">
+                                <div class="card-mat" [ngClass]="{'activeDiv':checkboxItem.active}">
                                     <mat-card class="example-card">
                                         <mat-card-header>
                                             <mat-card-title>{{checkboxItem.htmlTitle}}</mat-card-title>

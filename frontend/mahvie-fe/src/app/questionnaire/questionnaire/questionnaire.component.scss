@@ -795,11 +795,25 @@ mat-card {
     border-radius: 6px;
     cursor: pointer;
     box-sizing: border-box;
+    position: relative;
 }
 
-.example-card:hover {
-    border: 3px solid #FE8134;
+.example-card:hover::after {
+    border: 2px solid #FE8134;
     box-sizing: border-box;
+    position: absolute;
+    content: "";
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.activeDiv {
+    background: rgba(244, 93, 1, 0.4);
+    border: 1px solid #FE8134;
+    box-sizing: border-box;
+    border-radius: 6px;
 }
 
 .example-card mat-card-title {

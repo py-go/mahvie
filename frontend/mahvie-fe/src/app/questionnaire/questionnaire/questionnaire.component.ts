@@ -1294,7 +1294,11 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/home');
   }
 
-  setCardValue(value:any,name:any){
+  setCardValue(value:any,name:any,index:number){
+    this.currentQuestion.options.forEach((element:any) => {
+      element.active = false;
+    });
+    this.currentQuestion.options[index].active = true;
     this.formGroup.get(name)?.setValue(value);
     if(this.formGroup.get(name)){
       if(value=='I know what I want'){
