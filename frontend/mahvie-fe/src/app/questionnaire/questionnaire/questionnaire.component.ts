@@ -953,7 +953,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
   isButtonVisible = parseInt(localStorage.getItem('questionId') || '1') > 1;
   fieldSet:number=10;
   recommendedArray:any=[];
-
+  DOBdateError: boolean = false;
   constructor(
     private questionService: QuestionnaireService,
     private constantService: ConstantService,
@@ -1244,6 +1244,33 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     this.year = newDates.getFullYear();
     const newDate = this.formatDate(event.value!)
     this.formGroup.get(this.currentQuestion.name)?.setValue(newDate);
+  }
+
+  dateChanged(): void {
+    if (this.date !== undefined && this.month !== undefined && this.year !== undefined && this.year !== '') {
+      if (this.year.toString().length === 4 && this.date.toString().length >= 1 && this.month.toString().length >= 1) {
+        let selectedDate: any = new Date(`${this.month}/${this.date}/${this.year}`)
+        selectedDate.setHours(0, 0, 0, 0);
+        let today = new Date();
+        today.setHours(0, 0, 0, 0);
+        if (selectedDate == 'Invalid Date') {
+          this.DOBdateError = true;
+          this.formGroup.get(this.currentQuestion.name)?.setValue(null);
+        } else {
+          if (selectedDate > today) {
+            this.DOBdateError = true;
+            this.formGroup.get(this.currentQuestion.name)?.setValue(null);
+          } else {
+            this.DOBdateError = false;
+            this.dateValue = selectedDate;
+            this.formGroup.get(this.currentQuestion.name)?.setValue(this.formatDate(selectedDate));
+          }
+        }
+      } else {
+        this.DOBdateError = false;
+        this.formGroup.get(this.currentQuestion.name)?.setValue(null);
+      }
+    }
   }
 
   /**
