@@ -794,10 +794,12 @@ mat-card {
     box-sizing: border-box;
     border-radius: 6px;
     cursor: pointer;
+    box-sizing: border-box;
 }
 
 .example-card:hover {
     border: 3px solid #FE8134;
+    box-sizing: border-box;
 }
 
 .example-card mat-card-title {

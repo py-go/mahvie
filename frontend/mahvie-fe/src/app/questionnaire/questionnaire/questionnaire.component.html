@@ -80,11 +80,11 @@
                         </div>
                         <!-- textboxes -->
                         <div *ngIf="currentQuestion.type === 'text'" class="inline-container" [class.inline]="currentQuestion.inline">
-                            <input [formControlName]="currentQuestion.controls[i]" type="text" class="inputText inputHalf" [placeholder]="fields" *ngFor="let fields of currentQuestion.options; let i = index;">
+                            <input [formControlName]="currentQuestion.controls[i]" type="text" class="inputText inputHalf" [placeholder]="fields" *ngFor="let fields of currentQuestion.options; let i = index;" appAlphabetsOnly>
                         </div>
                         <!-- slider control -->
                         <div *ngIf="currentQuestion.type === 'slider'" class="col-sm-7 mx-auto">
-                            <input readonly type="text" class="inputFull inputSlide mb-74" matInput [value]="sliderValue | currency" [class.hasValue]="sliderValue > 0">
+                            <input type="text" class="inputFull inputSlide mb-74" matInput [value]="sliderValue | currency" [class.hasValue]="sliderValue > 0">
                             <mat-slider [step]="1000" [max]="currentQuestion.validations.max" [min]="currentQuestion.validations.min" (change)="sliderValueChange$.next($event.value)" [value]="sliderValue"></mat-slider>
                             <section class="slider-amounts">
                                 <label class="sliderLabel">{{currentQuestion.validations.min | currency}}</label>
