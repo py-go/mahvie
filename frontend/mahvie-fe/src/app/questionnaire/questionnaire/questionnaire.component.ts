@@ -84,7 +84,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
       type: 'text',
       options: ['First Name', 'Last Name'],
       controls: ['firstName', 'lastName'],
-      validations: { required: true },
+      validations: { required: true,pattern:'^[a-zA-Z]+$'},
       title: 'Welcome to G2G, your recommendation is only minutes away!',
       subtitle: '',
       inline: true,
@@ -217,7 +217,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
       ],
       controls: ['without-income'],
       validations: { required: true },
-      title: 'Can you, your spouse or your family survive without your income?',
+      title: "It's time to get real... Can you, your spouse or your family survive without your income?",
       subtitle: '',
     },
     {
@@ -347,7 +347,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
       type: 'text',
       options: ['First Name', 'Last Name'],
       controls: ['firstName', 'lastName'],
-      validations: { required: true },
+      validations: { required: true,pattern:'^[a-zA-Z]+$'},
       title: 'Welcome to G2G, your recommendation is only minutes away!',
       subtitle: '',
       inline: true,
@@ -583,7 +583,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
       type: 'text',
       options: ['First Name', 'Last Name'],
       controls: ['firstName', 'lastName'],
-      validations: { required: true },
+      validations: { required: true,pattern:'^[a-zA-Z]+$'},
       title: 'Welcome to G2G, your recommendation is only minutes away!',
       subtitle: '',
       inline: true,
@@ -833,7 +833,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
       type: 'text',
       options: ['First Name', 'Last Name'],
       controls: ['firstName', 'lastName'],
-      validations: { required: true },
+      validations: { required: true,pattern:'^[a-zA-Z]+$'},
       title: 'Welcome to G2G, your recommendation is only minutes away!',
       subtitle: '',
       inline: true,
@@ -953,7 +953,7 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
   isButtonVisible = parseInt(localStorage.getItem('questionId') || '1') > 1;
   fieldSet:number=10;
   recommendedArray:any=[];
-
+  DOBdateError: boolean = false;
   constructor(
     private questionService: QuestionnaireService,
     private constantService: ConstantService,
@@ -1246,6 +1246,33 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     this.formGroup.get(this.currentQuestion.name)?.setValue(newDate);
   }
 
+  dateChanged(): void {
+    if (this.date !== undefined && this.month !== undefined && this.year !== undefined && this.year !== '') {
+      if (this.year.toString().length === 4 && this.date.toString().length >= 1 && this.month.toString().length >= 1) {
+        let selectedDate: any = new Date(`${this.month}/${this.date}/${this.year}`)
+        selectedDate.setHours(0, 0, 0, 0);
+        let today = new Date();
+        today.setHours(0, 0, 0, 0);
+        if (selectedDate == 'Invalid Date') {
+          this.DOBdateError = true;
+          this.formGroup.get(this.currentQuestion.name)?.setValue(null);
+        } else {
+          if (selectedDate > today) {
+            this.DOBdateError = true;
+            this.formGroup.get(this.currentQuestion.name)?.setValue(null);
+          } else {
+            this.DOBdateError = false;
+            this.dateValue = selectedDate;
+            this.formGroup.get(this.currentQuestion.name)?.setValue(this.formatDate(selectedDate));
+          }
+        }
+      } else {
+        this.DOBdateError = false;
+        this.formGroup.get(this.currentQuestion.name)?.setValue(null);
+      }
+    }
+  }
+
   /**
    * Options selections event
    * @param index Index of selected radio
@@ -1294,7 +1321,11 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/home');
   }
 
-  setCardValue(value:any,name:any){
+  setCardValue(value:any,name:any,index:number){
+    this.currentQuestion.options.forEach((element:any) => {
+      element.active = false;
+    });
+    this.currentQuestion.options[index].active = true;
     this.formGroup.get(name)?.setValue(value);
     if(this.formGroup.get(name)){
       if(value=='I know what I want'){
