@@ -763,7 +763,10 @@ mat-slider {
 }
 
 .buttonBack {
+<<<<<<< HEAD
     top: 40px;
+=======
+>>>>>>> 3cb4239ec1dd773628697fd0530f0a6692364cb0
     position: relative;
     float: left;
     padding: 0px 10px 0px 30px;
@@ -794,6 +797,7 @@ mat-card {
     box-sizing: border-box;
     border-radius: 6px;
     cursor: pointer;
+<<<<<<< HEAD
     box-sizing: border-box;
     position: relative;
 }
@@ -814,6 +818,12 @@ mat-card {
     border: 1px solid #FE8134;
     box-sizing: border-box;
     border-radius: 6px;
+=======
+}
+
+.example-card:hover {
+    border: 3px solid #FE8134;
+>>>>>>> 3cb4239ec1dd773628697fd0530f0a6692364cb0
 }
 
 .example-card mat-card-title {

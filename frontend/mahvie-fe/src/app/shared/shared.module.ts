@@ -8,10 +8,16 @@ import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NumberOnlyDirective } from './directives/number-only/number-only.directive';
+<<<<<<< HEAD
 import { AlphabetsOnlyDirective } from './directives/alphabets-only/alphabets-only.directive';
 
 @NgModule({
   declarations: [NumberOnlyDirective, AlphabetsOnlyDirective],
+=======
+
+@NgModule({
+  declarations: [NumberOnlyDirective],
+>>>>>>> 3cb4239ec1dd773628697fd0530f0a6692364cb0
   imports: [
     CommonModule,
     FormsModule,
@@ -26,8 +32,12 @@ import { AlphabetsOnlyDirective } from './directives/alphabets-only/alphabets-on
     MatFormFieldModule,
     MatInputModule,
     MatNativeDateModule,
+<<<<<<< HEAD
     NumberOnlyDirective,
     AlphabetsOnlyDirective
+=======
+    NumberOnlyDirective
+>>>>>>> 3cb4239ec1dd773628697fd0530f0a6692364cb0
   ]
 })
 export class SharedModule { }
