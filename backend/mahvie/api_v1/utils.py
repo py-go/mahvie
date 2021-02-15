@@ -66,17 +66,18 @@ def critical_illness_data(t1, t2, t3):
 
     data = {}
 
-    data['Tier 1'] = {"Term": term, "Policy length": policy_length,
-                      "Coverage Amount": coverage_amount_t1,
-                      "Monthly payment": monthly_payment_t1}
+    data['tier_1'] = {"term": term, "policy_length": policy_length,
+                      "coverage_amount": coverage_amount_t1,
+                      "monthly_payment": monthly_payment_t1,
+                      "recommended": True}
 
-    data['Tier 2'] = {"Term": term, "Policy length": policy_length,
-                      "Coverage Amount": coverage_amount_t2,
-                      "Monthly payment": monthly_payment_t2}
+    data['tier_2'] = {"Term": term, "policy_length": policy_length,
+                      "coverage_amount": coverage_amount_t2,
+                      "monthly_payment": monthly_payment_t2}
 
-    data['Tier 3'] = {"Term": term, "Policy length": policy_length,
-                      "Coverage Amount": coverage_amount_t3,
-                      "Monthly payment": monthly_payment_t3}
+    data['tier_3'] = {"Term": term, "policy_length": policy_length,
+                      "coverage_amount": coverage_amount_t3,
+                      "monthly_payment": monthly_payment_t3}
 
     return data
 
@@ -88,16 +89,17 @@ def long_term_care(age):
 
     data = {}
 
-    data['Tier 1'] = {"Term": term, "Policy length": policy_length,
-                      "Coverage Amount": "$2,000/month",
-                      "Monthly payment": " $60"}
+    data['tier_1'] = {"term": term, "policy_length": policy_length,
+                      "coverage_amount": "$2,000/month",
+                      "monthly_payment": " $60",
+                      "recommended": True}
 
-    data['Tier 2'] = {"Term": term, "Policy length": policy_length,
-                      "Coverage Amount": "$4,000/month",
-                      "Monthly payment": "$106"}
+    data['tier_2'] = {"term": term, "policy_length": policy_length,
+                      "coverage_amount": "$4,000/month",
+                      "monthly_payment": "$106"}
 
-    data['Tier 3'] = {"Term": term, "Policy length": policy_length,
-                      "Coverage Amount": "$6,000/month",
-                      "Monthly payment": "$152"}
+    data['tier_3'] = {"term": term, "policy_length": policy_length,
+                      "coverage_amount": "$6,000/month",
+                      "monthly_payment": "$152"}
 
     return data

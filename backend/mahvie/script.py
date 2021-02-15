@@ -155,16 +155,20 @@ def noble_wealth_scraper(**input_data):
                 except:
                     pass
 
-                tier = "Tier" + str(i)
+                tier = "tier_" + str(i)
                 # inner_dict['company'] = insurance_company
                 insurance_premium = insurance_premium.replace(',', '')
                 insurance_premium = insurance_premium.replace('$', '')
-                inner_dict['Term'] = insurance_term
-                inner_dict['Policy length'] = policy_length[i]
-                inner_dict['Coverage Amount'] = insurance_coverage
-                inner_dict['Monthly payment'] = float(insurance_premium)/12
-                inner_dict['Monthly payment'] = "$" + \
-                    str(inner_dict['Monthly payment'])
+                inner_dict['term'] = insurance_term
+                inner_dict['policy_length'] = policy_length[i]
+                inner_dict['coverage_amount'] = insurance_coverage
+                inner_dict['monthly_payment'] = float(insurance_premium)/12
+                inner_dict['monthly_payment'] = "$" + \
+                    str(inner_dict['monthly_payment'])
+
+                if i == 1:
+                    inner_dict['recommended'] = True
+
                 outer_dict.update({tier: inner_dict})
 
     return outer_dict

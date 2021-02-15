@@ -80,11 +80,19 @@
                         </div>
                         <!-- textboxes -->
                         <div *ngIf="currentQuestion.type === 'text'" class="inline-container" [class.inline]="currentQuestion.inline">
+<<<<<<< HEAD
+                            <input [formControlName]="currentQuestion.controls[i]" type="text" class="inputText inputHalf" [placeholder]="fields" *ngFor="let fields of currentQuestion.options; let i = index;" appAlphabetsOnly>
+                        </div>
+                        <!-- slider control -->
+                        <div *ngIf="currentQuestion.type === 'slider'" class="col-sm-7 mx-auto">
+                            <input type="text" class="inputFull inputSlide mb-74" matInput [value]="sliderValue | currency" [class.hasValue]="sliderValue > 0">
+=======
                             <input [formControlName]="currentQuestion.controls[i]" type="text" class="inputText inputHalf" [placeholder]="fields" *ngFor="let fields of currentQuestion.options; let i = index;">
                         </div>
                         <!-- slider control -->
                         <div *ngIf="currentQuestion.type === 'slider'" class="col-sm-7 mx-auto">
                             <input readonly type="text" class="inputFull inputSlide mb-74" matInput [value]="sliderValue | currency" [class.hasValue]="sliderValue > 0">
+>>>>>>> 3cb4239ec1dd773628697fd0530f0a6692364cb0
                             <mat-slider [step]="1000" [max]="currentQuestion.validations.max" [min]="currentQuestion.validations.min" (change)="sliderValueChange$.next($event.value)" [value]="sliderValue"></mat-slider>
                             <section class="slider-amounts">
                                 <label class="sliderLabel">{{currentQuestion.validations.min | currency}}</label>
@@ -106,9 +114,15 @@
                                 <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
                                 <mat-datepicker #dp3 disabled="false"></mat-datepicker>
                             </div>
+<<<<<<< HEAD
+                            <input type="text" class="inputDate input2" placeholder="MM" maxlength="2" [(ngModel)]="date" (keyup)="dateChanged()" [ngModelOptions]="{standalone: true}" appNumberOnly>
+                            <input type="text" class="inputDate input3" placeholder="DD" maxlength="2" [(ngModel)]="month" (keyup)="dateChanged()" [ngModelOptions]="{standalone: true}" appNumberOnly>
+                            <input type="text" class="inputDate input4" placeholder="YYYY" maxlength="4" [(ngModel)]="year" (keyup)="dateChanged()" [ngModelOptions]="{standalone: true}" appNumberOnly>
+=======
                             <input type="text" class="inputDate input2" placeholder="MM" readonly [(ngModel)]="date" [ngModelOptions]="{standalone: true}">
                             <input type="text" class="inputDate input3" placeholder="DD" readonly [(ngModel)]="month" [ngModelOptions]="{standalone: true}">
                             <input type="text" class="inputDate input4" placeholder="YYYY" readonly [(ngModel)]="year" [ngModelOptions]="{standalone: true}">
+>>>>>>> 3cb4239ec1dd773628697fd0530f0a6692364cb0
                         </div>
                         <!-- preferences -->
                         <div *ngIf="currentQuestion.type === 'products-radio'" class="row mt-4 w-100 mt-3 mx-auto">
@@ -126,8 +140,13 @@
                         </div>
                         <!-- div -->
                         <div *ngIf="currentQuestion.type === 'div'" class="row mt-4 w-100 mt-3 mx-auto">
+<<<<<<< HEAD
+                            <div *ngFor="let checkboxItem of currentQuestion.options; let i = index;" class="col-md-6 p-2 text-center" (click)="setCardValue(checkboxItem.htmlTitle,currentQuestion.name,i)">
+                                <div class="card-mat" [ngClass]="{'activeDiv':checkboxItem.active}">
+=======
                             <div *ngFor="let checkboxItem of currentQuestion.options; let i = index;" class="col-md-6 p-2 text-center " (click)="setCardValue(checkboxItem.htmlTitle,currentQuestion.name)">
                                 <div class="card-mat">
+>>>>>>> 3cb4239ec1dd773628697fd0530f0a6692364cb0
                                     <mat-card class="example-card">
                                         <mat-card-header>
                                             <mat-card-title>{{checkboxItem.htmlTitle}}</mat-card-title>
@@ -169,6 +188,10 @@
                         </section>
                     </div>
                     <!-- submit/skip -->
+<<<<<<< HEAD
+                    <div *ngIf="DOBdateError" class="text-danger">*Date of Birth can not be in the future</div>
+=======
+>>>>>>> 3cb4239ec1dd773628697fd0530f0a6692364cb0
                     <div class="text-center mt-50 mb-80" [ngClass]="{'button-container':currentQuestion.name!='mortgage'}">
                         <button [disabled]="formGroup.invalid" type="submit" class="submitBtn">
                          {{ currentQuestion.last ? 'See Recommendation' : (currentQuestion.id === 1 ? 'Let\'s
