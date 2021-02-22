@@ -7,7 +7,6 @@
                 <div class="">
                     <div class="">
                         <form id="msform">
-
                             <!-- progressbar -->
                             <ul id="progressbar">
                                 <li [ngClass]="{'active':currentQuestion.category=='about-you','finish':currentQuestion.category=='finances'||currentQuestion.category=='recommendation'}" id="account"> <img src="assets/images/about-youAsset-4@2x-1.png" class="imhg-fluid"><strong>About you</strong></li>
@@ -17,7 +16,7 @@
                                 <li [ngClass]="{'active':currentQuestion.category=='about-you1'}" id="confirm"> <img src="assets/images/registerAsset-5@2x-1.png" class="imhg-fluid"><strong>Register</strong></li>
                             </ul>
                             <!-- fieldsets -->
-
+                            
                             <div class="progress">
                                 <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" [style.width.%]="fieldSet">
                                     <sup style="right: -40px;
@@ -142,7 +141,7 @@
                             </div>
                             <div *ngIf="subDiv && currentQuestion.subDiv" class="inline-container w-50" [class.inline]="currentQuestion.inline">
                                 <h2 class="subDivH2">What is your desired coverage amount?</h2>
-                                <input type="text" placeholder="0" class="inputFull inputSlide mb-74 w-100" matInput (keyup)="sliderValueChangeSub()" [(ngModel)]="subDivvalue" [ngModelOptions]="{standalone:true}" [class.hasValue]="sliderValue > 0" appNumberOnly>
+                                <input type="text"  class="inputFull inputSlide mb-74 w-100" currencyMask [options]="{ prefix: '$ ', thousands: ',', decimal: '.' }" matInput (blur)="sliderValueChangeSub($event)"  [(ngModel)]="subDivvalue" [ngModelOptions]="{standalone:true}" [class.hasValue]="sliderValue > 0">
                                 <!-- <mat-slider [step]="1000" [max]="currentQuestion.subDiv.max" [min]="currentQuestion.subDiv.min" (change)="sliderValueChangeSub($event.value)" [value]="sliderValue"></mat-slider>
                                 <section class="slider-amounts">
                                     <label class="sliderLabel">{{currentQuestion.subDiv.min | currency}}</label>
