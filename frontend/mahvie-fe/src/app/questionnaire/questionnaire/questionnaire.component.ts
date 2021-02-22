@@ -6,7 +6,7 @@ import { ConstantService } from '@config/constant.service';
 import { Option, Question } from '@models/core.model';
 import { AuthService } from '@services/auth.service';
 import { QuestionnaireService } from '@services/questionnaire.service';
-import { EventEmitter } from 'events';
+// import { EventEmitter } from 'events';
 import { Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { SubSink } from 'subsink';
