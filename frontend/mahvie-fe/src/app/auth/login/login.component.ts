@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
     this.authService.loginUser(this.loginForm.value).subscribe((response: UserTokens) => {
       this.alertboxService.showAlert('success', 'Login successful');
       this.authService.setUserTokens(response);
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/home']);
     });
   }
 }

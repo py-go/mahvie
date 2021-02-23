@@ -7,11 +7,13 @@ import { LoginComponent } from './login/login.component';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 import { RegisterationComponent } from './registeration/registeration.component';
 import { LoginGuard } from '@core/guards/login.guard';
+import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
   { path: 'forget', component: ForgetPasswordComponent },
   { path: 'register', component: RegisterationComponent },
+  { path: 'confirm-email', component: ConfirmEmailComponent }
 ];
 
 @NgModule({
@@ -19,6 +21,7 @@ const routes: Routes = [
     LoginComponent,
     ForgetPasswordComponent,
     RegisterationComponent,
+    ConfirmEmailComponent
   ],
   imports: [
     CommonModule,

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { QuestionnaireService } from '@services/questionnaire.service';
 
 @Component({
@@ -11,6 +12,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private questionService: QuestionnaireService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -33,5 +35,9 @@ export class HeaderComponent implements OnInit {
     } else {
       x.className = "topnav";
     }
+  }
+
+  logoClick(): void{
+    this.router.navigate(['']);
   }
 }

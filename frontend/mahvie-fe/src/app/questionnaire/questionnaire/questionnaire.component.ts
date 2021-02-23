@@ -1366,7 +1366,6 @@ export class QuestionnaireComponent implements OnInit, OnDestroy {
         else {
           this.formGroup.addControl(this.currentQuestion.subDiv.control, new FormControl(this.subDivvalue));
         }
-        console.log(this.subDivvalue)
       }
   }
 }

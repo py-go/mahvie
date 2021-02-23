@@ -53,6 +53,11 @@ export class AuthService {
     this.router.navigateByUrl('');
   }
 
+  
+  confirmEmail(token: string, uid: string): Observable<any>{
+    return this.http.get(`${this.baseUrl}auth/confirm-email/?uid=${uid}&token=${token}`)
+  }
+
   setUserTokens(response: UserTokens): void {
     this.cookieService.set('user-tokens', JSON.stringify(response));
   }
