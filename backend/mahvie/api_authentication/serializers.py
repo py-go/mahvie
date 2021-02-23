@@ -54,7 +54,7 @@ class UserSerializer(serializers.ModelSerializer):
         html_message = render_to_string(
             'email/email_confirmation.html', context)
         plain_message = strip_tags(html_message)
-        from_email = 'developer@techversantinfo.com'
+        from_email = settings.DEFAULT_FROM_EMAIL
         send_mail(
             mail_subject,
             plain_message,
