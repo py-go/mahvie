@@ -71,11 +71,11 @@ def critical_illness_data(t1, t2, t3):
                       "monthly_payment": monthly_payment_t1,
                       "recommended": True}
 
-    data['tier_2'] = {"Term": term, "policy_length": policy_length,
+    data['tier_2'] = {"term": term, "policy_length": policy_length,
                       "coverage_amount": coverage_amount_t2,
                       "monthly_payment": monthly_payment_t2}
 
-    data['tier_3'] = {"Term": term, "policy_length": policy_length,
+    data['tier_3'] = {"term": term, "policy_length": policy_length,
                       "coverage_amount": coverage_amount_t3,
                       "monthly_payment": monthly_payment_t3}
 
