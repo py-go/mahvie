@@ -37,7 +37,7 @@ class UserSerializer(serializers.ModelSerializer):
 
         uid = urlsafe_base64_encode(force_bytes(user.email))
         token = default_token_generator.make_token(user)
-        activation_link = "{0}confirm-email/?uid={1}&token={2}".format(
+        activation_link = "{0}/user/confirm-email/?uid={1}&token={2}".format(
             settings.FE_URL, uid, token)
 
         current_user = user.first_name if user.first_name else user.email
@@ -54,7 +54,7 @@ class UserSerializer(serializers.ModelSerializer):
         html_message = render_to_string(
             'email/email_confirmation.html', context)
         plain_message = strip_tags(html_message)
-        from_email = 'developer@techversantinfo.com'
+        from_email = settings.DEFAULT_FROM_EMAIL
         send_mail(
             mail_subject,
             plain_message,

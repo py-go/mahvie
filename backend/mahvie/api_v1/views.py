@@ -31,12 +31,11 @@ class QuestionnaireResponse(APIView):
         Pass form data values to NobleWealth LDA Input
         """
         user_response = {}
-
+        
+        questionnaire_questions = request.data.get('questions')
+        questionnaire_response = request.data.get('answers')
+        questionnaire_status = request.data.get('status')
         if self.request.user.is_authenticated:
-            questionnaire_questions = request.data.get('questions')
-            questionnaire_response = request.data.get('answers')
-            questionnaire_status = request.data.get('status')
-
             try:
                 user_response = UserResponse.objects.get(
                     user=self.request.user)

@@ -26,7 +26,7 @@ def noble_wealth_scraper(**input_data):
     gender = Select(driver.find_element_by_id('core_gender_code'))
     country = Select(driver.find_element_by_id('core_country_region_id'))
     smoker = Select(driver.find_element_by_id('smoker'))
-    purpose = Select(driver.find_element_by_id('purpose'))
+    # purpose = Select(driver.find_element_by_id('purpose'))
     insurance_benefit_amount_select = Select(
         driver.find_element_by_id('insurance_benefit_amount_select'))
 
@@ -40,7 +40,7 @@ def noble_wealth_scraper(**input_data):
     gender.select_by_visible_text(input_data.get('gender'))
     country.select_by_visible_text(input_data.get('country'))
     smoker.select_by_visible_text(input_data.get('smoke'))
-    purpose.select_by_visible_text(input_data.get('purpose'))
+    # purpose.select_by_visible_text(input_data.get('purpose'))
     insurance_benefit_amount_select.select_by_visible_text(
         input_data.get('amount_needed'))
 
@@ -114,14 +114,14 @@ def noble_wealth_scraper(**input_data):
         "//form[@action='https://lifedesignanalysis.com/case/embed/needs-analysis-save/token/iLMrd0dcMB3UggqA/']").submit()
 
     # time.sleep(5)
-    a = driver.find_element_by_partial_link_text('VIEW')
-    driver.execute_script("arguments[0].click();", a)
+    # a = driver.find_element_by_partial_link_text('VIEW')
+    # driver.execute_script("arguments[0].click();", a)
 
-    driver.switch_to.window(driver.window_handles[1])
-    driver.find_element_by_xpath('//button[text()="Generate PDF"]').click()
+    # driver.switch_to.window(driver.window_handles[1])
+    # driver.find_element_by_xpath('//button[text()="Generate PDF"]').click()
 
-    # driver.get(
-    #     "https://lifedesignanalysis.com/my-case/6a4562ef882d363727f660edc53b31a5636465d2")
+    driver.get(
+        "https://lifedesignanalysis.com/my-case/3b790a586c09192469245fae9054e6617e58805b")
 
     insurance_company = None
     insurance_term = None
@@ -142,7 +142,7 @@ def noble_wealth_scraper(**input_data):
         if len(insurance) > 1:
             for i, each_tr in enumerate(insurance):
                 inner_dict = {}
-                # insurance_company = each_tr.text.split('-')[0].rstrip()
+                insurance_company = each_tr.text.split('-')[0].rstrip()
                 start = each_tr.text.find('Term')
                 end = start + 7
                 insurance_term = each_tr.text[start:end].lstrip()
@@ -156,7 +156,7 @@ def noble_wealth_scraper(**input_data):
                     pass
 
                 tier = "tier_" + str(i)
-                # inner_dict['company'] = insurance_company
+                inner_dict['company'] = insurance_company
                 insurance_premium = insurance_premium.replace(',', '')
                 insurance_premium = insurance_premium.replace('$', '')
                 inner_dict['term'] = insurance_term
